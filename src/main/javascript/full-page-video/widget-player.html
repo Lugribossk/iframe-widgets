@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Widget with player</title>
+        <link href="styling.css" rel="stylesheet"/>
+        <script>
+            var queryParameters = (function () {
+                var queryString = window.location.search,
+                        output = {};
+
+                if (queryString === "") {
+                    return output;
+                }
+
+                var parameters = queryString.substr(1).split("&");
+                for (var i = 0; i < parameters.length ; i++) {
+                    var keyValue = parameters[i].split("=");
+                    if (keyValue.length === 2) {
+                        output[keyValue[0]] = decodeURIComponent(keyValue[1]);
+                    } else {
+                        output[keyValue[0]] = "";
+                    }
+                }
+
+                return output;
+            }());
+
+            var player;
+
+            function onYouTubePlayerAPIReady() {
+                player = new YT.Player('ytplayer', {
+                    height: 400,
+                    width: 400,
+                    videoId: queryParameters.id,
+                    playerVars: {
+//                        autoplay: 1,
+                        controls: 0
+                    }
+                });
+
+                window.parent.parent.player = player;
+            }
+        </script>
+        <script src="https://www.youtube.com/player_api"></script>
+    </head>
+    <body>
+        <div id="ytplayer"></div>
+    </body>
+</html>

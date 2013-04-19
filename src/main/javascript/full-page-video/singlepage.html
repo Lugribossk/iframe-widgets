@@ -15,27 +15,46 @@
         </div>
         <script>
             // embed page
-            var playerWidgetReady = new $.Deferred();
 
+            function WidgetBus() {
+                this.playerWidgets = {};
+                this.callbacks = {};
+            }
 
-//            function registerPlayerWidget(id, ytPlayerFactory) {
-//
-//            }
-//
-//            function unregisterPlayerWidget(id) {
-//
-//            }
-//
-//            function onPlayerWidgetReady(id, callback) {
-//
-//            }
+            WidgetBus.prototype.unregisterPlayerWidget = function (id) {
+                this.playerWidgets[id] = null;
+            };
+
+            WidgetBus.prototype.offPlayerWidgetReady = function(id) {
+                this.callbacks[id] = null;
+            };
+
+            WidgetBus.prototype.registerPlayerWidget = function (id, ytPlayerFactory) {
+                if (this.callbacks[id]) {
+                    this.callbacks[id](ytPlayerFactory);
+                    this.offPlayerWidgetReady(id);
+                } else {
+                    this.playerWidgets[id] = ytPlayerFactory;
+                }
+            };
+
+            WidgetBus.prototype.onPlayerWidgetReady = function (id, callback) {
+                if (this.playerWidgets[id]) {
+                    callback(this.playerWidgets[id]);
+                    this.unregisterPlayerWidget(id);
+                } else {
+                    this.callbacks[id] = callback;
+                }
+            };
+
+            var widgetBus = new WidgetBus();
 
 
             // controls widget
 
             // 2. On player widget ready
-            playerWidgetReady.done(function () {
-                var ytPlayer = createYtPlayer();
+            widgetBus.onPlayerWidgetReady("x", function (ytPlayerFactory) {
+                var ytPlayer = ytPlayerFactory();
 
                 vjs("controls", {
                     techOrder: ["widget"],
@@ -69,23 +88,27 @@
                 return output;
             }());
 
-            // Somehow called by Youtube API code
-            function onYouTubePlayerAPIReady() {
-                // 1. register player widget ready
-                playerWidgetReady.resolve();
-            }
 
             function createYtPlayer() {
                 var ytPlayer = new YT.Player('ytplayer', {
                     height: 400,
                     width: 400,
-                    videoId: "9bZkp7q19f0",//queryParameters.id,
+                    videoId: "9bZkp7q19f0",//queryParameters.videoId,
+                    // https://developers.google.com/youtube/player_parameters#Parameters
                     playerVars: {
-//                        autoplay: 1,
-                        controls: 0
+                        controls: 0,
+                        rel: 0,
+                        showinfo: 0,
+                        origin: window.location.origin
                     }
                 });
                 return ytPlayer;
+            }
+
+            // Somehow called by Youtube API code
+            function onYouTubePlayerAPIReady() {
+                // 1. register player widget ready
+                widgetBus.registerPlayerWidget("x", createYtPlayer);
             }
         </script>
     </body>

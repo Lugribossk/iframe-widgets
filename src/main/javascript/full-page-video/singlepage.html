@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test</title>
+        <script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+        <link href="lib/video-js/video-js.css" rel="stylesheet">
+        <script src="lib/video-js/video.js"></script>
+        <script src="media.widget.js"></script>
+        <script src="https://www.youtube.com/player_api"></script>
+    </head>
+    <body>
+        <div id="ytplayer"></div>
+        <div style="position: absolute; top: 80%; bottom: 0; left: 0; right: 0;">
+            <div id="controls" class="vjs-default-skin"></div>
+        </div>
+        <script>
+            // embed page
+            var playerWidgetReady = new $.Deferred();
+
+
+//            function registerPlayerWidget(id, ytPlayerFactory) {
+//
+//            }
+//
+//            function unregisterPlayerWidget(id) {
+//
+//            }
+//
+//            function onPlayerWidgetReady(id, callback) {
+//
+//            }
+
+
+            // controls widget
+
+            // 2. On player widget ready
+            playerWidgetReady.done(function () {
+                var ytPlayer = createYtPlayer();
+
+                vjs("controls", {
+                    techOrder: ["widget"],
+                    width: "100%",
+                    height: "100%",
+                    ytPlayer: ytPlayer
+                });
+            });
+
+
+            // player widget
+
+            var queryParameters = (function () {
+                var queryString = window.location.search,
+                    output = {};
+
+                if (queryString === "") {
+                    return output;
+                }
+
+                var parameters = queryString.substr(1).split("&");
+                for (var i = 0; i < parameters.length ; i++) {
+                    var keyValue = parameters[i].split("=");
+                    if (keyValue.length === 2) {
+                        output[keyValue[0]] = decodeURIComponent(keyValue[1]);
+                    } else {
+                        output[keyValue[0]] = "";
+                    }
+                }
+
+                return output;
+            }());
+
+            // Somehow called by Youtube API code
+            function onYouTubePlayerAPIReady() {
+                // 1. register player widget ready
+                playerWidgetReady.resolve();
+            }
+
+            function createYtPlayer() {
+                var ytPlayer = new YT.Player('ytplayer', {
+                    height: 400,
+                    width: 400,
+                    videoId: "9bZkp7q19f0",//queryParameters.id,
+                    playerVars: {
+//                        autoplay: 1,
+                        controls: 0
+                    }
+                });
+                return ytPlayer;
+            }
+        </script>
+    </body>
+</html>

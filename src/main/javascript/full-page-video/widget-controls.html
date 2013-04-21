@@ -2,8 +2,28 @@
 <html>
     <head>
         <title>Widget with controls</title>
+        <link href="lib/video-js/video-js.css" rel="stylesheet">
+        <script src="lib/video-js/video.js"></script>
+        <script src="media.widget.js"></script>
+        <script src="WidgetBus.js"></script>
     </head>
     <body>
+        <div style="position: absolute; top: 0; bottom: 0; left: 0; right: 0;">
+            <div id="controls" class="vjs-default-skin"></div>
+        </div>
+        <script>
+            console.log("controls.html loading");
+            var widgetBus = WidgetBus.initialize();
+            widgetBus.onPlayerWidgetReady("x", function (ytPlayerFactory) {
+                var ytPlayer = ytPlayerFactory();
 
+                vjs("controls", {
+                    techOrder: ["widget"],
+                    width: "100%",
+                    height: "100%",
+                    ytPlayer: ytPlayer
+                });
+            });
+        </script>
     </body>
 </html>

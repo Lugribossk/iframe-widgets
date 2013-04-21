@@ -1,6 +1,15 @@
 /*global vjs, ytplayer, YT*/
 /*jslint sloppy:true*/
 
+var YTPlayerState = {
+    BUFFERING: 3,
+    CUED: 5,
+    ENDED: 0,
+    PAUSED: 2,
+    PLAYING: 1,
+    UNSTARTED: -1
+};
+
 vjs.Widget = vjs.MediaTechController.extend({
     init: function (player, options, ready) {
         vjs.MediaTechController.call(this, player, options, ready);
@@ -45,8 +54,8 @@ vjs.Widget.prototype.pause = function () {
 };
 
 vjs.Widget.prototype.paused = function () {
-    return this.lastState !== YT.PlayerState.PLAYING &&
-           this.lastState !== YT.PlayerState.BUFFERING;
+    return this.lastState !== YTPlayerState.PLAYING &&
+           this.lastState !== YTPlayerState.BUFFERING;
 };
 
 vjs.Widget.prototype.currentTime = function () {
@@ -132,28 +141,28 @@ vjs.Widget.prototype.onStateChange = function (event) {
             this.player_.trigger('durationchange');
             break;
 
-        case YT.PlayerState.ENDED:
+        case YTPlayerState.ENDED:
             this.player_.trigger('ended');
             break;
 
-        case YT.PlayerState.PLAYING:
+        case YTPlayerState.PLAYING:
             this.player_.trigger('timeupdate');
             this.player_.trigger('durationchange');
             this.player_.trigger('playing');
             this.player_.trigger('play');
             break;
 
-        case YT.PlayerState.PAUSED:
+        case YTPlayerState.PAUSED:
             this.player_.trigger('pause');
             break;
 
-        case YT.PlayerState.BUFFERING:
+        case YTPlayerState.BUFFERING:
             this.player_.trigger('timeupdate');
             this.player_.trigger('waiting');
 
             break;
 
-        case YT.PlayerState.CUED:
+        case YTPlayerState.CUED:
             break;
         }
 

@@ -3,6 +3,8 @@
     <head>
         <title>Widget with player</title>
         <link href="styling.css" rel="stylesheet"/>
+        <script src="https://www.youtube.com/player_api"></script>
+        <script src="WidgetBus.js"></script>
         <script>
             var queryParameters = (function () {
                 var queryString = window.location.search,
@@ -25,23 +27,32 @@
                 return output;
             }());
 
-            var player;
 
-            function onYouTubePlayerAPIReady() {
-                player = new YT.Player('ytplayer', {
+            function createYtPlayer() {
+                var ytPlayer = new YT.Player('ytplayer', {
                     height: 400,
                     width: 400,
-                    videoId: queryParameters.id,
+                    videoId: queryParameters.videoId,
+                    // https://developers.google.com/youtube/player_parameters#Parameters
                     playerVars: {
-//                        autoplay: 1,
-                        controls: 0
+                        controls: 0,
+                        rel: 0,
+                        showinfo: 0,
+                        origin: window.location.origin
                     }
                 });
+                return ytPlayer;
+            }
 
-                window.parent.parent.player = player;
+            // Somehow called by Youtube API code
+            function onYouTubePlayerAPIReady() {
+                console.log("onYouTubePlayerAPIReady")
+                // 1. register player widget ready
+                var widgetBus = WidgetBus.initialize();
+                widgetBus.registerPlayerWidget("x", createYtPlayer);
             }
         </script>
-        <script src="https://www.youtube.com/player_api"></script>
+        <!--<script src="https://www.youtube.com/player_api"></script>-->
     </head>
     <body>
         <div id="ytplayer"></div>

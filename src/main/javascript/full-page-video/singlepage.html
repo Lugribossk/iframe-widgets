@@ -7,6 +7,7 @@
         <script src="lib/video-js/video.js"></script>
         <script src="media.widget.js"></script>
         <script src="https://www.youtube.com/player_api"></script>
+        <script src="WidgetBus.js"></script>
     </head>
     <body>
         <div id="ytplayer"></div>
@@ -14,45 +15,10 @@
             <div id="controls" class="vjs-default-skin"></div>
         </div>
         <script>
-            // embed page
-
-            function WidgetBus() {
-                this.playerWidgets = {};
-                this.callbacks = {};
-            }
-
-            WidgetBus.prototype.unregisterPlayerWidget = function (id) {
-                this.playerWidgets[id] = null;
-            };
-
-            WidgetBus.prototype.offPlayerWidgetReady = function(id) {
-                this.callbacks[id] = null;
-            };
-
-            WidgetBus.prototype.registerPlayerWidget = function (id, ytPlayerFactory) {
-                if (this.callbacks[id]) {
-                    this.callbacks[id](ytPlayerFactory);
-                    this.offPlayerWidgetReady(id);
-                } else {
-                    this.playerWidgets[id] = ytPlayerFactory;
-                }
-            };
-
-            WidgetBus.prototype.onPlayerWidgetReady = function (id, callback) {
-                if (this.playerWidgets[id]) {
-                    callback(this.playerWidgets[id]);
-                    this.unregisterPlayerWidget(id);
-                } else {
-                    this.callbacks[id] = callback;
-                }
-            };
-
-            var widgetBus = new WidgetBus();
-
-
             // controls widget
 
             // 2. On player widget ready
+            var widgetBus = WidgetBus.initialize();
             widgetBus.onPlayerWidgetReady("x", function (ytPlayerFactory) {
                 var ytPlayer = ytPlayerFactory();
 

@@ -41,7 +41,14 @@
                         origin: window.location.origin
                     }
                 });
-                return ytPlayer;
+                return {
+                    player: ytPlayer,
+                    delegateEventListener: function (eventName, callback) {
+                        ytPlayer.addEventListener(eventName, function () {
+                            callback.apply(this, arguments);
+                        })
+                    }
+                };
             }
 
             // Somehow called by Youtube API code

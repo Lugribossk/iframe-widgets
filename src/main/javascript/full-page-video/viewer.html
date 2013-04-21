@@ -4,6 +4,9 @@
         <title>Fake viewer</title>
         <link href="styling.css" rel="stylesheet"/>
         <style type="text/css">
+            body {
+                background-color: gray;
+            }
             #player {
                 pointer-events: none;
                 height: 400px;
@@ -11,16 +14,16 @@
             }
             #controls {
                 position: absolute;
-                top: 80%;
-                bottom: 10%;
-                left: 10%;
-                right: 10%;
+                top: 400px;
+                left: 50px;
+                width: 300px;
+                height: 63px;
             }
         </style>
         <!--<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>-->
     </head>
     <body>
-        <iframe src="widget-player.html?id=9bZkp7q19f0" id="player" scrolling="no"></iframe>
-        <iframe src="widget-controls.html" id="controls"></iframe>
+        <iframe src="widget-player.html?videoId=9bZkp7q19f0" id="player" scrolling="no" frameBorder="0"></iframe>
+        <iframe src="widget-controls.html" id="controls" frameBorder="0"></iframe>
     </body>
 </html>

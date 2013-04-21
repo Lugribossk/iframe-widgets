@@ -41,25 +41,16 @@
                         origin: window.location.origin
                     }
                 });
-                return {
-                    player: ytPlayer,
-                    delegateEventListener: function (eventName, callback) {
-                        ytPlayer.addEventListener(eventName, function () {
-                            callback.apply(this, arguments);
-                        })
-                    }
-                };
+                return ytPlayer;
             }
 
             // Somehow called by Youtube API code
             function onYouTubePlayerAPIReady() {
-                console.log("onYouTubePlayerAPIReady")
                 // 1. register player widget ready
                 var widgetBus = WidgetBus.initialize();
                 widgetBus.registerPlayerWidget("x", createYtPlayer);
             }
         </script>
-        <!--<script src="https://www.youtube.com/player_api"></script>-->
     </head>
     <body>
         <div id="ytplayer"></div>

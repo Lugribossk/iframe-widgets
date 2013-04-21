@@ -8,15 +8,14 @@ var WidgetBus = (function () {
     }
 
     WidgetBus.prototype.unregisterPlayerWidget = function (id) {
-        this.playerWidgets[id] = null;
+        delete this.playerWidgets[id];
     };
 
     WidgetBus.prototype.offPlayerWidgetReady = function (id) {
-        this.callbacks[id] = null;
+        delete this.callbacks[id];
     };
 
     WidgetBus.prototype.registerPlayerWidget = function (id, ytPlayerFactory) {
-        console.log("registerPlayerWidget")
         if (this.callbacks[id]) {
             this.callbacks[id](ytPlayerFactory);
             this.offPlayerWidgetReady(id);
@@ -26,7 +25,6 @@ var WidgetBus = (function () {
     };
 
     WidgetBus.prototype.onPlayerWidgetReady = function (id, callback) {
-        console.log("onPlayerWidgetReady")
         if (this.playerWidgets[id]) {
             callback(this.playerWidgets[id]);
             this.unregisterPlayerWidget(id);
@@ -36,8 +34,6 @@ var WidgetBus = (function () {
     };
 
     WidgetBus.initialize = function () {
-//        return new WidgetBus();
-
         if (window.parent && window.parent.parent) {
             var frame = window.parent.parent;
 

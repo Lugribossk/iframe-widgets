@@ -2,6 +2,12 @@
 var WidgetBus = (function () {
     "use strict";
 
+    /**
+     * Communications bus for video player widgets.
+     *
+     * @author Bo Gotthardt
+     * @constructor
+     */
     function WidgetBus() {
         this.playerWidgets = {};
         this.callbacks = {};

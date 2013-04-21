@@ -45,14 +45,63 @@
                     ytPlayer.setSize(window.innerWidth, window.innerHeight);
                 };
 
+                ytPlayer.getIframe().frameBorder = "0";
+
                 return ytPlayer;
             }
 
             // Somehow called by Youtube API code
             function onYouTubePlayerAPIReady() {
-                // 1. register player widget ready
                 var widgetBus = WidgetBus.initialize();
                 widgetBus.registerPlayerWidget("x", createYtPlayer);
+            }
+
+
+
+
+
+            function isViewerAPIObject(obj) {
+                return obj.setPublicationID;
+            }
+
+            function findViewerAPI() {
+                var frame = window.parent.parent,
+                    DEFAULT_NAME = "viewer";
+
+                if (frame[DEFAULT_NAME] && isViewerAPIObject(frame[DEFAULT_NAME])) {
+                    return frame[DEFAULT_NAME];
+                } else if (frame.com && frame.com.zmags && frame.com.zmags.ps) {
+                    return frame.com.zmags.ps.require("viewer").viewerAPI;
+                } else {
+                    for (var prop in frame) {
+                        if (frame.hasOwnProperty(prop)) {
+                            if (isViewerAPIObject(prop)) {
+                                return prop;
+                            }
+                        }
+                    }
+
+                    return null;
+                }
+
+            }
+
+            function blah(ytPlayer) {
+                var viewerObj = findViewerAPI();
+
+                if (viewerObj) {
+                    viewerObj.addEventListener("customlinkactivate", function (event) {
+                        var data = event.data;
+
+                        if (data.type === "widget" && data.action === "play" && data.id === "x") {
+                            if (ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
+                                ytPlayer.pauseVideo();
+                            } else {
+                                ytPlayer.playVideo();
+                            }
+                        }
+                    });
+                }
             }
         </script>
     </head>

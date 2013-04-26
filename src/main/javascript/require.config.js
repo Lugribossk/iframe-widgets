@@ -1,7 +1,7 @@
 /**
  * RequireJS module setup.
  */
-var require = {
+require.config({
     paths: {
         jquery: "http://code.jquery.com/jquery-2.0.0.min",
         webfont: "http://ajax.googleapis.com/ajax/libs/webfont/1/webfont",
@@ -12,4 +12,4 @@ var require = {
             exports: "WebFont"
         }
     }
-};
+});

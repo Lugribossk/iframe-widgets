@@ -11,11 +11,10 @@ define(["jquery", "widget/AbstractWidget"],
          * @author Bo Gotthardt
          * @constructor
          *
-         * @param {Object|QueryParameters} [parameters]
-         * @param {Object} [presets]
+         * @param {Object} options
          */
-        function SlidingWidget(parameters, presets) {
-            AbstractWidget.call(this, parameters, presets);
+        function SlidingWidget(options) {
+            AbstractWidget.call(this, options);
 
             this.element.addClass("SlidingWidget");
 

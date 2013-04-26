@@ -13,22 +13,16 @@ define(["jquery", "util/QueryParameters", "lib/lucid"/*, "iframeapi"*/],
          * @author Bo Gotthardt
          * @constructor
          *
-         * @param {Object|QueryParameters} [parameters]
-         * @param {Object} [presets]
+         * @param {Object} options
          */
-        function AbstractWidget(parameters, presets) {
+        function AbstractWidget(options) {
             var scope = this;
-            this.options = parameters || new QueryParameters();
-
-            if (this.options.preset && presets) {
-                this.options = presets[this.options.preset];
-            }
+            this.options = options;
 
             this.element = $("<div></div>")
                 .appendTo("body");
 
             this.activated = false;
-
 
             /*Iframe.addEventListener(Iframe.IFRAME_WIDGET_ACTIVATE, function () {
                 scope.activated = true;

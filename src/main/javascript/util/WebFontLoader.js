@@ -18,6 +18,13 @@ define(["jquery", "webfont"],
         }
 
 
+        /**
+         * Utility class for loading webfonts via Google's API.
+         *
+         * @author Bo Gotthardt
+         *
+         * @constructor
+         */
         function WebFontLoader() {
         }
 

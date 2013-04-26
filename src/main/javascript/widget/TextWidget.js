@@ -10,11 +10,10 @@ define(["jquery", "widget/SlidingWidget", "util/WebFontLoader", "util/Logger"],
          * @author Bo Gotthardt
          * @constructor
          *
-         * @param {Object|QueryParameters} [parameters]
-         * @param {Object} [presets]
+         * @param {Object} options
          */
-        function TextWidget(parameters, presets) {
-            SlidingWidget.call(this, parameters, presets);
+        function TextWidget(options) {
+            SlidingWidget.call(this, options);
 
             var scope = this;
 

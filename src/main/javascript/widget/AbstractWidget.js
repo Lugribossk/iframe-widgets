@@ -18,10 +18,10 @@ define(["jquery", "util/QueryParameters", "lib/lucid"/*, "iframeapi"*/],
          */
         function AbstractWidget(parameters, presets) {
             var scope = this;
-            this.parameters = parameters || new QueryParameters();
+            this.options = parameters || new QueryParameters();
 
-            if (this.parameters.preset && presets) {
-                this.parameters = presets[this.parameters.preset];
+            if (this.options.preset && presets) {
+                this.options = presets[this.options.preset];
             }
 
             this.element = $("<div></div>")
@@ -31,13 +31,13 @@ define(["jquery", "util/QueryParameters", "lib/lucid"/*, "iframeapi"*/],
 
 
             /*Iframe.addEventListener(Iframe.IFRAME_WIDGET_ACTIVATE, function () {
-                this.activated = true;
-                this.trigger.apply(this, ["activate"].concat(Array.prototype.slice.call(arguments, 1)));
+                scope.activated = true;
+                scope.trigger.apply(this, ["activate"].concat(Array.prototype.slice.call(arguments, 1)));
             });
 
             Iframe.addEventListener(Iframe.IFRAME_WIDGET_DEACTIVATE, function () {
-                this.activated = false;
-                this.trigger.apply(this, ["deactivate"].concat(Array.prototype.slice.call(arguments, 1)));
+                scope.activated = false;
+                scope.trigger.apply(this, ["deactivate"].concat(Array.prototype.slice.call(arguments, 1)));
             });*/
 
             $(window).on("resize", function () {
@@ -48,10 +48,17 @@ define(["jquery", "util/QueryParameters", "lib/lucid"/*, "iframeapi"*/],
         // Mix-in event handling functionality.
         LucidJS.emitter(AbstractWidget.prototype);
 
+        /**
+         * Make the widget visible.
+         */
         AbstractWidget.prototype.show = function () {
+            // Use visibility rather than display so that the widget retains its size while hidden.
             this.element.css("visibility", "visible");
         };
 
+        /**
+         * Hide the widget.
+         */
         AbstractWidget.prototype.hide = function () {
             this.element.css("visibility", "hidden");
         };

@@ -5,6 +5,8 @@ define(["jquery", "widget/AbstractWidget"],
 
         /**
          * Widget that slides in from offscreen, ending next to the opposite edge.
+         * 
+         * Uses translate3d to take advantage of hardware acceleration.
          *
          * @author Bo Gotthardt
          * @constructor
@@ -17,16 +19,18 @@ define(["jquery", "widget/AbstractWidget"],
 
             this.element.addClass("SlidingWidget");
 
-            var from = this.parameters.from;
+            var from = this.options.from;
             if (from) {
                 this.hide();
 
                 var scope = this;
 
                 this.on("activate", function () {
-                    scope._moveOutsideFrame();
+                    scope._positionOutsideFrame();
                     scope.show();
-                    scope._animateToOppositeEdge();
+                    scope._animateToOppositeEdge(scope.options.duration,
+                                                 scope.options.timingFunction,
+                                                 scope.options.delay);
                 });
 
                 this.on("deactivate", function () {
@@ -44,11 +48,16 @@ define(["jquery", "widget/AbstractWidget"],
         }
         SlidingWidget.prototype = Object.create(AbstractWidget.prototype);
 
-        SlidingWidget.prototype._moveOutsideFrame = function () {
+        /**
+         * Position the widget just offscreen so it is ready to slide in.
+         * 
+         * @private
+         */
+        SlidingWidget.prototype._positionOutsideFrame = function () {
             var x = 0,
                 y = 0;
 
-            switch (this.parameters.from) {
+            switch (this.options.from) {
             case "top":
                 y = -this.element.height();
                 break;
@@ -77,7 +86,7 @@ define(["jquery", "widget/AbstractWidget"],
             var x = 0,
                 y = 0;
 
-            switch (this.parameters.from) {
+            switch (this.options.from) {
             case "top":
                 y = $(window).height() - this.element.height();
                 break;

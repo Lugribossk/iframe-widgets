@@ -11,3 +11,18 @@ body {
     display: inline;
     white-space: nowrap;
 }
+
+.ImageWidget {
+    width: 100%;
+    height: 100%;
+}
+
+.ImageWidget img {
+    width: 100%;
+}
+
+.ImageWidget.windowIsWider img {
+    width: auto;
+    height: 100%;
+}
+

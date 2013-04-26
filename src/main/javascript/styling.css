@@ -1,0 +1,13 @@
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+.SlidingWidget {
+    position: absolute;
+}
+
+.TextWidget {
+    display: inline;
+    white-space: nowrap;
+}

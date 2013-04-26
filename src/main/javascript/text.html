@@ -4,15 +4,7 @@
         <title>Text Widget</title>
         <script src="require.config.js"></script>
         <script src="lib/require.js"></script>
-        <style type="text/css">
-            body {
-                margin: 0;
-                overflow: hidden;
-            }
-            .text-widget {
-                white-space: nowrap;
-            }
-        </style>
+        <link href="styling.css" rel="stylesheet">
         <script>
             var presets = {
                 "test": {
@@ -32,6 +24,12 @@
 
             require(["widget/TextWidget"], function (TextWidget) {
                 var widget = new TextWidget(null, presets);
+
+                window.widget = widget;
+
+                setTimeout(function () {
+                    widget.trigger("activate");
+                }, 500);
             });
         </script>
     </head>

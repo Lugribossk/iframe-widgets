@@ -1,11 +1,12 @@
 /*global window*/
-define(["jquery", "widget/SlidingWidget", "util/WebFontLoader", "util/Logger"],
-    function ($, SlidingWidget, WebFontLoader, Logger) {
+define(["jquery", "widget/SlidingWidget", "util/WebFontLoader", "util/Logger", "util/Promise"],
+    function ($, SlidingWidget, WebFontLoader, Logger, Promise) {
         "use strict";
         var log = new Logger("TextWidget");
 
         /**
          * Widget for displaying text.
+         * Automatically sized to match the widow size.
          *
          * @author Bo Gotthardt
          * @constructor
@@ -24,7 +25,7 @@ define(["jquery", "widget/SlidingWidget", "util/WebFontLoader", "util/Logger"],
             });
 
             var text = this.options.text.replace("\n", "<br/>");
-            this.element.text(text)
+            this.element.html(text)
                 .addClass("TextWidget");
 
             var clazz = this.options["class"];
@@ -32,18 +33,7 @@ define(["jquery", "widget/SlidingWidget", "util/WebFontLoader", "util/Logger"],
                 this.element.addClass(clazz);
             }
 
-            var fontName = this.options["font-family"];
-            if (fontName) {
-                WebFontLoader.loadGoogle(fontName)
-                    .done(function () {
-                        if (this.activated) {
-                            log.warn("Web font finished loading after widget activation.");
-                        }
-                        scope._matchTextSizeToWindow();
-                    });
-            } else {
-                this._matchTextSizeToWindow();
-            }
+            this._loadFonts();
 
             this.on("resize", function () {
                 scope._matchTextSizeToWindow();
@@ -51,6 +41,42 @@ define(["jquery", "widget/SlidingWidget", "util/WebFontLoader", "util/Logger"],
         }
         TextWidget.prototype = Object.create(SlidingWidget.prototype);
 
+        /**
+         * Load any external fonts required.
+         *
+         * @returns {Promise} A promise for all the fonts having loaded.
+         * @private
+         */
+        TextWidget.prototype._loadFonts = function () {
+            var scope = this,
+                waitingOnFonts = [];
+
+            if (this.options.googleFont) {
+                var fontName = this.options["font-family"];
+                waitingOnFonts.push(WebFontLoader.loadGoogle(fontName));
+            }
+
+            if (this.options.fontAwesome) {
+                waitingOnFonts.push(WebFontLoader.loadFontAwesome());
+            }
+
+            if (this.options.typekitId) {
+                waitingOnFonts.push(WebFontLoader.loadTypekit(this.options.typekitId));
+            }
+
+            return Promise.all(waitingOnFonts)
+                .done(function () {
+                    if (this.activated) {
+                        log.warn("Web fonts finished loading after widget activation.");
+                    }
+                    scope._matchTextSizeToWindow();
+                });
+        };
+
+        /**
+         * Resize the text so it fills the window.
+         * @private
+         */
         TextWidget.prototype._matchTextSizeToWindow = function () {
             var win = $(window);
             // There's no way to scale some text to fit in a box with CSS.
@@ -64,6 +90,10 @@ define(["jquery", "widget/SlidingWidget", "util/WebFontLoader", "util/Logger"],
             this.setFontSize(size - 1);
         };
 
+        /**
+         * Set the font size, as a number of pixels.
+         * @param {Number} size
+         */
         TextWidget.prototype.setFontSize = function (size) {
             this.element.css({"font-size": size + "px"});
         };

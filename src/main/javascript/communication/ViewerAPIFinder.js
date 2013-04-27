@@ -43,7 +43,7 @@ define(["util/Logger"],
                 return frame.com.zmags.ps.require("viewer").viewerAPI;
             }
 
-            // Try all the top-level variables...
+            // Try all the top-level variables. Yes this is a bit hacky...
             for (prop in frame) {
                 if (frame.hasOwnProperty(prop)) {
                     if (isViewerAPIObject(prop)) {

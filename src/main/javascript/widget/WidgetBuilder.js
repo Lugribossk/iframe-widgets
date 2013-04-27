@@ -55,7 +55,9 @@ define(["jquery", "util/QueryParameters", "util/Logger"],
                 options = this.presets[parameters.preset];
             }
 
-            $.extend(options, parameters);
+            Object.keys(parameters).forEach(function (parameter) {
+                options[parameter] = parameters[parameter];
+            });
 
             return getWidgetConstructor(options.type)
                 .then(function (Widget) {

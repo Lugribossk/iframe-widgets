@@ -19,7 +19,7 @@ define(["jquery", "webfont"],
 
 
         /**
-         * Utility class for loading webfonts via Google's API.
+         * Utility class for loading web fonts.
          *
          * @author Bo Gotthardt
          *
@@ -42,6 +42,18 @@ define(["jquery", "webfont"],
                     id: id
                 }
             });
+        };
+
+        WebFontLoader.loadFontAwesome = function () {
+            var deferred = new $.Deferred();
+
+            $("<link href='//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css' rel='stylesheet'>")
+                .on("load", function () {
+                    deferred.resolve();
+                })
+                .appendTo("head");
+
+            return deferred;
         };
 
         return WebFontLoader;

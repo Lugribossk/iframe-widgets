@@ -1,6 +1,3 @@
-/**
- * RequireJS module setup.
- */
 require.config({
     paths: {
         jquery: "http://code.jquery.com/jquery-2.0.0.min",

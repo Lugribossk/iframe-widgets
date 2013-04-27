@@ -14,7 +14,7 @@ module.exports = function (grunt) {
                 vars: true,
                 nomen: true,
                 todo: true,
-                predef: ["define"]
+                predef: ["define", "require"]
             },
             options: {
                 jslintXml: "target/jslint.xml",
@@ -33,7 +33,7 @@ module.exports = function (grunt) {
             },
             compile: {
                 options: {
-                    name: "widget",
+                    name: "main",
                     out: "target/widget.min.js",
                     deps: ["lib/require",
                            "require.config.js",

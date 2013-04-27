@@ -1,6 +1,6 @@
 /*global setTimeout, window */
-define(["jquery", "widget/AbstractWidget"],
-    function ($, AbstractWidget) {
+define(["jquery", "widget/AbstractWidget", "util/Browser"],
+    function ($, AbstractWidget, Browser) {
         "use strict";
 
         /**
@@ -77,6 +77,14 @@ define(["jquery", "widget/AbstractWidget"],
             });
         };
 
+        /**
+         * Animate the widget moving to the opposite edge of the window.
+         *
+         * @param {String} [duration=1s] The animation duration as a CSS string, e.g. "1s".
+         * @param {String} [timingFunction=ease] The animation timing function as a CSS string, e.g. "ease".
+         * @param {String} [delay=0] The animation start delay as a CSS string, e.g. "1s".
+         * @private
+         */
         SlidingWidget.prototype._animateToOppositeEdge = function (duration, timingFunction, delay) {
             duration = duration || "1s";
             timingFunction = timingFunction || "ease";
@@ -98,8 +106,7 @@ define(["jquery", "widget/AbstractWidget"],
             var scope = this;
             setTimeout(function () {
                 scope.element.css({
-                    // TODO Change to not be Webkit-specific
-                    transition: "-webkit-transform " + duration + " " + timingFunction + " " + delay,
+                    transition: Browser.getCSSPrefix() + "transform " + duration + " " + timingFunction + " " + delay,
                     transform: "translate3d(" + x + "px, " + y + "px, 0)"
                 });
             }, 0);

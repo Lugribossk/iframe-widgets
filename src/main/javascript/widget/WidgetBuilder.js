@@ -1,3 +1,4 @@
+/*global window*/
 define(["jquery", "util/QueryParameters", "util/Logger"],
     function ($, QueryParameters, Logger) {
         "use strict";
@@ -61,7 +62,16 @@ define(["jquery", "util/QueryParameters", "util/Logger"],
 
             return getWidgetConstructor(options.type)
                 .then(function (Widget) {
-                    return new Widget(options);
+                    var widget = new Widget(options);
+
+                    // If the page has been opened directly we will never get the activate event, so trigger it manually.
+                    if (window.parent === window.top || parameters.activate) {
+                        window.setTimeout(function () {
+                            widget.trigger("activate");
+                        }, 1000);
+                    }
+
+                    return widget;
                 });
         };
 

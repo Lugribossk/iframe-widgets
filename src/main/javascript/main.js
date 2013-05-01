@@ -5,8 +5,6 @@ require(["widget/WidgetBuilder"],
 
         new WidgetBuilder(window.presets).fromQueryParameters()
             .done(function (widget) {
-                window.setTimeout(function () {
-                    widget.trigger("activate");
-                }, 500);
+                window.widget = widget;
             });
     });

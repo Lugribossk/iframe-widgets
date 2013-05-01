@@ -1,5 +1,5 @@
 /*global window*/
-define(["jquery", "util/QueryParameters", "lib/lucid"/*, "iframeapi"*/],
+define(["jquery", "util/QueryParameters", "lib/lucid", "iframeapi"],
     function ($, QueryParameters, LucidJS, Iframe) {
         "use strict";
 
@@ -9,6 +9,7 @@ define(["jquery", "util/QueryParameters", "lib/lucid"/*, "iframeapi"*/],
          * @event activate When the widget is visible to the user.
          * @event deactivate When the widget is no longer visible to the user.
          * @event resize When the window is resized.
+         * @event unload When the window is about to be destroyed.
          *
          * @author Bo Gotthardt
          * @constructor
@@ -24,18 +25,28 @@ define(["jquery", "util/QueryParameters", "lib/lucid"/*, "iframeapi"*/],
 
             this.activated = false;
 
-            /*Iframe.addEventListener(Iframe.IFRAME_WIDGET_ACTIVATE, function () {
-                scope.activated = true;
+            Iframe.addEventListener(Iframe.IFRAME_WIDGET_ACTIVATE, function () {
                 scope.trigger.apply(this, ["activate"].concat(Array.prototype.slice.call(arguments, 1)));
             });
 
             Iframe.addEventListener(Iframe.IFRAME_WIDGET_DEACTIVATE, function () {
-                scope.activated = false;
                 scope.trigger.apply(this, ["deactivate"].concat(Array.prototype.slice.call(arguments, 1)));
-            });*/
+            });
+
+            this.on("activated", function () {
+                scope.activated = true;
+            });
+
+            this.on("deactivated", function () {
+                scope.activated = false;
+            });
 
             $(window).on("resize", function () {
                 scope.trigger("resize");
+            });
+
+            $(window).on("beforeunload", function () {
+                scope.trigger("unload");
             });
         }
 

@@ -66,9 +66,9 @@ define(["jquery", "util/QueryParameters", "util/Logger"],
 
                     // If the page has been opened directly we will never get the activate event, so trigger it manually.
                     if (window.parent === window.top || parameters.activate) {
-                        window.setTimeout(function () {
-                            widget.trigger("activate");
-                        }, 1000);
+                        widget.initialized.done(function () {
+                            widget.activate();
+                        });
                     }
 
                     return widget;

@@ -25,11 +25,13 @@ define(["jquery", "widget/AbstractWidget", "util/Browser"],
                 var scope = this;
 
                 this.on("activate", function () {
-                    scope._positionOutsideFrame();
-                    scope.show();
-                    scope._animateToOppositeEdge(scope.options.duration,
-                                                 scope.options.timingFunction,
-                                                 scope.options.delay);
+                    scope.initialized.done(function () {
+                        scope._positionOutsideFrame();
+                        scope.show();
+                        scope._animateToOppositeEdge(scope.options.duration,
+                                                     scope.options.timingFunction,
+                                                     scope.options.delay);
+                    });
                 });
 
                 this.on("deactivate", function () {

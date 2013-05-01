@@ -29,6 +29,7 @@ define(["jquery", "widget/SlidingWidget"],
 
             this.image.on("load", function () {
                 scope._setScalingDimension();
+                scope.initialized.resolve();
             });
         }
         ImageWidget.prototype = Object.create(SlidingWidget.prototype);

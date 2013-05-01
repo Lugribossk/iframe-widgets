@@ -23,22 +23,25 @@ define(["jquery", "util/QueryParameters", "lib/lucid", "iframeapi"],
             this.element = $("<div></div>")
                 .appendTo("body");
 
+            /**
+             * Whether the widget is currently activated.
+             * @type {Boolean}
+             */
             this.activated = false;
 
-            Iframe.addEventListener(Iframe.IFRAME_WIDGET_ACTIVATE, function () {
-                scope.trigger.apply(this, ["activate"].concat(Array.prototype.slice.call(arguments, 1)));
+            /**
+             * A promise for the widget having finished initializing.
+             * Subclasses must resolve this when they are done initializing.
+             * @type {$.Deferred}
+             */
+            this.initialized = new $.Deferred();
+
+            Iframe.addEventListener(Iframe.IFRAME_WIDGET_ACTIVATE, function (event) {
+                scope.activate(event);
             });
 
-            Iframe.addEventListener(Iframe.IFRAME_WIDGET_DEACTIVATE, function () {
-                scope.trigger.apply(this, ["deactivate"].concat(Array.prototype.slice.call(arguments, 1)));
-            });
-
-            this.on("activated", function () {
-                scope.activated = true;
-            });
-
-            this.on("deactivated", function () {
-                scope.activated = false;
+            Iframe.addEventListener(Iframe.IFRAME_WIDGET_DEACTIVATE, function (event) {
+                scope.deactivate(event);
             });
 
             $(window).on("resize", function () {
@@ -52,6 +55,24 @@ define(["jquery", "util/QueryParameters", "lib/lucid", "iframeapi"],
 
         // Mix-in event handling functionality.
         LucidJS.emitter(AbstractWidget.prototype);
+
+        /**
+         * Activate the widget. Is called automatically by the Iframe API.
+         * @param event
+         */
+        AbstractWidget.prototype.activate = function (event) {
+            this.activated = true;
+            this.trigger("activate", event);
+        };
+
+        /**
+         * Dectivate the widget. Is called automatically by the Iframe API.
+         * @param event
+         */
+        AbstractWidget.prototype.deactivate = function (event) {
+            this.activated = false;
+            this.trigger("deactivate", event);
+        };
 
         /**
          * Make the widget visible.

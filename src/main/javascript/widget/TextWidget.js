@@ -33,11 +33,11 @@ define(["jquery", "widget/SlidingWidget", "util/WebFontLoader", "util/Logger", "
                 this.element.addClass(clazz);
             }
 
-            this._loadFonts();
-
             this.on("resize", function () {
                 scope._matchTextSizeToWindow();
             });
+
+            this._loadFonts().then(this.initialized.resolve, this.initialized.reject);
         }
         TextWidget.prototype = Object.create(SlidingWidget.prototype);
 
@@ -65,10 +65,7 @@ define(["jquery", "widget/SlidingWidget", "util/WebFontLoader", "util/Logger", "
             }
 
             return Promise.all(waitingOnFonts)
-                .done(function () {
-                    if (this.activated) {
-                        log.warn("Web fonts finished loading after widget activation.");
-                    }
+                .then(function () {
                     scope._matchTextSizeToWindow();
                 });
         };

@@ -67,7 +67,7 @@ define(["util/Logger"],
             var obj = this.frame[name];
 
             log.assert(obj, "Viewer API object not found with name:", name);
-            log.assert(isViewerAPIObject(obj), name, "found, but does not appear to be a Viewer API object.")
+            log.assert(isViewerAPIObject(obj), name, "found, but does not appear to be a Viewer API object.");
 
             return obj;
         };

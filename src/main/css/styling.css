@@ -3,14 +3,20 @@ body {
     overflow: hidden;
 }
 
+
+
 .SlidingWidget {
     position: absolute;
 }
+
+
 
 .TextWidget {
     display: inline;
     white-space: nowrap;
 }
+
+
 
 .ImageWidget {
     width: 100%;
@@ -24,4 +30,47 @@ body {
 .ImageWidget.windowIsWider img {
     width: auto;
     height: 100%;
+}
+
+
+
+.CardFlipWidget {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    -webkit-perspective: 2000px;
+}
+
+.CardFlipWidget .card {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    -webkit-transform-style: preserve-3d;
+    -webkit-transition: -webkit-transform 1s;
+}
+
+.CardFlipWidget .side {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+}
+
+.CardFlipWidget .front {
+    background-color: indianred;
+}
+
+.CardFlipWidget .front img {
+    height: 100%;
+    width: 100%;
+}
+
+.CardFlipWidget .back {
+    background-color: lightblue;
+    -webkit-transform: rotateY(180deg);
+}
+
+.CardFlipWidget.flipped .card {
+    -webkit-transform: rotateY(180deg);
 }

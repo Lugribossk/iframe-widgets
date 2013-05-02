@@ -66,7 +66,7 @@ define(["jquery", "util/QueryParameters", "lib/lucid", "iframeapi"],
         };
 
         /**
-         * Dectivate the widget. Is called automatically by the Iframe API.
+         * Deactivate the widget. Is called automatically by the Iframe API.
          * @param event
          */
         AbstractWidget.prototype.deactivate = function (event) {

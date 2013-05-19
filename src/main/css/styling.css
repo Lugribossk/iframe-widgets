@@ -5,6 +5,16 @@ body {
 
 
 
+.BaseWidget {
+    visibility: visible;
+}
+
+.BaseWidget.hidden {
+    /* Use visibility rather than display so that the widget retains its size while hidden. */
+    visibility: hidden;
+}
+
+
 .AnimatedWidget {
     position: absolute;
 }
@@ -34,7 +44,7 @@ body {
 
 
 
-.CardFlipWidget {
+/*.CardFlipWidget {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -73,4 +83,4 @@ body {
 
 .CardFlipWidget.flipped .card {
     -webkit-transform: rotateY(180deg);
-}
+}*/

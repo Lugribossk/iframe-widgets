@@ -4,7 +4,6 @@ define(["util/Logger"],
         var log = new Logger("ViewerAPIFinder");
 
         function isViewerAPIObject(obj) {
-            // TODO obj instanceof this.frame.com.zmags.api.Viewer ?
             return obj.setPublicationID;
         }
 

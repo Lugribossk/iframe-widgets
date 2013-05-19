@@ -1,9 +1,9 @@
-define(["jquery", "widget/AbstractWidget"],
-    function ($, AbstractWidget) {
+define(["jquery", "widget/BaseWidget"],
+    function ($, BaseWidget) {
         "use strict";
 
         function CardFlipWidget(options) {
-            AbstractWidget.call(this, options);
+            BaseWidget.call(this, options);
             this.element.addClass("CardFlipWidget");
 
             var card = $("<div class='card'></div>")
@@ -34,7 +34,7 @@ define(["jquery", "widget/AbstractWidget"],
             });
 
         }
-        CardFlipWidget.prototype = Object.create(AbstractWidget.prototype);
+        CardFlipWidget.prototype = Object.create(BaseWidget.prototype);
 
         CardFlipWidget.prototype.flip = function () {
             this.element.toggleClass("flipped");

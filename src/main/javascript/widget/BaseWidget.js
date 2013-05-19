@@ -16,7 +16,7 @@ define(["jquery", "util/QueryParameters", "lib/lucid", "iframeapi"],
          *
          * @param {Object} options
          */
-        function AbstractWidget(options) {
+        function BaseWidget(options) {
             var scope = this;
             this.options = options;
 
@@ -54,13 +54,13 @@ define(["jquery", "util/QueryParameters", "lib/lucid", "iframeapi"],
         }
 
         // Mix-in event handling functionality.
-        LucidJS.emitter(AbstractWidget.prototype);
+        LucidJS.emitter(BaseWidget.prototype);
 
         /**
          * Activate the widget. Is called automatically by the Iframe API.
          * @param event
          */
-        AbstractWidget.prototype.activate = function (event) {
+        BaseWidget.prototype.activate = function (event) {
             this.activated = true;
             this.trigger("activate", event);
         };
@@ -69,7 +69,7 @@ define(["jquery", "util/QueryParameters", "lib/lucid", "iframeapi"],
          * Deactivate the widget. Is called automatically by the Iframe API.
          * @param event
          */
-        AbstractWidget.prototype.deactivate = function (event) {
+        BaseWidget.prototype.deactivate = function (event) {
             this.activated = false;
             this.trigger("deactivate", event);
         };
@@ -77,7 +77,7 @@ define(["jquery", "util/QueryParameters", "lib/lucid", "iframeapi"],
         /**
          * Make the widget visible.
          */
-        AbstractWidget.prototype.show = function () {
+        BaseWidget.prototype.show = function () {
             // Use visibility rather than display so that the widget retains its size while hidden.
             this.element.css("visibility", "visible");
         };
@@ -85,9 +85,9 @@ define(["jquery", "util/QueryParameters", "lib/lucid", "iframeapi"],
         /**
          * Hide the widget.
          */
-        AbstractWidget.prototype.hide = function () {
+        BaseWidget.prototype.hide = function () {
             this.element.css("visibility", "hidden");
         };
 
-        return AbstractWidget;
+        return BaseWidget;
     });

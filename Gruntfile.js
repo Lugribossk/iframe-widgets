@@ -8,7 +8,8 @@ module.exports = function (grunt) {
                     "src/test/javascript/**/*.js",
                     "Gruntfile.js",
                     "package.json"],
-            exclude: ["src/main/javascript/lib/*.js"],
+            exclude: ["src/main/javascript/lib/*.js",
+                      "src/main/javascript/full-page-video/**/*.js"],
             directives: {
                 plusplus: true,
                 vars: true,
@@ -38,9 +39,9 @@ module.exports = function (grunt) {
                     deps: ["lib/require",
                            "require.config.js",
                            "widget/TextWidget",
-                           "widget/ImageWidget",
+                           "widget/ImageWidget"/*,
                            "widget/DebugWidget",
-                           "widget/CardFlipWidget"]
+                           "widget/CardFlipWidget"*/]
                 }
             }
         },
@@ -69,5 +70,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-cssmin");
     grunt.loadNpmTasks('grunt-contrib-copy');
 
-    grunt.registerTask("default", [/*"jslint", */"requirejs", "cssmin", "copy"]);
+    grunt.registerTask("default", ["jslint", "requirejs", "cssmin", "copy"]);
 };

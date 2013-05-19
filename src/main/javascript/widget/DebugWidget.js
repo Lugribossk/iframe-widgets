@@ -1,5 +1,5 @@
-define(["jquery", "widget/AbstractWidget"],
-    function ($, AbstractWidget) {
+define(["jquery", "widget/BaseWidget"],
+    function ($, BaseWidget) {
         "use strict";
 
         function showMessage(text) {
@@ -11,7 +11,7 @@ define(["jquery", "widget/AbstractWidget"],
         }
 
         function DebugWidget(options) {
-            AbstractWidget.call(this, options);
+            BaseWidget.call(this, options);
 
             $("body").css("background-color", "lightblue");
 
@@ -27,7 +27,7 @@ define(["jquery", "widget/AbstractWidget"],
 
             this.initialized.resolve();
         }
-        DebugWidget.prototype = Object.create(AbstractWidget.prototype);
+        DebugWidget.prototype = Object.create(BaseWidget.prototype);
 
         return DebugWidget;
     });

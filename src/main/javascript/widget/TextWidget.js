@@ -1,6 +1,6 @@
 /*global window*/
-define(["jquery", "widget/SlidingWidget", "util/WebFontLoader", "util/Logger", "util/Promise"],
-    function ($, SlidingWidget, WebFontLoader, Logger, Promise) {
+define(["jquery", "widget/AnimatedWidget", "util/WebFontLoader", "util/Logger", "util/Promise"],
+    function ($, AnimatedWidget, WebFontLoader, Logger, Promise) {
         "use strict";
         var log = new Logger("TextWidget");
 
@@ -14,7 +14,7 @@ define(["jquery", "widget/SlidingWidget", "util/WebFontLoader", "util/Logger", "
          * @param {Object} options
          */
         function TextWidget(options) {
-            SlidingWidget.call(this, options);
+            AnimatedWidget.call(this, options);
 
             var scope = this;
 
@@ -39,7 +39,7 @@ define(["jquery", "widget/SlidingWidget", "util/WebFontLoader", "util/Logger", "
 
             this._loadFonts().then(this.initialized.resolve, this.initialized.reject);
         }
-        TextWidget.prototype = Object.create(SlidingWidget.prototype);
+        TextWidget.prototype = Object.create(AnimatedWidget.prototype);
 
         /**
          * Load any external fonts required.

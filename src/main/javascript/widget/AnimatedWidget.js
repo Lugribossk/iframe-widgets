@@ -1,6 +1,6 @@
 /*global setTimeout, window */
-define(["jquery", "widget/AbstractWidget", "util/Browser"],
-    function ($, AbstractWidget, Browser) {
+define(["jquery", "widget/BaseWidget", "util/Browser"],
+    function ($, BaseWidget, Browser) {
         "use strict";
 
         /**
@@ -13,10 +13,10 @@ define(["jquery", "widget/AbstractWidget", "util/Browser"],
          *
          * @param {Object} options
          */
-        function SlidingWidget(options) {
-            AbstractWidget.call(this, options);
+        function AnimatedWidget(options) {
+            BaseWidget.call(this, options);
 
-            this.element.addClass("SlidingWidget");
+            this.element.addClass("AnimatedWidget");
 
             var from = this.options.from;
             if (from) {
@@ -47,14 +47,14 @@ define(["jquery", "widget/AbstractWidget", "util/Browser"],
 //                });
             }
         }
-        SlidingWidget.prototype = Object.create(AbstractWidget.prototype);
+        AnimatedWidget.prototype = Object.create(BaseWidget.prototype);
 
         /**
          * Position the widget just offscreen so it is ready to slide in.
          * 
          * @private
          */
-        SlidingWidget.prototype._positionOutsideFrame = function () {
+        AnimatedWidget.prototype._positionOutsideFrame = function () {
             var x = 0,
                 y = 0;
 
@@ -87,7 +87,7 @@ define(["jquery", "widget/AbstractWidget", "util/Browser"],
          * @param {String} [delay=0] The animation start delay as a CSS string, e.g. "1s".
          * @private
          */
-        SlidingWidget.prototype._animateToOppositeEdge = function (duration, timingFunction, delay) {
+        AnimatedWidget.prototype._animateToOppositeEdge = function (duration, timingFunction, delay) {
             duration = duration || "1s";
             timingFunction = timingFunction || "ease";
             delay = delay || "0";
@@ -114,5 +114,5 @@ define(["jquery", "widget/AbstractWidget", "util/Browser"],
             }, 0);
         };
 
-        return SlidingWidget;
+        return AnimatedWidget;
     });

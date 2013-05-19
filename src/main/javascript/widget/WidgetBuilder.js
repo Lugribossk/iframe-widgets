@@ -14,12 +14,12 @@ define(["jquery", "util/QueryParameters", "util/Logger"],
             case "image":
                 widgetClass = "widget/ImageWidget";
                 break;
-            case "debug":
-                widgetClass = "widget/DebugWidget";
-                break;
-            case "cardflip":
-                widgetClass = "widget/CardFlipWidget";
-                break;
+//            case "debug":
+//                widgetClass = "widget/DebugWidget";
+//                break;
+//            case "cardflip":
+//                widgetClass = "widget/CardFlipWidget";
+//                break;
             // If adding a new class here, also add it to the Gruntfile under requirejs.compile.options.deps .
             default:
                 log.error("Unknown widget type:", type);

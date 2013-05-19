@@ -1,6 +1,6 @@
 /*global window*/
-define(["jquery", "widget/SlidingWidget"],
-    function ($, SlidingWidget) {
+define(["jquery", "widget/AnimatedWidget"],
+    function ($, AnimatedWidget) {
         "use strict";
 
         /**
@@ -15,7 +15,7 @@ define(["jquery", "widget/SlidingWidget"],
          * @param options
          */
         function ImageWidget(options) {
-            SlidingWidget.call(this, options);
+            AnimatedWidget.call(this, options);
 
             this.element.addClass("ImageWidget");
 
@@ -32,7 +32,7 @@ define(["jquery", "widget/SlidingWidget"],
                 scope.initialized.resolve();
             });
         }
-        ImageWidget.prototype = Object.create(SlidingWidget.prototype);
+        ImageWidget.prototype = Object.create(AnimatedWidget.prototype);
 
         /**
          * Set the image to scale to either height or width, so that it is always as large as possible without being larger than the window.

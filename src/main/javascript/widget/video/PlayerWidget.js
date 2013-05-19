@@ -1,11 +1,11 @@
-define(["widget/AbstractWidget", "util/QueryParameters"],
-    function (AbstractWidget) {
+define(["widget/BaseWidget", "util/QueryParameters"],
+    function (BaseWidget) {
         "use strict";
 
         function PlayerWidget() {
-            AbstractWidget.call(this);
+            BaseWidget.call(this);
         }
-        PlayerWidget.prototype = Object.create(AbstractWidget.prototype);
+        PlayerWidget.prototype = Object.create(BaseWidget.prototype);
 
         return PlayerWidget;
     });

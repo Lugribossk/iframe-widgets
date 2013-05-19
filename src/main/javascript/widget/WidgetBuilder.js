@@ -59,8 +59,12 @@ define(["jquery", "util/QueryParameters", "util/Logger", "util/Promise"],
             var parameters = new QueryParameters();
             var options = {};
 
-            if (this.presets && parameters.preset && this.presets[parameters.preset]) {
-                options = this.presets[parameters.preset];
+            if (parameters.preset) {
+                if (this.presets && this.presets[parameters.preset]) {
+                    options = this.presets[parameters.preset];
+                } else {
+                    log.warn("Preset not found:", parameters.preset);
+                }
             }
 
             Object.keys(parameters).forEach(function (parameter) {

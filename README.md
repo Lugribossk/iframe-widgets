@@ -5,8 +5,8 @@ Reusable Zmags Iframe widgets with various configuration options.
 ## Usage
 
 1. Point the iframe widget URL to `widget.html` (either located on your own server or somewhere else).
-1. Add query parameters to specify options. Note that some characters such as spaces need to be escaped when used in query parameters.
-1. View to see the widget in action. It can also be previewd by opening the URL to `widget.html` directly.
+1. Add query parameters to specify options. Note that some characters such as spaces need to be escaped when used in query parameters. E.g. http://lugribossk.github.io/iframe-widgets/target/widget.html?type=text&text=Hello%20world .
+1. View to see the widget in action. It can also be previewed by opening the URL to `widget.html` directly.
 
 
 ## Options

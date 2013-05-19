@@ -16,12 +16,12 @@ module.exports = function (grunt) {
                 nomen: true,
                 todo: true,
                 predef: ["define", "require"]
-            },
+            }/*,
             options: {
                 jslintXml: "target/jslint.xml",
                 junit: "target/jslint-junit.xml",
                 checkstyle: "target/jslint-checkstyle.xml"
-            }
+            }*/
         },
         requirejs: {
             options: {

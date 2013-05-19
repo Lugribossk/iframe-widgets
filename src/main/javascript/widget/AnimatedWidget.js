@@ -90,7 +90,7 @@ define(["jquery", "widget/BaseWidget", "util/Browser"],
         AnimatedWidget.prototype._animateToOppositeEdge = function (duration, timingFunction, delay) {
             duration = duration || "1s";
             timingFunction = timingFunction || "ease";
-            delay = delay || "0";
+            delay = delay || "500ms";
 
             var x = 0,
                 y = 0;

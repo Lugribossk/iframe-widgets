@@ -1,6 +1,6 @@
 /*global window*/
-define(["jquery", "util/QueryParameters", "util/Logger"],
-    function ($, QueryParameters, Logger) {
+define(["jquery", "util/QueryParameters", "util/Logger", "util/Promise"],
+    function ($, QueryParameters, Logger, Promise) {
         "use strict";
         var log = new Logger("WidgetBuilder");
 
@@ -23,6 +23,7 @@ define(["jquery", "util/QueryParameters", "util/Logger"],
             // If adding a new class here, also add it to the Gruntfile under requirejs.compile.options.deps .
             default:
                 log.error("Unknown widget type:", type);
+                return Promise.rejected();
             }
 
             // Dynamically require the widget class needed.

@@ -1,23 +1,25 @@
 /*global window*/
-define(["jquery"],
-    function ($) {
+define(["jquery", "util/Logger"],
+    function ($, Logger) {
         "use strict";
+        var log = new Logger("Browser");
 
         function findCSSPrefix() {
             var style = window.getComputedStyle($("body")[0], null);
 
-            if (style.WebkitTransition) {
+            if (style.WebkitTransition !== undefined) {
                 return "-webkit-";
             }
-            if (style.MozTransition) {
+            if (style.MozTransition !== undefined) {
                 return "-moz-";
             }
-            if (style.msTransition) {
+            if (style.msTransition !== undefined) {
                 return "-ms-";
             }
-            if (style.OTransition) {
+            if (style.OTransition !== undefined) {
                 return "-o-";
             }
+            log.error("Unable to determine browser CSS prefix.");
             return "";
         }
 
@@ -54,6 +56,13 @@ define(["jquery"],
             return window.location.protocol === "https:";
         };
 
+        /**
+         * Get the CSS vendor prefix used by this browser.
+         *
+         * @static
+         *
+         * @return {String}
+         */
         Browser.getCSSPrefix = function () {
             return prefix;
         };

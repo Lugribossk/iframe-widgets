@@ -38,13 +38,12 @@ define(["jquery", "widget/BaseWidget", "util/Browser"],
                     scope.hide();
                 });
 
-                // TODO ???
-//                this.on("resize", function () {
-//                    if (scope.active) {
-//                        // Reset the animation target position.
-//                        scope._animateToOppositeEdge("0");
-//                    }
-//                });
+                this.on("resize", function () {
+                    if (scope.active) {
+                        // Reset the animation target position.
+                        scope._animateToOppositeEdge("0", "ease", "0");
+                    }
+                });
             }
         }
         AnimatedWidget.prototype = Object.create(BaseWidget.prototype);

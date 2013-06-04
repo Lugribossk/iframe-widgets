@@ -53,7 +53,11 @@ define(["jquery", "widget/AnimatedWidget", "util/WebFontLoader", "util/Logger", 
 
             if (this.options.googleFont) {
                 var fontName = this.options["font-family"];
-                waitingOnFonts.push(WebFontLoader.loadGoogle(fontName));
+                if (fontName) {
+                    waitingOnFonts.push(WebFontLoader.loadGoogle(fontName));
+                } else {
+                    log.warn("Google Fonts has been enabled, but the font familiy to load has not been specified.");
+                }
             }
 
             if (this.options.fontAwesome) {

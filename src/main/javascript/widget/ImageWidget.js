@@ -19,8 +19,8 @@ define(["jquery", "widget/AnimatedWidget"],
 
             this.element.addClass("ImageWidget");
 
-            this.image = $("<img src='" + this.options.src + "'/>").
-                appendTo(this.element);
+            this.image = $("<img src='" + this.options.src + "'/>")
+                .appendTo(this.element);
 
             var scope = this;
             this.on("resize", function () {

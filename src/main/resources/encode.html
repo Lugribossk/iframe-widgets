@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Text encoding</title>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    </head>
+    <body>
+        <input id="input" type="text" autofocus placeholder="Plain text" style="width: 100%;">
+        <br/>
+        <input id="encoded" type="text" readonly placeholder="URL encoded" style="width: 100%;">
+        <script>
+            var input = $("#input"),
+                encoded = $("#encoded");
+
+            input.on("keyup", function () {
+                encoded.val(encodeURIComponent(input.val()));
+            });
+
+            encoded.on("click", function () {
+                encoded.select();
+            });
+        </script>
+    </body>
+</html>

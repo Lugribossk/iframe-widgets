@@ -5,7 +5,7 @@ Reusable Zmags Iframe widgets with various configuration options.
 ## Usage
 
 1. Point the iframe widget URL to `widget.html` (either located on your own server or somewhere else).
-1. Add query parameters to specify options. Note that some characters such as spaces must be [encoded](http://lugribossk.github.io/iframe-widgets/resources/encode.html) when used in query parameters. E.g. http://lugribossk.github.io/iframe-widgets/target/widget.html?type=text&text=Hello%20world .
+1. Add query parameters to specify options. Note that some characters such as spaces must be [encoded](http://lugribossk.github.io/iframe-widgets/src/main/resources/encode.html) when used in query parameters. E.g. http://lugribossk.github.io/iframe-widgets/target/widget.html?type=text&text=Hello%20world .
 1. View to see the widget in action. It can also be previewd by opening the URL to `widget.html` directly.
 
 
@@ -37,7 +37,7 @@ Displays an image or SVG. It will be scaled to fill the widget, without distorti
 
 Parameter name|Description|Default
 ---|---|---
-src|The URL to the image or SVG file. Must be [encoded](http://lugribossk.github.io/iframe-widgets/resources/encode.html). |Value required.
+src|The URL to the image or SVG file. Must be [encoded](http://lugribossk.github.io/iframe-widgets/src/main/resources/encode.html). |Value required.
 
 ## Building
 Build with Grunt, then upload the files in `target` somewhere.

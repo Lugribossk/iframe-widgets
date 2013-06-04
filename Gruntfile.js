@@ -3,25 +3,18 @@ module.exports = function (grunt) {
     "use strict";
 
     grunt.initConfig({
-        jslint: {
-            files: ["src/main/javascript/**/*.js",
-                    "src/test/javascript/**/*.js",
-                    "Gruntfile.js",
-                    "package.json"],
-            exclude: ["src/main/javascript/lib/*.js",
-                      "src/main/javascript/full-page-video/**/*.js"],
-            directives: {
-                plusplus: true,
-                vars: true,
-                nomen: true,
-                todo: true,
-                predef: ["define", "require"]
-            }/*,
+        jshint: {
             options: {
-                jslintXml: "target/jslint.xml",
-                junit: "target/jslint-junit.xml",
-                checkstyle: "target/jslint-checkstyle.xml"
-            }*/
+                jshintrc: ".jshintrc",
+                ignores: ["src/main/javascript/lib/*.js",
+                          "src/main/javascript/full-page-video/**/*.js"]
+            },
+            all: {
+                src: ["src/main/javascript/**/*.js",
+                      "src/test/javascript/**/*.js",
+                      "Gruntfile.js",
+                      "package.json"]
+            }
         },
         requirejs: {
             options: {
@@ -80,11 +73,11 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.loadNpmTasks("grunt-jslint");
+    grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-requirejs");
     grunt.loadNpmTasks("grunt-contrib-cssmin");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-string-replace");
 
-    grunt.registerTask("default", ["jslint", "requirejs:dist", "cssmin:dist", "string-replace:dist"]);
+    grunt.registerTask("default", ["jshint", "requirejs:dist", "cssmin:dist", "string-replace:dist"]);
 };

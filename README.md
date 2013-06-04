@@ -26,7 +26,7 @@ Displays the specified text. The text will be scaled to fill the widget, without
 
 Parameter name|Description|Default
 ---|---|---
-text|The text to display. Can contain simple markup (e.g. `<br/>` for linebreaks).|Value required.
+text|The text to display. Can contain simple markup (e.g. `<br/>` for linebreaks). Remember to [encode](http://lugribossk.github.io/iframe-widgets/src/main/resources/encode.html) the text or it may not work if it contains special characters.|Value required.
 font-family<br/> color<br/> text-shadow<br/> opacity<br/> letter-spacing<br/> line-height|Set the value to use for these CSS properties.|Browser default
 googleFont|Set to true to load the font family from [Google Fonts](https://www.google.com/fonts).|False
 fontAwesome|Set to true to load [Font Awesome](http://fortawesome.github.io/Font-Awesome/).|False
@@ -39,7 +39,13 @@ Parameter name|Description|Default
 ---|---|---
 src|The URL to the image or SVG file. Must be [encoded](http://lugribossk.github.io/iframe-widgets/src/main/resources/encode.html). |Value required.
 
+## Browser support
+
+Only tested in Chrome on Windows so far.
+Should hopefully work in all modern (IE 9+) browsers.
+
 ## Building
-Build with Grunt, then upload the files in `target` somewhere.
+Build with Grunt, then upload the files in `target` on your own server.
+
 
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/ee572733c662aee473ea4e83442d5ed1 "githalytics.com")](http://githalytics.com/Lugribossk/iframe-widgets)

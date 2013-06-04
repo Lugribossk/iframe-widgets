@@ -33,8 +33,7 @@ module.exports = function (grunt) {
                            "require.config.js",
                            "widget/TextWidget",
                            "widget/ImageWidget"/*,
-                           "widget/DebugWidget",
-                           "widget/CardFlipWidget"*/]
+                           "widget/DebugWidget"*/]
                 }
             }
         },

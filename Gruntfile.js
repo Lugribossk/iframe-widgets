@@ -27,8 +27,8 @@ module.exports = function (grunt) {
             },
             widget: {
                 options: {
-                    name: "main-widget",
-                    out: "target/widget/widget.min.js",
+                    name: "widget",
+                    out: "target/widget/widget.js",
                     deps: ["lib/require",
                            "require.config.js",
                            "widget/TextWidget",
@@ -37,8 +37,8 @@ module.exports = function (grunt) {
             },
             configure: {
                 options: {
-                    name: "main-configure",
-                    out: "target/configure/configure.min.js",
+                    name: "configure",
+                    out: "target/configure/configure.js",
                     deps: ["lib/require",
                            "require.config.js"]
                 }
@@ -52,9 +52,6 @@ module.exports = function (grunt) {
                 }, {
                     pattern: /\s*<script src="require\.config\.js"><\/script>/,
                     replacement: ""
-                }, {
-                    pattern: /src="main-([^.]*).js"/,
-                    replacement: "src=\"$1.min.js\""
                 }]
             },
             widget: {

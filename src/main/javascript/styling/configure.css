@@ -1,0 +1,24 @@
+#form {
+    width: 30%;
+    float: left;
+}
+
+#preview {
+    width: 70%;
+    float: left;
+}
+
+#preview iframe {
+    width: 100%;
+    height: 500px;
+    outline: 1px solid lightgrey;
+}
+
+#url {
+    width: 95%;
+}
+
+input[readonly],
+textarea[readonly] {
+    cursor: auto;
+}

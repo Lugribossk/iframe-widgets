@@ -1,5 +1,5 @@
 /*global window*/
-define(["jquery", "util/QueryParameters", "lib/lucid", "iframeapi"],
+define(["jquery", "util/QueryParameters", "lib/lucid", "iframeapi", "css!styling/widget"],
     function ($, QueryParameters, LucidJS, Iframe) {
         "use strict";
 

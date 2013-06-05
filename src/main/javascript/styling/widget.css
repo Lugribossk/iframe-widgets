@@ -33,16 +33,18 @@ body {
 
 
 
-.ImageWidget {
-    width: 100%;
-    height: 100%;
-}
-
+.ImageWidget,
 .ImageWidget img {
     width: 100%;
 }
 
+.ImageWidget.windowIsWider,
 .ImageWidget.windowIsWider img {
+    width: auto;
+    height: 100%;
+}
+
+.ImageWidget.windowIsWider {
     width: auto;
     height: 100%;
 }

@@ -6,7 +6,7 @@ module.exports = function (grunt) {
         jshint: {
             options: {
                 jshintrc: ".jshintrc",
-                ignores: ["src/main/javascript/lib/*.js",
+                ignores: ["src/main/javascript/lib/**/*.js",
                           "src/main/javascript/full-page-video/**/*.js"]
             },
             all: {
@@ -25,50 +25,70 @@ module.exports = function (grunt) {
                 preserveLicenseComments: false,
                 generateSourceMaps: true
             },
-            dist: {
+            widget: {
                 options: {
-                    name: "main",
-                    out: "target/widget.min.js",
+                    name: "main-widget",
+                    out: "target/widget/widget.min.js",
                     deps: ["lib/require",
                            "require.config.js",
                            "widget/TextWidget",
-                           "widget/ImageWidget"/*,
-                           "widget/DebugWidget"*/]
+                           "widget/ImageWidget"]
                 }
-            }
-        },
-        cssmin: {
-            options: {
-                report: "min"
             },
-            dist: {
-                files: {
-                    "target/widget.min.css": ["src/main/css/**/*.css"]
+            configure: {
+                options: {
+                    name: "main-configure",
+                    out: "target/configure/configure.min.js",
+                    deps: ["lib/require",
+                           "require.config.js"]
                 }
             }
         },
         "string-replace": {
-            dist: {
-                options: {
-                    replacements: [{
-                        pattern: "../css/styling.css",
-                        replacement: "widget.min.css"
-                    }, {
-                        pattern: /\s*<script src="lib\/require\.js"><\/script>\r\n/,
-                        replacement: ""
-                    }, {
-                        pattern: /\s*<script src="require\.config\.js"><\/script>/,
-                        replacement: ""
-                    }, {
-                        pattern: "src=\"main.js\"",
-                        replacement: "src=\"widget.min.js\""
-                    }]
-                },
+            options: {
+                replacements: [{
+                    pattern: /\s*<script src="lib\/require\.js"><\/script>/,
+                    replacement: ""
+                }, {
+                    pattern: /\s*<script src="require\.config\.js"><\/script>/,
+                    replacement: ""
+                }, {
+                    pattern: /src="main-([^.]*).js"/,
+                    replacement: "src=\"$1.min.js\""
+                }]
+            },
+            widget: {
                 files: [{
-                    src: "src/main/javascript/dev.html",
-                    dest: "target/widget.html"
+                    src: "src/main/javascript/widget.html",
+                    dest: "target/widget/widget.html"
+                }]
+            },
+            configure: {
+                files: [{
+                    src: "src/main/javascript/configure.html",
+                    dest: "target/configure/configure.html"
                 }]
             }
+        },
+        copy: {
+            configure: {
+                files: [{
+                    expand: true,
+                    cwd: "src/main",
+                    src: ["img/**"],
+                    dest: "target/configure/"
+                }, {
+                    expand: true,
+                    cwd: "src/main/javascript/styling",
+                    src: ["font/**"],
+                    dest: "target/configure/styling/"
+                }]
+            }
+        },
+        clean: {
+            // Trying to delete the target folder itself makes the requirejs task randomly fail.
+            widget: ["target/widget/**/*"],
+            configure: ["target/configure/**/*"]
         }
     });
 
@@ -76,7 +96,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-requirejs");
     grunt.loadNpmTasks("grunt-contrib-cssmin");
     grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-string-replace");
 
-    grunt.registerTask("default", ["jshint", "requirejs:dist", "cssmin:dist", "string-replace:dist"]);
+    grunt.registerTask("default", ["widget"]);
+    grunt.registerTask("widget", ["jshint:all", "clean:widget", "requirejs:widget", "string-replace:widget"]);
+    grunt.registerTask("configure", ["jshint:all", "clean:configure", "requirejs:configure", "string-replace:configure", "copy:configure"]);
 };

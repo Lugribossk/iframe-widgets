@@ -1,6 +1,6 @@
 /*global window */
-define(["jquery", "hbars!template/configure", "lib/bootstrap", "lib/bootstrap-colorpicker", "css!styling/configure"],
-    function ($, template) {
+define(["jquery", "template/Helpers", "hbars!template/configure", "lib/bootstrap", "lib/bootstrap-colorpicker", "css!styling/configure"],
+    function ($, Helpers, template) {
         "use strict";
 
         /**
@@ -12,7 +12,7 @@ define(["jquery", "hbars!template/configure", "lib/bootstrap", "lib/bootstrap-co
          */
         function WidgetConfigurator() {}
 
-        var BASE_URL = "http://lugribossk.github.io/iframe-widgets/target/widget.html",
+        var BASE_URL = window.location.href.replace(/http:/, "").replace(/\/configure/, "/widget"),
             TYPING_DELAY = 500,
             ENRICHED_MAX_LENGTH = 255;
 

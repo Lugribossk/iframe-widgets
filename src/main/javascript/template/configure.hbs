@@ -35,7 +35,7 @@
                     <span class="add-on">ms</span>
                 </div>
 
-                <label>Timing function <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/timing-function" target="_blank"><i class="icon-info-sign"></i></a></label>
+                <label>Timing function <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/timing-function" target="_blank">{{icon "info-sign"}}</a></label>
                 <input type="text" data-parameter="timingFunction" placeholder="ease">
             </fieldset>
 
@@ -48,7 +48,7 @@
                 <label>Font</label>
                 <input type="text" data-parameter="font-family">
 
-                <label>Enable Google Fonts <a href="https://www.google.com/fonts/" target="_blank"><i class="icon-info-sign"></i></a></label>
+                <label>Enable Google Fonts <a href="https://www.google.com/fonts/" target="_blank">{{icon "info-sign"}}</a></label>
                 <input type="checkbox" data-parameter="googleFont" value="true">
 
                 <label>Color</label>
@@ -94,13 +94,13 @@
     <div id="preview">
         <iframe id="preview-frame" frameborder="0"></iframe>
 
-        <button id="refresh" class="btn"><i class="icon-refresh"></i></button>
-        <a id="newwindow" class="btn" href="" target="_blank"><i class="icon-share"></i></a>
+        <button id="refresh" class="btn">{{icon "refresh"}}</button>
+        <a id="newwindow" class="btn" href="" target="_blank">{{icon "share"}}</a>
 
         <label>Widget URL</label>
         <input id="url" class="select-on-click" type="text" readonly>
         <div class="alert" id="warning-length" style="display: none;">
-            <i class="icon-warning-sign"></i> URL too long for Enriched to handle, please use fewer options.
+            {{icon "warning-sign"}}URL too long for Enriched to handle, please use fewer options.
         </div>
 
         <label>Preset</label>

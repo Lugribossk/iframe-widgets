@@ -74,14 +74,9 @@ module.exports = function (grunt) {
             configure: {
                 files: [{
                     expand: true,
-                    cwd: "src/main",
-                    src: ["img/**"],
-                    dest: "target/configure/"
-                }, {
-                    expand: true,
                     cwd: "src/main/javascript/styling",
-                    src: ["font/**"],
-                    dest: "target/configure/styling/"
+                    src: ["img/**", "font/**"],
+                    dest: "target/configure/styling"
                 }]
             }
         },

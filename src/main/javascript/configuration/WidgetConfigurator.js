@@ -1,11 +1,11 @@
 /*global window */
-define(["jquery", "lib/bootstrap", "lib/bootstrap-colorpicker", "css!styling/configure"],
-    function ($) {
+define(["jquery", "hbars!template/configure", "lib/bootstrap", "lib/bootstrap-colorpicker", "css!styling/configure"],
+    function ($, template) {
         "use strict";
 
         /**
          * A simple UI for visually creating widget configuration query strings.
-         * Unfortunately an excellent example of how quickly a pure jQuery-based UI degenerates into ugliness...
+         * Unfortunately an excellent example of how quickly a purely jQuery-based UI degenerates into ugliness...
          *
          * @author Bo Gotthardt
          * @constructor
@@ -16,9 +16,9 @@ define(["jquery", "lib/bootstrap", "lib/bootstrap-colorpicker", "css!styling/con
             TYPING_DELAY = 500,
             ENRICHED_MAX_LENGTH = 255;
 
-        var widgetType = $("#widget-type").find("select"),
-            form = $("#form"),
-            iframe = $("#preview-frame"),
+        var widgetType,
+            form,
+            iframe,
             update;
 
         function updateType() {
@@ -92,6 +92,12 @@ define(["jquery", "lib/bootstrap", "lib/bootstrap-colorpicker", "css!styling/con
          * @static
          */
         WidgetConfigurator.init = function () {
+            $("<div></div>").html(template()).appendTo("body");
+
+            widgetType = $("#widget-type").find("select");
+            form = $("#form");
+            iframe = $("#preview-frame");
+
             form.find("input, textarea").on("keyup", updateUrl);
             form.find("input[type='checkbox'], select").on("change", updateUrl);
 

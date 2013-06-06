@@ -45,9 +45,10 @@ module.exports = function (grunt) {
             }
         },
         "git-describe": {
-            describe: {
+            options: {
                 prop: "revision"
-            }
+            },
+            describe: {}
         },
         "string-replace": {
             options: {

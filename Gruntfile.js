@@ -44,6 +44,11 @@ module.exports = function (grunt) {
                 }
             }
         },
+        "git-describe": {
+            describe: {
+                prop: "revision"
+            }
+        },
         "string-replace": {
             options: {
                 replacements: [{
@@ -52,6 +57,9 @@ module.exports = function (grunt) {
                 }, {
                     pattern: /\s*<script src="require\.config\.js"><\/script>/,
                     replacement: ""
+                }, {
+                    pattern: "${build}",
+                    replacement: "<%= revision %> <%= grunt.template.today('UTC:yyyy/mm/dd HH:MM:ss Z') %>"
                 }]
             },
             widget: {
@@ -90,8 +98,20 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-string-replace");
+    grunt.loadNpmTasks("grunt-git-describe");
 
     grunt.registerTask("default", ["widget"]);
-    grunt.registerTask("widget", ["jshint:all", "clean:widget", "requirejs:widget", "string-replace:widget"]);
-    grunt.registerTask("configure", ["jshint:all", "clean:configure", "requirejs:configure", "string-replace:configure", "copy:configure"]);
+
+    grunt.registerTask("widget",    ["jshint:all",
+                                     "clean:widget",
+                                     "requirejs:widget",
+                                     "git-describe",
+                                     "string-replace:widget"]);
+
+    grunt.registerTask("configure", ["jshint:all",
+                                     "clean:configure",
+                                     "requirejs:configure",
+                                     "git-describe",
+                                     "string-replace:configure",
+                                     "copy:configure"]);
 };

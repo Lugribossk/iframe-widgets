@@ -1,0 +1,15 @@
+<div class="preview">
+    <iframe id="preview-frame" frameborder="0"></iframe>
+
+    <button id="refresh" class="btn">{{icon "refresh"}}</button>
+    <a id="newwindow" class="btn" href="" target="_blank">{{icon "share"}}</a>
+
+    <label>Widget URL</label>
+    <input id="url" class="select-on-click" type="text" readonly>
+    <div class="alert" id="warning-length" style="display: none;">
+        {{icon "warning-sign"}}URL too long for Enriched to handle, please use fewer options.
+    </div>
+
+    <label>Preset</label>
+    <textarea id="preset" class="select-on-click" rows="5" readonly></textarea>
+</div>

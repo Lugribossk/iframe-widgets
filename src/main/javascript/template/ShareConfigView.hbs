@@ -1,0 +1,27 @@
+<fieldset>
+    <legend>Sharing</legend>
+
+    <label>Title to share</label>
+    <input type="text" data-parameter="title" data-required>
+
+    <label>URL to share</label>
+    <input type="url" data-parameter="src" data-required>
+
+    <label>Networks</label>
+    <label class="checkbox">
+        <input type="checkbox" value="facebook" data-parameter="networks">
+        Facebook
+    </label>
+    <label class="checkbox">
+        <input type="checkbox" value="twitter" data-parameter="networks">
+        Twitter
+    </label>
+
+    <label>Icon size</label>
+    <select data-parameter="size">
+        <option value="32x32" selected>Large</option>
+        <option value="16x16">Small</option>
+    </select>
+</fieldset>
+
+<div id="animation"></div>

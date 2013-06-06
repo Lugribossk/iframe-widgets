@@ -1,0 +1,27 @@
+<fieldset>
+    <legend>Animation</legend>
+
+    <label>Slide in from</label>
+    <select data-parameter="from">
+        <option value="" selected>Disabled</option>
+        <option value="top">Top</option>
+        <option value="bottom">Bottom</option>
+        <option value="left">Left</option>
+        <option value="right">Right</option>
+    </select>
+
+    <label>Duration</label>
+    <div class="input-append">
+        <input type="number" placeholder="1000" min="0" data-parameter="duration" data-append="ms">
+        <span class="add-on">ms</span>
+    </div>
+
+    <label>Delay</label>
+    <div class="input-append">
+        <input type="number" placeholder="500" min="0" data-parameter="delay" data-append="ms">
+        <span class="add-on">ms</span>
+    </div>
+
+    <label>Timing function <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/timing-function" target="_blank">{{icon "info-sign"}}</a></label>
+    <input type="text" data-parameter="timingFunction" placeholder="ease">
+</fieldset>

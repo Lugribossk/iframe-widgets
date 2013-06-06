@@ -51,12 +51,12 @@ define(["jquery", "util/QueryParameters", "util/Logger", "util/Promise"],
         }
 
         /**
-         * Create a widget based on the options in the page's query parameters.
+         * Create a widget based on the specified parameters.
          *
+         * @param {Object} parameters The widget parameters
          * @returns {Promise} A promise for the widget
          */
-        WidgetBuilder.prototype.fromQueryParameters = function () {
-            var parameters = new QueryParameters();
+        WidgetBuilder.prototype.build = function (parameters) {
             var options = {};
 
             if (parameters.preset) {

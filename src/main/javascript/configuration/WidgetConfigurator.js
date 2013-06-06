@@ -67,20 +67,27 @@ define(["jquery", "template/Helpers", "hbars!template/configure", "lib/bootstrap
                         return b + "=" + encodeURIComponent(a);
                     }).join("&");
 
-                    $("#preview-frame").prop("src", url + "&activate=true");
                     $("#newwindow").prop("href", url);
                     $("#url").val(url);
 
                     $("#warning-length").toggle(url.length > ENRICHED_MAX_LENGTH);
 
-                    var json = "{\n" + $.map(parameters, function (a, b) {
-                        if ($.isArray(a)) {
-                            a = a.join(",");
-                        }
-                        return "    \"" + b + "\": \"" + a + "\"";
-                    }).join(",\n") + "\n}";
+                    var preset = {};
 
-                    $("#preset").val(json);
+                    Object.keys(parameters).forEach(function (parameter) {
+                        var v = parameters[parameter];
+                        if ($.isArray(v)) {
+                            v = v.join(",");
+                        }
+                        preset[parameter] = v;
+                    });
+
+                    $("#preset").val(JSON.stringify(preset));
+
+                    window.frames[0].postMessage(JSON.stringify({
+                        widgetCommand: "parameters",
+                        parameters: preset
+                    }), "*");
 
                 }
             }, TYPING_DELAY);
@@ -102,7 +109,9 @@ define(["jquery", "template/Helpers", "hbars!template/configure", "lib/bootstrap
             form.find("input[type='checkbox'], select").on("change", updateUrl);
 
             $("#refresh").on("click", function () {
-                iframe.prop("src", iframe.prop("src"));
+                window.frames[0].postMessage(JSON.stringify({
+                    widgetCommand: "activate"
+                }), "*");
             });
 
             $(".select-on-click").on("click", function () {
@@ -112,6 +121,8 @@ define(["jquery", "template/Helpers", "hbars!template/configure", "lib/bootstrap
             widgetType.on("change", updateType);
 
             updateType();
+
+            $("#preview-frame").prop("src", BASE_URL);
 
             $(".colorpicker").colorpicker().on("changeColor", updateUrl);
         };

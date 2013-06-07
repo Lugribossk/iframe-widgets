@@ -16,9 +16,5 @@
 
 #url {
     width: 95%;
-}
-
-input[readonly],
-textarea[readonly] {
     cursor: auto;
 }

@@ -2,7 +2,11 @@
     <legend>Image</legend>
 
     <label>Source URL</label>
-    <input type="url" data-parameter="src" data-required>
+    <input type="text" data-parameter="src" data-required data-validate-https="#warning-https">
+    <div class="alert" id="warning-https" style="display: none;">
+        {{icon "warning-sign"}} For the image to show when on a HTTPS connection (e.g. Facebook),
+        the source URL must start with <code>https://</code> or <code>//</code>.
+    </div>
 </fieldset>
 
 <div id="animation"></div>

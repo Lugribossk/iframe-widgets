@@ -37,21 +37,13 @@ define(["jquery", "marionette", "hbars!template/WidgetPreview"],
                 this.ui.url.val(url);
                 this.ui.lengthWarning.toggle(url.length > ENRICHED_MAX_LENGTH);
 
-                var parameters = this.model.get("parameters");
-                this.sendMessage({
-                    widgetCommand: "parameters",
-                    parameters: parameters
-                });
+                // Activate the widget immediately.
+                this.ui.iframe.prop("src", url + "&activate=true");
             },
 
             onRefreshButtonClick: function () {
-                this.sendMessage({
-                    widgetCommand: "activate"
-                });
-            },
-
-            sendMessage: function (data) {
-                this.ui.iframe[0].contentWindow.postMessage(JSON.stringify(data), "*");
+                // Activate immediately, with an extra random parameter to force a hashchange event.
+                this.ui.iframe.prop("src", this.model.get("url") + "&activate=true&" + new Date().getTime());
             }
         });
     });

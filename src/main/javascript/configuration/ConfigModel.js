@@ -1,5 +1,5 @@
-define(["backbone", "util/QueryParameters"],
-    function (Backbone, QueryParameters) {
+define(["backbone", "util/UrlParameters"],
+    function (Backbone, UrlParameters) {
         "use strict";
 
         /**
@@ -24,7 +24,7 @@ define(["backbone", "util/QueryParameters"],
             setParameters: function (parameters) {
                 this.set({
                     parameters: parameters,
-                    url: this.get("baseUrl") + QueryParameters.prototype.toQueryString.call(parameters)
+                    url: this.get("baseUrl") + UrlParameters.prototype.toHashFragment.call(parameters)
                 });
             }
         });

@@ -1,5 +1,5 @@
 /*global window*/
-define(["jquery", "util/QueryParameters", "util/Logger", "util/Promise"],
+define(["jquery", "util/UrlParameters", "util/Logger", "util/Promise"],
     function ($, QueryParameters, Logger, Promise) {
         "use strict";
         var log = new Logger("WidgetBuilder");
@@ -78,7 +78,6 @@ define(["jquery", "util/QueryParameters", "util/Logger", "util/Promise"],
                     // If the page has been opened directly we will never get the activate event, so trigger it manually.
                     if (window === window.top || parameters.activate) {
                         widget.initialized.done(function () {
-                            log.info("Widget loaded directly, activating immediately.");
                             widget.activate();
                         });
                     }

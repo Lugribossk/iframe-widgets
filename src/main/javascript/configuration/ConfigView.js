@@ -14,7 +14,8 @@ define(["jquery", "marionette", "hbars!template/AnimationConfigView", "lib/boots
          */
         return Marionette.Layout.extend({
             ui: {
-                formInputs: "input, select, textarea"
+                formInputs: "input, select, textarea",
+                colorpickers: "input.colorpicker"
             },
             regions: {
                 animation: "#animation"
@@ -22,21 +23,27 @@ define(["jquery", "marionette", "hbars!template/AnimationConfigView", "lib/boots
             events: {
                 "change input[type='checkbox'], select": "updateModel",
                 "keyup input, textarea": "updateModel",
+                "changeColor .colorpicker": "updateModel",
                 "keyup input[data-validate-https]": function (e) {
                     var target = $(e.currentTarget);
                     $(target.data("validate-https")).toggle(target.val().indexOf("http://") === 0);
                 }
             },
+
             onRender: function () {
                 this.animation.show(new Marionette.ItemView({
                     template: AnimationConfigView
                 }));
 
-                // TODO
-                //$(".colorpicker").colorpicker().on("changeColor", this.getData);
-
                 // Re-bind so formInput also includes the animation form inputs.
                 this.bindUIElements();
+
+                this.ui.colorpickers.colorpicker();
+            },
+
+            close: function () {
+                // The colorpicker must be explicitly removed.
+                this.ui.colorpickers.colorpicker("destroy");
             },
 
             /**

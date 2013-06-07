@@ -1,27 +1,27 @@
 /*global window*/
 define(["marionette",
     "template/Helpers",
-    "lib/bootstrap",
+    "bootstrap",
     "css!styling/configure",
     "configuration/bootstrap/NavBar",
-    "configuration/ConfigView",
-    "hbars!template/TextConfigView",
-    "hbars!template/ImageConfigView",
-    "hbars!template/ShareConfigView",
-    "configuration/PreviewView",
+    "configuration/ConfigForm",
+    "hbars!template/TextConfigForm",
+    "hbars!template/ImageConfigForm",
+    "hbars!template/ShareConfigForm",
+    "configuration/WidgetPreview",
     "configuration/ConfigModel"],
-    function (Marionette, helpers, bootstrap, css, NavBar, ConfigView, TextConfigView, ImageConfigView, ShareConfigView, PreviewView, ConfigModel) {
+    function (Marionette, helpers, bootstrap, css, NavBar, ConfigForm, TextConfigForm, ImageConfigForm, ShareConfigForm, WidgetPreview, ConfigModel) {
         "use strict";
 
         var app = new Marionette.Application(),
             templates = {
-                text: TextConfigView,
-                image: ImageConfigView,
-                share: ShareConfigView
+                text: TextConfigForm,
+                image: ImageConfigForm,
+                share: ShareConfigForm
             };
 
         function showConfigView(template, model) {
-            app.config.show(new ConfigView({
+            app.config.show(new ConfigForm({
                 template: template,
                 model: model
             }));
@@ -58,8 +58,8 @@ define(["marionette",
             });
 
             app.navbar.show(navBar);
-            app.preview.show(new PreviewView({model: configModel}));
-            showConfigView(TextConfigView, configModel);
+            app.preview.show(new WidgetPreview({model: configModel}));
+            showConfigView(TextConfigForm, configModel);
 
             navBar.on("change", function (active) {
                 showConfigView(templates[active], configModel);

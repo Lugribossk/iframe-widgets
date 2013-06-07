@@ -1,6 +1,6 @@
 /*global window*/
-define(["jquery", "marionette", "hbars!template/PreviewView"],
-    function ($, Marionette, PreviewView) {
+define(["jquery", "marionette", "hbars!template/WidgetPreview"],
+    function ($, Marionette, WidgetPreview) {
         "use strict";
 
         var ENRICHED_MAX_LENGTH = 255;
@@ -11,7 +11,7 @@ define(["jquery", "marionette", "hbars!template/PreviewView"],
          * @author Bo Gotthardt
          */
         return Marionette.ItemView.extend({
-            template: PreviewView,
+            template: WidgetPreview,
             ui: {
                 newWindow: "#newwindow",
                 refresh: "#refresh",

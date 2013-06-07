@@ -4,28 +4,32 @@ require.config({
         jquery: "lib/jquery",
         underscore: "lib/underscore",
         Handlebars: "lib/handlebars",
+
         backbone: "lib/backbone/backbone",
         "backbone.wreqr": "lib/backbone/backbone.wreqr",
         "backbone.babysitter": "lib/backbone/backbone.babysitter",
         marionette: "lib/backbone/backbone.marionette",
+
+        bootstrap: "lib/bootstrap/bootstrap",
+        "bootstrap-colorpicker": "lib/bootstrap/bootstrap-colorpicker",
 
         // External APIs
         webfont: "//ajax.googleapis.com/ajax/libs/webfont/1/webfont",
         iframeapi: "//secure.api.viewer.zmags.com/widgets/iframe",
 
         // RequireJS plugins
-        text: "lib/text",
-        hbars: "lib/hbars"
+        text: "lib/plugins/text",
+        hbars: "lib/plugins/hbars"
     },
     shim: {
         webfont: {
             exports: "WebFont"
         },
-        "lib/bootstrap": {
+        bootstrap: {
             deps: ["jquery", "css!styling/lib/bootstrap", "css!styling/lib/font-awesome"]
         },
-        "lib/bootstrap-colorpicker": {
-            deps: ["lib/bootstrap", "css!styling/lib/bootstrap-colorpicker"]
+        "bootstrap-colorpicker": {
+            deps: ["bootstrap", "css!styling/lib/bootstrap-colorpicker"]
         },
         underscore: {
             exports: "_"
@@ -40,7 +44,7 @@ require.config({
     },
     map: {
         "*": {
-            "css": "lib/require-css/css"
+            "css": "lib/plugins/require-css/css"
         }
     },
     hbars: {

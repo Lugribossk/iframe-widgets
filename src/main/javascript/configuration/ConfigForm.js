@@ -1,6 +1,6 @@
 /*global window*/
-define(["jquery", "marionette", "hbars!template/AnimationConfigView", "lib/bootstrap-colorpicker"],
-    function ($, Marionette, AnimationConfigView) {
+define(["jquery", "marionette", "hbars!template/AnimationConfigForm", "bootstrap-colorpicker"],
+    function ($, Marionette, AnimationConfigForm) {
         "use strict";
 
         var TYPING_DELAY_MS = 500;
@@ -32,7 +32,7 @@ define(["jquery", "marionette", "hbars!template/AnimationConfigView", "lib/boots
 
             onRender: function () {
                 this.animation.show(new Marionette.ItemView({
-                    template: AnimationConfigView
+                    template: AnimationConfigForm
                 }));
 
                 // Re-bind so formInput also includes the animation form inputs.

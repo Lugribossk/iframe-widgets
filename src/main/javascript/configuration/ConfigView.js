@@ -5,6 +5,13 @@ define(["jquery", "marionette", "hbars!template/AnimationConfigView", "lib/boots
 
         var TYPING_DELAY_MS = 500;
 
+        /**
+         * Generic configuration form view.
+         *
+         * Must be instantiated with the template and ConfigModel to use.
+         *
+         * @author Bo Gotthardt
+         */
         return Marionette.Layout.extend({
             ui: {
                 formInputs: "input, select, textarea"
@@ -13,8 +20,8 @@ define(["jquery", "marionette", "hbars!template/AnimationConfigView", "lib/boots
                 animation: "#animation"
             },
             events: {
-                "change input[type='checkbox'], select": "getData",
-                "keyup input, textarea": "getData",
+                "change input[type='checkbox'], select": "updateModel",
+                "keyup input, textarea": "updateModel",
                 "keyup input[data-validate-https]": function (e) {
                     var target = $(e.currentTarget);
                     $(target.data("validate-https")).toggle(target.val().indexOf("http://") === 0);
@@ -32,7 +39,11 @@ define(["jquery", "marionette", "hbars!template/AnimationConfigView", "lib/boots
                 this.bindUIElements();
             },
 
-            getData: function () {
+            /**
+             * Update the model to reflect the current state of the form.
+             * Only triggers after a pause between form updates so that typing does not spam updates.
+             */
+            updateModel: function () {
                 var scope = this;
                 window.clearTimeout(this.dataTimeout);
 
@@ -76,9 +87,7 @@ define(["jquery", "marionette", "hbars!template/AnimationConfigView", "lib/boots
                     });
 
                     if (!requiredMissing) {
-                        console.log(parameters);
-                        //EventBus.trigger("change:config", parameters);
-                        //this.model.setParameters(parameters)
+                        scope.model.setParameters(parameters);
                     }
                 }, TYPING_DELAY_MS);
             }

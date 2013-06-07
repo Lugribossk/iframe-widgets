@@ -1,3 +1,4 @@
+/*global window*/
 define(["marionette",
     "template/Helpers",
     "lib/bootstrap",
@@ -7,8 +8,9 @@ define(["marionette",
     "hbars!template/TextConfigView",
     "hbars!template/ImageConfigView",
     "hbars!template/ShareConfigView",
-    "configuration/PreviewView"],
-    function (Marionette, helpers, bootstrap, css, NavBar, ConfigView, TextConfigView, ImageConfigView, ShareConfigView, PreviewView) {
+    "configuration/PreviewView",
+    "configuration/ConfigModel"],
+    function (Marionette, helpers, bootstrap, css, NavBar, ConfigView, TextConfigView, ImageConfigView, ShareConfigView, PreviewView, ConfigModel) {
         "use strict";
 
         var app = new Marionette.Application(),
@@ -18,19 +20,24 @@ define(["marionette",
                 share: ShareConfigView
             };
 
+        function showConfigView(template, model) {
+            app.config.show(new ConfigView({
+                template: template,
+                model: model
+            }));
+        }
+
         app.addRegions({
             navbar: "#navbar",
             config: "#config",
             preview: "#preview"
         });
 
-        function blah(template) {
-            app.config.show(new ConfigView({
-                template: template
-            }));
-        }
-
         app.addInitializer(function () {
+            var configModel = new ConfigModel({
+                baseUrl: window.location.href.replace(/http:/, "").replace(/\/configure/, "/widget")
+            });
+
             var navBar = new NavBar({
                 brand: "Widget Configurator",
                 items: [
@@ -49,12 +56,13 @@ define(["marionette",
                     }
                 ]
             });
+
             app.navbar.show(navBar);
-            blah(TextConfigView);
-            app.preview.show(new PreviewView());
+            app.preview.show(new PreviewView({model: configModel}));
+            showConfigView(TextConfigView, configModel);
 
             navBar.on("change", function (active) {
-                blah(templates[active]);
+                showConfigView(templates[active], configModel);
             });
         });
 

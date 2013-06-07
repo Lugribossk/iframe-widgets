@@ -5,6 +5,11 @@ define(["jquery", "marionette", "hbars!template/PreviewView"],
 
         var ENRICHED_MAX_LENGTH = 255;
 
+        /**
+         * Preview pane view with widget iframe and URL display.
+         *
+         * @author Bo Gotthardt
+         */
         return Marionette.ItemView.extend({
             template: PreviewView,
             ui: {
@@ -21,8 +26,8 @@ define(["jquery", "marionette", "hbars!template/PreviewView"],
                 "click #refresh": "onRefreshButtonClick"
             },
             onRender: function () {
-                //this.listenTo(this.model, "change", this.onUrlChange);
-                this.ui.iframe.prop("src", ""/*this.model.get("baseUrl")*/);
+                this.listenTo(this.model, "change", this.onUrlChange);
+                this.ui.iframe.prop("src", this.model.get("baseUrl"));
             },
 
             onUrlChange: function () {
@@ -37,7 +42,6 @@ define(["jquery", "marionette", "hbars!template/PreviewView"],
                     widgetCommand: "parameters",
                     parameters: parameters
                 });
-
             },
 
             onRefreshButtonClick: function () {
@@ -47,7 +51,7 @@ define(["jquery", "marionette", "hbars!template/PreviewView"],
             },
 
             sendMessage: function (data) {
-                this.ui.iframe.contentWindow.postMessage(JSON.stringify(data), "*");
+                this.ui.iframe[0].contentWindow.postMessage(JSON.stringify(data), "*");
             }
         });
     });

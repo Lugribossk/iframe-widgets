@@ -37,14 +37,15 @@ define([],
          * @returns {String}
          */
         QueryParameters.prototype.toQueryString = function () {
-            var keys = Object.prototype.keys.call(this);
+            var scope = this,
+                keys = Object.keys(this);
 
             if (keys.length === 0) {
                 return "";
             }
 
             return "?" + keys.map(function (key) {
-                return key + "=" + this[key];
+                return key + "=" + scope[key];
             }).join("&");
         };
 

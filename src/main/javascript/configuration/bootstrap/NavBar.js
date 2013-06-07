@@ -2,6 +2,11 @@ define(["jquery", "marionette", "hbars!template/NavBar", "lib/bootstrap"],
     function ($, Marionette, NavBar) {
         "use strict";
 
+        /**
+         * Bootstrap navbar view.
+         *
+         * @author Bo Gotthardt
+         */
         return Marionette.ItemView.extend({
             template: NavBar,
             ui: {

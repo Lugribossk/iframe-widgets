@@ -8,6 +8,7 @@ require.config({
         backbone: "lib/backbone/backbone",
         "backbone.wreqr": "lib/backbone/backbone.wreqr",
         "backbone.babysitter": "lib/backbone/backbone.babysitter",
+        "backbone.stickit": "lib/backbone/backbone.stickit",
         marionette: "lib/backbone/backbone.marionette",
 
         bootstrap: "lib/bootstrap/bootstrap",
@@ -43,6 +44,9 @@ require.config({
         },
         "lib/jquery.animate-enhanced": {
             deps: ["jquery"]
+        },
+        "backbone.stickit": {
+            deps: ["backbone"]
         }
     },
     map: {

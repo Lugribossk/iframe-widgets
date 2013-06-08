@@ -10,8 +10,9 @@ define(["backbone", "util/UrlParameters"],
          */
         return Backbone.Model.extend({
             defaults: {
-                url: null,
-                parameters: null,
+                // If only the url could be a computed property solely derived form the two others...
+                url: "",
+                parameters: {},
                 baseUrl: "//" + window.location.host + window.location.pathname.replace(/\/configure/, "/widget")
             },
 

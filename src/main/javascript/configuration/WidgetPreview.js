@@ -1,5 +1,5 @@
 /*global window*/
-define(["jquery", "marionette", "hbars!template/WidgetPreview"],
+define(["jquery", "marionette", "hbars!template/WidgetPreview", "backbone.stickit"],
     function ($, Marionette, WidgetPreview) {
         "use strict";
 
@@ -12,32 +12,36 @@ define(["jquery", "marionette", "hbars!template/WidgetPreview"],
          */
         return Marionette.ItemView.extend({
             template: WidgetPreview,
-            ui: {
-                newWindow: "#newwindow",
-                url: "#url",
-                lengthWarning: "#warning-length",
-                iframe: "#preview-frame"
-            },
             events: {
                 "click .select-on-click": function (e) {
                     $(e.currentTarget).select();
                 },
                 "click #refresh": function () {
-                    // Activate immediately, with an extra random parameter to force a hashchange event.
-                    this.ui.iframe.prop("src", this.model.get("url") + "&activate=true&" + new Date().getTime());
+                    // Re-apply data bindings, causing the iframe src to get a new timestamp and thus triggering a hashchange.
+                    this.stickit();
                 }
             },
-            modelEvents: {
-                "change": function () {
-                    var url = this.model.get("url");
-
-                    this.ui.newWindow.prop("href", url);
-                    this.ui.url.val(url);
-                    this.ui.lengthWarning.toggle(url.length > ENRICHED_MAX_LENGTH);
-
-                    // Activate the widget immediately.
-                    this.ui.iframe.prop("src", url + "&activate=true");
+            bindings: {
+                "#newwindow": {attributes: [{observe: "url", name: "href"}]},
+                "#url": {attributes: [{observe: "url", name: "value"}]},
+                "iframe": {attributes: [{
+                    observe: "url",
+                    name: "src",
+                    onGet: function (url) {
+                        // Activate immediately so the animation is visible, with an extra random parameter to force a hashchange event.
+                        return (url ? url + "&activate=true&" + new Date().getTime() : "");
+                    }
+                }]},
+                "#warning-length": {
+                    observe: "url",
+                    updateView: false,
+                    visible: function (url) {
+                        return url.length > ENRICHED_MAX_LENGTH;
+                    }
                 }
+            },
+            onRender: function () {
+                this.stickit();
             }
         });
     });

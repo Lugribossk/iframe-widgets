@@ -25,10 +25,6 @@ define(["jquery", "marionette", "hbars!template/NavBar", "bootstrap"],
 
                     e.preventDefault();
                 }
-            },
-            serializeData: function () {
-                // Use the options rather than model or collection for templating.
-                return this.options;
             }
         });
     });

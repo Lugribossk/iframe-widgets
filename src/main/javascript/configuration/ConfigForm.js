@@ -1,18 +1,34 @@
 /*global window*/
-define(["jquery", "marionette", "hbars!template/AnimationConfigForm", "bootstrap-colorpicker"],
-    function ($, Marionette, AnimationConfigForm) {
+define(["jquery", "marionette", "hbars!template/TextConfigForm",
+    "hbars!template/ImageConfigForm",
+    "hbars!template/ShareConfigForm", "hbars!template/AnimationConfigForm", "util/Logger", "bootstrap-colorpicker"],
+    function ($, Marionette, TextConfigForm, ImageConfigForm, ShareConfigForm, AnimationConfigForm, Logger) {
         "use strict";
+        var log = new Logger("ConfigForm");
 
         var TYPING_DELAY_MS = 500;
 
         /**
          * Generic configuration form view.
          *
-         * Must be instantiated with the template and ConfigModel to use.
+         * Must be instantiated with the configuration type and ConfigModel to use.
          *
          * @author Bo Gotthardt
          */
         return Marionette.Layout.extend({
+            getTemplate: function () {
+                switch (this.options.type) {
+                case "text":
+                    return TextConfigForm;
+                case "image":
+                    return ImageConfigForm;
+                case "share":
+                    return ShareConfigForm;
+                default:
+                    log.error("Unknown config type: ", this.options.type);
+                    return null;
+                }
+            },
             ui: {
                 formInputs: "input, select, textarea",
                 colorpickers: "input.colorpicker"
@@ -35,9 +51,10 @@ define(["jquery", "marionette", "hbars!template/AnimationConfigForm", "bootstrap
                     template: AnimationConfigForm
                 }));
 
-                // Re-bind so formInput also includes the animation form inputs.
+                // Re-bind so this.ui also includes elements from the animation form.
                 this.bindUIElements();
 
+                // Activate colorpicker plugin.
                 this.ui.colorpickers.colorpicker();
             },
 

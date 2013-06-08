@@ -1,31 +1,17 @@
 /*global window*/
 define(["marionette",
+    "backbone",
     "template/Helpers",
     "bootstrap",
     "css!styling/configure",
     "configuration/bootstrap/NavBar",
     "configuration/ConfigForm",
-    "hbars!template/TextConfigForm",
-    "hbars!template/ImageConfigForm",
-    "hbars!template/ShareConfigForm",
     "configuration/WidgetPreview",
     "configuration/ConfigModel"],
-    function (Marionette, helpers, bootstrap, css, NavBar, ConfigForm, TextConfigForm, ImageConfigForm, ShareConfigForm, WidgetPreview, ConfigModel) {
+    function (Marionette, Backbone, helpers, bootstrap, css, NavBar, ConfigForm, WidgetPreview, ConfigModel) {
         "use strict";
 
-        var app = new Marionette.Application(),
-            templates = {
-                text: TextConfigForm,
-                image: ImageConfigForm,
-                share: ShareConfigForm
-            };
-
-        function showConfigView(template, model) {
-            app.config.show(new ConfigForm({
-                template: template,
-                model: model
-            }));
-        }
+        var app = new Marionette.Application();
 
         app.addRegions({
             navbar: "#navbar",
@@ -39,30 +25,38 @@ define(["marionette",
             });
 
             var navBar = new NavBar({
-                brand: "Widget Configurator",
-                items: [
-                    {
-                        title: "Text",
-                        event: "text",
-                        active: true
-                    },
-                    {
-                        title: "Image/SVG",
-                        event: "image"
-                    },
-                    {
-                        title: "Share",
-                        event: "share"
-                    }
-                ]
+                model: new Backbone.Model({
+                    brand: "Widget Configurator",
+                    items: [
+                        {
+                            title: "Text",
+                            event: "text",
+                            active: true
+                        },
+                        {
+                            title: "Image/SVG",
+                            event: "image"
+                        },
+                        {
+                            title: "Share",
+                            event: "share"
+                        }
+                    ]
+                })
             });
 
             app.navbar.show(navBar);
             app.preview.show(new WidgetPreview({model: configModel}));
-            showConfigView(TextConfigForm, configModel);
+            app.config.show(new ConfigForm({
+                type: "text",
+                model: configModel
+            }));
 
             navBar.on("change", function (active) {
-                showConfigView(templates[active], configModel);
+                app.config.show(new ConfigForm({
+                    type: active,
+                    model: configModel
+                }));
             });
         });
 

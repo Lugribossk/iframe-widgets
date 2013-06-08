@@ -14,7 +14,6 @@ define(["jquery", "marionette", "hbars!template/WidgetPreview"],
             template: WidgetPreview,
             ui: {
                 newWindow: "#newwindow",
-                refresh: "#refresh",
                 url: "#url",
                 lengthWarning: "#warning-length",
                 iframe: "#preview-frame"
@@ -23,27 +22,22 @@ define(["jquery", "marionette", "hbars!template/WidgetPreview"],
                 "click .select-on-click": function (e) {
                     $(e.currentTarget).select();
                 },
-                "click #refresh": "onRefreshButtonClick"
+                "click #refresh": function () {
+                    // Activate immediately, with an extra random parameter to force a hashchange event.
+                    this.ui.iframe.prop("src", this.model.get("url") + "&activate=true&" + new Date().getTime());
+                }
             },
-            onRender: function () {
-                this.listenTo(this.model, "change", this.onUrlChange);
-                this.ui.iframe.prop("src", this.model.get("baseUrl"));
-            },
+            modelEvents: {
+                "change": function () {
+                    var url = this.model.get("url");
 
-            onUrlChange: function () {
-                var url = this.model.get("url");
+                    this.ui.newWindow.prop("href", url);
+                    this.ui.url.val(url);
+                    this.ui.lengthWarning.toggle(url.length > ENRICHED_MAX_LENGTH);
 
-                this.ui.newWindow.prop("href", url);
-                this.ui.url.val(url);
-                this.ui.lengthWarning.toggle(url.length > ENRICHED_MAX_LENGTH);
-
-                // Activate the widget immediately.
-                this.ui.iframe.prop("src", url + "&activate=true");
-            },
-
-            onRefreshButtonClick: function () {
-                // Activate immediately, with an extra random parameter to force a hashchange event.
-                this.ui.iframe.prop("src", this.model.get("url") + "&activate=true&" + new Date().getTime());
+                    // Activate the widget immediately.
+                    this.ui.iframe.prop("src", url + "&activate=true");
+                }
             }
         });
     });

@@ -106,7 +106,7 @@ define(["jquery", "underscore", "marionette", "hbars!template/TextConfigForm",
                 });
 
                 if (!requiredMissing) {
-                    this.model.setParameters(parameters);
+                    this.model.set("parameters", parameters);
                 }
             },
 

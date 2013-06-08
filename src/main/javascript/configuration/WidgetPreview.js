@@ -24,14 +24,7 @@ define(["jquery", "marionette", "hbars!template/WidgetPreview", "backbone.sticki
             bindings: {
                 "#newwindow": {attributes: [{observe: "url", name: "href"}]},
                 "#url": {attributes: [{observe: "url", name: "value"}]},
-                "iframe": {attributes: [{
-                    observe: "url",
-                    name: "src",
-                    onGet: function (url) {
-                        // Activate immediately so the animation is visible, with an extra random parameter to force a hashchange event.
-                        return (url ? url + "&activate=true&" + new Date().getTime() : "");
-                    }
-                }]},
+                "iframe": {attributes: [{observe: "activateUrl", name: "src"}]},
                 "#warning-length": {
                     observe: "url",
                     updateView: false,

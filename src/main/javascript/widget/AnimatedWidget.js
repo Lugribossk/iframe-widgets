@@ -1,4 +1,4 @@
-/*global setTimeout, window */
+/*global window */
 define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
     function ($, BaseWidget) {
         "use strict";
@@ -17,6 +17,7 @@ define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
             BaseWidget.call(this, options);
 
             this.element.addClass("AnimatedWidget");
+            this._delayedAnimation = null;
 
             if (this.options.from || this.options.fadeIn) {
                 this.hide();
@@ -110,7 +111,8 @@ define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
             }
 
             var scope = this;
-            window.setTimeout(function () {
+            window.clearTimeout(this._delayedAnimation);
+            this._delayedAnimation = window.setTimeout(function () {
                 var animation = {
                     top: y,
                     left: x

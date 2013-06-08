@@ -1,3 +1,4 @@
+/*global window*/
 define(["backbone", "util/UrlParameters"],
     function (Backbone, UrlParameters) {
         "use strict";
@@ -11,7 +12,7 @@ define(["backbone", "util/UrlParameters"],
             defaults: {
                 url: null,
                 parameters: null,
-                baseUrl: null
+                baseUrl: "//" + window.location.host + window.location.pathname.replace(/\/configure/, "/widget")
             },
 
             /**

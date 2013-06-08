@@ -20,11 +20,9 @@ define(["marionette",
         });
 
         app.addInitializer(function () {
-            var configModel = new ConfigModel({
-                baseUrl: window.location.href.replace(/http:/, "").replace(/\/configure/, "/widget")
-            });
+            var configModel = new ConfigModel();
 
-            var navBar = new NavBar({
+            app.navbar.show(new NavBar({
                 model: new Backbone.Model({
                     brand: "Widget Configurator",
                     items: [{
@@ -40,9 +38,7 @@ define(["marionette",
                     }
                 ]
                 })
-            });
-
-            app.navbar.show(navBar);
+            }));
             app.preview.show(new WidgetPreview({model: configModel}));
 
             var router = new Backbone.Router({

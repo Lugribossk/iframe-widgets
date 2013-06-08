@@ -40,6 +40,9 @@ require.config({
         backbone: {
             deps: ["jquery", "underscore"],
             exports: "Backbone"
+        },
+        "lib/jquery.animate-enhanced": {
+            deps: ["jquery"]
         }
     },
     map: {

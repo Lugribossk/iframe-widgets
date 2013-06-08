@@ -1,6 +1,6 @@
 /*global setTimeout, window */
-define(["jquery", "widget/BaseWidget", "util/Browser"],
-    function ($, BaseWidget, Browser) {
+define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
+    function ($, BaseWidget) {
         "use strict";
 
         /**
@@ -18,8 +18,7 @@ define(["jquery", "widget/BaseWidget", "util/Browser"],
 
             this.element.addClass("AnimatedWidget");
 
-            var from = this.options.from;
-            if (from) {
+            if (this.options.from || this.options.fadeIn) {
                 this.hide();
 
                 var scope = this;
@@ -72,24 +71,30 @@ define(["jquery", "widget/BaseWidget", "util/Browser"],
                 break;
             }
 
-            this.element.css({
-                transition: "none",
-                transform: "translate3d(" + x + "px, " + y + "px, 0)"
-            });
+            var animation = {
+                top: y,
+                left: x
+            };
+
+            if (this.options.fadeIn) {
+                animation.opacity = 0;
+            }
+
+            this.element.animate(animation, 0);
         };
 
         /**
          * Animate the widget moving to the opposite edge of the window.
          *
-         * @param {String} [duration=1s] The animation duration as a CSS string, e.g. "1s".
+         * @param {String} [duration=1000] The animation duration.
          * @param {String} [timingFunction=ease] The animation timing function as a CSS string, e.g. "ease".
-         * @param {String} [delay=0] The animation start delay as a CSS string, e.g. "1s".
+         * @param {String} [delay=0] The animation start delay.
          * @private
          */
         AnimatedWidget.prototype._animateToOppositeEdge = function (duration, timingFunction, delay) {
-            duration = duration || "1s";
+            var durationInt = duration ? parseInt(duration, 10) : 1000,
+                delayInt = delay ? parseInt(delay, 10) : 500;
             timingFunction = timingFunction || "ease";
-            delay = delay || "500ms";
 
             var x = 0,
                 y = 0;
@@ -105,12 +110,18 @@ define(["jquery", "widget/BaseWidget", "util/Browser"],
             }
 
             var scope = this;
-            setTimeout(function () {
-                scope.element.css({
-                    transition: Browser.getCSSPrefix() + "transform " + duration + " " + timingFunction + " " + delay,
-                    transform: "translate3d(" + x + "px, " + y + "px, 0)"
-                });
-            }, 0);
+            window.setTimeout(function () {
+                var animation = {
+                    top: y,
+                    left: x
+                };
+
+                if (scope.options.fadeIn) {
+                    animation.opacity = 1;
+                }
+
+                scope.element.animate(animation, durationInt, timingFunction);
+            }, delayInt);
         };
 
         return AnimatedWidget;

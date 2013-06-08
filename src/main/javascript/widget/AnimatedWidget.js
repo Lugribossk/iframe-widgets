@@ -25,9 +25,9 @@ define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
 
                 this.on("activate", function () {
                     scope.initialized.done(function () {
-                        scope._positionOutsideFrame();
+                        scope._setupStartPosition();
                         scope.show();
-                        scope._animateToOppositeEdge(scope.options.duration,
+                        scope._animateIn(scope.options.duration,
                                                      scope.options.timingFunction,
                                                      scope.options.delay);
                     });
@@ -40,7 +40,7 @@ define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
                 this.on("resize", function () {
                     if (scope.active) {
                         // Reset the animation target position.
-                        scope._animateToOppositeEdge("0", "ease", "0");
+                        scope._animateIn(0, "ease", 0);
                     }
                 });
             }
@@ -48,11 +48,11 @@ define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
         AnimatedWidget.prototype = Object.create(BaseWidget.prototype);
 
         /**
-         * Position the widget just offscreen so it is ready to slide in.
+         * Set up the widget so it is ready for the animation to start.
          * 
          * @private
          */
-        AnimatedWidget.prototype._positionOutsideFrame = function () {
+        AnimatedWidget.prototype._setupStartPosition = function () {
             var x = 0,
                 y = 0;
 
@@ -84,16 +84,16 @@ define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
         };
 
         /**
-         * Animate the widget moving to the opposite edge of the window.
+         * Do the widget activation animation.
          *
-         * @param {String} [duration=1000] The animation duration.
+         * @param {Number} [duration=1000] The animation duration, in milliseconds.
          * @param {String} [timingFunction=ease] The animation timing function as a CSS string, e.g. "ease".
-         * @param {String} [delay=0] The animation start delay.
+         * @param {Number} [delay=0] The animation start delay, in milliseconds.
          * @private
          */
-        AnimatedWidget.prototype._animateToOppositeEdge = function (duration, timingFunction, delay) {
-            var durationInt = duration ? parseInt(duration, 10) : 1000,
-                delayInt = delay ? parseInt(delay, 10) : 500;
+        AnimatedWidget.prototype._animateIn = function (duration, timingFunction, delay) {
+            duration = (duration !== undefined ? duration : 1000);
+            delay = (delay !== undefined ? delay : 500);
             timingFunction = timingFunction || "ease";
 
             var x = 0,
@@ -120,8 +120,8 @@ define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
                     animation.opacity = 1;
                 }
 
-                scope.element.animate(animation, durationInt, timingFunction);
-            }, delayInt);
+                scope.element.animate(animation, duration, timingFunction);
+            }, delay);
         };
 
         return AnimatedWidget;

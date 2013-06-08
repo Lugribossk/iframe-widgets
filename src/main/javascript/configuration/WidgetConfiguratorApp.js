@@ -27,37 +27,38 @@ define(["marionette",
             var navBar = new NavBar({
                 model: new Backbone.Model({
                     brand: "Widget Configurator",
-                    items: [
-                        {
-                            title: "Text",
-                            event: "text",
-                            active: true
-                        },
-                        {
-                            title: "Image/SVG",
-                            event: "image"
-                        },
-                        {
-                            title: "Share",
-                            event: "share"
-                        }
-                    ]
+                    items: [{
+                        title: "Text",
+                        link: "#text",
+                        active: true
+                    }, {
+                        title: "Image/SVG",
+                        link: "#image"
+                    }, {
+                        title: "Share",
+                        link: "#share"
+                    }
+                ]
                 })
             });
 
             app.navbar.show(navBar);
             app.preview.show(new WidgetPreview({model: configModel}));
-            app.config.show(new ConfigForm({
-                type: "text",
-                model: configModel
-            }));
 
-            navBar.on("change", function (active) {
-                app.config.show(new ConfigForm({
-                    type: active,
-                    model: configModel
-                }));
+            var router = new Backbone.Router({
+                routes: {
+                    ":type": function (type) {
+                        app.config.show(new ConfigForm({
+                            type: type,
+                            model: configModel
+                        }));
+                    },
+                    "": function () {
+                        window.location.hash = "#text";
+                    }
+                }
             });
+            Backbone.history.start();
         });
 
         return app;

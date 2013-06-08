@@ -19,11 +19,7 @@ define(["jquery", "marionette", "hbars!template/NavBar", "bootstrap"],
                     if (!target.hasClass("active")) {
                         this.ui.navItems.removeClass("active");
                         target.parent().addClass("active");
-
-                        this.trigger("change", target.data("event"));
                     }
-
-                    e.preventDefault();
                 }
             }
         });

@@ -17,8 +17,9 @@ define(["jquery", "marionette", "hbars!template/WidgetPreview", "backbone.sticki
                     $(e.currentTarget).select();
                 },
                 "click #refresh": function () {
-                    // Re-apply data bindings, causing the iframe src to get a new timestamp and thus triggering a hashchange.
-                    this.stickit();
+                    // Re-compute the activateUrl, causing the iframe src to get a new timestamp and thus
+                    // triggering a hashchange which re-creates the widget.
+                    this.model.updateComputedProperties();
                 }
             },
             bindings: {

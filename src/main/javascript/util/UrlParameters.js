@@ -11,7 +11,7 @@ define([],
             }
 
             return prefix + keys.map(function (key) {
-                return key + "=" + scope[key];
+                return encodeURIComponent(key) + "=" + encodeURIComponent(scope[key]);
             }).join("&");
         }
 

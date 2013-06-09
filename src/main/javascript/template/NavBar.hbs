@@ -1,10 +1,14 @@
 <div class="navbar">
     <div class="navbar-inner">
-        <div class="brand">{{{brand}}}</div>
+        {{#if brand}}
+        <div class="brand">{{brand}}</div>
+        {{/if}}
         <ul class="nav">
             {{#each items}}
-                <li {{#if active}}class="active"{{/if}}>
-                    <a href="{{link}}">{{{title}}}</a>
+                <li class="{{#if active}}active{{/if}}{{#if region}} region-{{@index}}{{/if}}">
+                    {{#if title}}
+                        <a href="{{link}}">{{title}}</a>
+                    {{/if}}
                 </li>
             {{/each}}
         </ul>

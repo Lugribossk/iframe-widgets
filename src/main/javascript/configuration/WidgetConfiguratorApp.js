@@ -23,21 +23,18 @@ define(["marionette",
             var configModel = new ConfigModel();
 
             app.navbar.show(new NavBar({
-                model: new Backbone.Model({
-                    brand: "Widget Configurator",
-                    items: [{
-                        title: "Text",
-                        link: "#text",
-                        active: true
-                    }, {
-                        title: "Image/SVG",
-                        link: "#image"
-                    }, {
-                        title: "Share",
-                        link: "#share"
-                    }
-                ]
-                })
+                brand: "Widget Configurator",
+                items: [{
+                    title: "Text",
+                    link: "#text",
+                    active: true
+                }, {
+                    title: "Image/SVG",
+                    link: "#image"
+                }, {
+                    title: "Share",
+                    link: "#share"
+                }]
             }));
             app.preview.show(new WidgetPreview({model: configModel}));
 

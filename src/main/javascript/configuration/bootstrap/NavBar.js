@@ -7,10 +7,21 @@ define(["jquery", "marionette", "hbars!template/NavBar", "bootstrap"],
          *
          * @author Bo Gotthardt
          */
-        return Marionette.ItemView.extend({
+        return Marionette.Layout.extend({
             template: NavBar,
             ui: {
                 navItems: "ul.nav li"
+            },
+            regions: function (options) {
+                var regions = {};
+
+                options.items.forEach(function (item, index) {
+                    if (item.region) {
+                        regions[item.region] = ".region-" + index;
+                    }
+                });
+
+                return regions;
             },
             events: {
                 "click ul.nav a": function (e) {
@@ -21,6 +32,16 @@ define(["jquery", "marionette", "hbars!template/NavBar", "bootstrap"],
                         target.parent().addClass("active");
                     }
                 }
+            },
+            serializeData: function () {
+                return this.options;
+            },
+            onRender: function () {
+                this.options.items.forEach(function (item) {
+                    if (item.region && item.view) {
+                        this[item.region].show(item.view);
+                    }
+                }, this);
             }
         });
     });

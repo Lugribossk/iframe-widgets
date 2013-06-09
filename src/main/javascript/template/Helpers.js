@@ -19,4 +19,14 @@ define(["Handlebars"],
 
             return new Handlebars.SafeString("<i class='" + cssClass + "'></i> ");
         });
+
+        /**
+         * Trigger debugger breakpoint.
+         */
+        Handlebars.registerHelper("debugger", function () {
+            /*jshint debug:true*/
+            debugger;
+        });
+
+        return Handlebars;
     });

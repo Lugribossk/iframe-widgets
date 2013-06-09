@@ -1,7 +1,13 @@
 /*global window*/
-define(["jquery", "underscore", "marionette", "hbars!template/TextConfigForm",
-    "hbars!template/ImageConfigForm",
-    "hbars!template/ShareConfigForm", "hbars!template/AnimationConfigForm", "util/Logger", "bootstrap-colorpicker"],
+define(["jquery",
+        "underscore",
+        "marionette",
+        "hbars!template/TextConfigForm",
+        "hbars!template/ImageConfigForm",
+        "hbars!template/ShareConfigForm",
+        "hbars!template/AnimationConfigForm",
+        "util/Logger",
+        "bootstrap-colorpicker"],
     function ($, _, Marionette, TextConfigForm, ImageConfigForm, ShareConfigForm, AnimationConfigForm, Logger) {
         "use strict";
         var log = new Logger("ConfigForm");

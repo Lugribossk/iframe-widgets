@@ -1,13 +1,13 @@
-body {
-    margin: 0;
+html {
     overflow: hidden;
 }
 
-html,
 body {
+    margin: 0;
     height: 100%;
+    /* Force iOS 6 to use the size of the html element as the size of the iframe. */
+    overflow: hidden;
 }
-
 
 
 .BaseWidget {
@@ -25,12 +25,10 @@ body {
 }
 
 
-
 .TextWidget {
     display: inline;
     white-space: nowrap;
 }
-
 
 
 .ImageWidget,

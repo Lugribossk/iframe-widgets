@@ -17,8 +17,14 @@ define(["jquery", "lib/lucid", "iframeapi", "css!styling/widget"],
          * @param {Object} options
          */
         function BaseWidget(options) {
-            var scope = this;
+            var scope = this,
+                $window = $(window);
             this.options = options;
+
+            // Force the html element to keep its initial size, regardless of what content we insert later on.
+            // This fixes an iOS 6 issue where the iframe will grow to adjust to its content.
+            $("html").height($window.height())
+                     .width($window.width());
 
             this.element = $("<div class='BaseWidget'></div>")
                 .appendTo("body");
@@ -37,18 +43,20 @@ define(["jquery", "lib/lucid", "iframeapi", "css!styling/widget"],
             this.initialized = new $.Deferred();
 
             Iframe.addEventListener(Iframe.IFRAME_WIDGET_ACTIVATE, function (event) {
+                // event.publicationID, event.currentPages, event.widgetPages
                 scope.activate(event);
             });
 
             Iframe.addEventListener(Iframe.IFRAME_WIDGET_DEACTIVATE, function (event) {
+                // event.publicationID, event.currentPages, event.widgetPages
                 scope.deactivate(event);
             });
 
-            $(window).on("resize", function () {
+            $window.on("resize", function () {
                 scope.trigger("resize");
             });
 
-            $(window).on("beforeunload", function () {
+            $window.on("beforeunload", function () {
                 scope.trigger("unload");
             });
         }

@@ -43,9 +43,6 @@ define(["jquery", "widget/AnimatedWidget"],
 
             if (win.height() / win.width() < this.image.height() / this.image.width()) {
                 this.element.addClass("windowIsWider");
-
-                // iOS 6 seems to sometimes interpret 100% high as taller than the window, so force the height to be correct.
-                this.element.height(win.height());
             } else {
                 this.element.removeClass("windowIsWider");
             }

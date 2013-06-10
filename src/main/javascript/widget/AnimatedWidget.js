@@ -28,9 +28,12 @@ define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
                     scope.initialized.done(function () {
                         scope._setupStartPosition();
                         scope.show();
-                        scope._animateIn(scope.options.duration,
-                                                     scope.options.timingFunction,
-                                                     scope.options.delay);
+
+                        var duration = (scope.options.duration !== undefined ? parseInt(scope.options.duration, 10) : 1000),
+                            delay = (scope.options.delay !== undefined ? parseInt(scope.options.delay, 10) : 500),
+                            timingFunction = scope.options.timingFunction || "ease";
+
+                        scope._animateIn(duration, timingFunction, delay);
                     });
                 });
 
@@ -69,36 +72,37 @@ define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
                 break;
             case "right":
                 x = $(window).width();
+                // On iOS 6, if the element is even partially outside the right edge of the window, it's shifted upwards
+                // a little while animating in. Setting y to even -1 make it a lot less apparent.
+                y = -1;
                 break;
             }
 
-            var animation = {
+            var startPosition = {
                 top: y,
                 left: x
             };
 
             if (this.options.fadeIn) {
-                animation.opacity = 0;
+                startPosition.opacity = 0;
             }
 
-            this.element.animate(animation, 0);
+            this.element.css(startPosition);
         };
 
         /**
          * Do the widget activation animation.
          *
-         * @param {Number} [duration=1000] The animation duration, in milliseconds.
-         * @param {String} [timingFunction=ease] The animation timing function as a CSS string, e.g. "ease".
-         * @param {Number} [delay=0] The animation start delay, in milliseconds.
+         * @param {Number} duration The animation duration, in milliseconds.
+         * @param {String} timingFunction The animation timing function as a CSS string, e.g. "ease".
+         * @param {Number} delay The animation start delay, in milliseconds.
          * @private
          */
         AnimatedWidget.prototype._animateIn = function (duration, timingFunction, delay) {
-            duration = (duration !== undefined ? duration : 1000);
-            delay = (delay !== undefined ? delay : 500);
-            timingFunction = timingFunction || "ease";
-
-            var x = 0,
-                y = 0;
+            // On iOS 6 animating to 0 makes the animation immediately jump to the end position, then start from there.
+            // But animating it to "=0" works...
+            var x = "=0",
+                y = "=0";
 
             switch (this.options.from) {
             case "top":

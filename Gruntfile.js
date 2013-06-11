@@ -32,7 +32,8 @@ module.exports = function (grunt) {
                     deps: ["lib/require",
                            "require.config.js",
                            "widget/TextWidget",
-                           "widget/ImageWidget"]
+                           "widget/ImageWidget",
+                           "widget/ShareWidget"]
                 }
             },
             configure: {

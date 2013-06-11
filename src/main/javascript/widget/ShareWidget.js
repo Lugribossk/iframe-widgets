@@ -18,25 +18,27 @@ define(["jquery", "widget/AnimatedWidget", "addthis"],
 
             var smallIcons = ($(window).height() <= 16);
 
-            this.options.services.split(",").forEach(function (service) {
-                this.element.append("<a class='addthis_button_" + service + "'>" +
-                    // We create the images ourselves so that we can easily scale them. the ones inserted automatically by AddThis are background images on nested elements.
-                    // Use the small icons if the widget is small enough.
-                    "<img src='//cache.addthiscdn.com/icons/v1/thumbs/" + (smallIcons ? "" : "32x32/") + service + (smallIcons ? ".gif" : ".png") + "'/>" +
-                    "</a>");
-            }, this);
+            if (this.options.services) {
+                this.options.services.split(",").forEach(function (service) {
+                    this.element.append("<a class='addthis_button_" + service + "'>" +
+                        // We create the images ourselves so that we can easily scale them. the ones inserted automatically by AddThis are background images on nested elements.
+                        // Use the small icons if the widget is small enough.
+                        "<img src='//cache.addthiscdn.com/icons/v1/thumbs/" + (smallIcons ? "" : "32x32/") + service + (smallIcons ? ".gif" : ".png") + "'/>" +
+                        "</a>");
+                }, this);
 
-            var scope = this;
-            this.on("activate", function (publicationID, currentPages, widgetPages) {
-                if (!scope.sharingInitialized) {
-                    // Wait with initializing the sharing until the first activate event so we can get the publication ID.
-                    AddThis.toolbox(".ShareWidget", {}, {
-                        url: scope.getShareUrl(publicationID, widgetPages && widgetPages.firstPage),
-                        title: scope.options.title
-                    });
-                    scope.sharingInitialized = true;
-                }
-            });
+                var scope = this;
+                this.on("activate", function (publicationID, currentPages, widgetPages) {
+                    if (!scope.sharingInitialized) {
+                        // Wait with initializing the sharing until the first activate event so we can get the publication ID.
+                        AddThis.toolbox(".ShareWidget", {}, {
+                            url: scope.getShareUrl(publicationID, widgetPages && widgetPages.firstPage),
+                            title: scope.options.title
+                        });
+                        scope.sharingInitialized = true;
+                    }
+                });
+            }
 
             this.initialized.resolve();
         }

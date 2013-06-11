@@ -24,7 +24,7 @@ define(["jquery", "widget/AnimatedWidget", "util/WebFontLoader", "util/Logger", 
                 }
             });
 
-            var text = this.options.text.replace("\n", "<br/>");
+            var text = this.options.text.replace("\\n", "<br/>");
             this.element.html(text)
                 .addClass("TextWidget");
 

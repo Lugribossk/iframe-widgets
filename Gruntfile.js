@@ -93,6 +93,8 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.loadTasks("src/grunt");
+
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-requirejs");
     grunt.loadNpmTasks("grunt-contrib-cssmin");

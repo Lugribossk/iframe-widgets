@@ -17,6 +17,7 @@ require.config({
         // External APIs
         webfont: "//ajax.googleapis.com/ajax/libs/webfont/1/webfont",
         iframeapi: "//secure.api.viewer.zmags.com/widgets/iframe",
+        addthis: "//s7.addthis.com/js/300/addthis_widget",
 
         // RequireJS plugins
         text: "lib/plugins/text",
@@ -25,6 +26,9 @@ require.config({
     shim: {
         webfont: {
             exports: "WebFont"
+        },
+        addthis: {
+            exports: "addthis"
         },
         bootstrap: {
             deps: ["jquery", "css!styling/lib/bootstrap", "css!styling/lib/font-awesome"]

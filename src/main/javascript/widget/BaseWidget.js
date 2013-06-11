@@ -43,13 +43,11 @@ define(["jquery", "lib/lucid", "iframeapi", "css!styling/widget"],
             this.initialized = new $.Deferred();
 
             Iframe.addEventListener(Iframe.IFRAME_WIDGET_ACTIVATE, function (event) {
-                // event.publicationID, event.currentPages, event.widgetPages
-                scope.activate(event);
+                scope.activate(event.publicationID, event.currentPages, event.widgetPages);
             });
 
             Iframe.addEventListener(Iframe.IFRAME_WIDGET_DEACTIVATE, function (event) {
-                // event.publicationID, event.currentPages, event.widgetPages
-                scope.deactivate(event);
+                scope.deactivate(event.publicationID, event.currentPages, event.widgetPages);
             });
 
             $window.on("resize", function () {
@@ -66,20 +64,18 @@ define(["jquery", "lib/lucid", "iframeapi", "css!styling/widget"],
 
         /**
          * Activate the widget. Is called automatically by the Iframe API.
-         * @param event
          */
-        BaseWidget.prototype.activate = function (event) {
+        BaseWidget.prototype.activate = function (publicationID, currentPages, widgetPages) {
             this.active = true;
-            this.trigger("activate", event);
+            this.trigger("activate", publicationID, currentPages, widgetPages);
         };
 
         /**
          * Deactivate the widget. Is called automatically by the Iframe API.
-         * @param event
          */
-        BaseWidget.prototype.deactivate = function (event) {
+        BaseWidget.prototype.deactivate = function (publicationID, currentPages, widgetPages) {
             this.active = false;
-            this.trigger("deactivate", event);
+            this.trigger("deactivate", publicationID, currentPages, widgetPages);
         };
 
         /**

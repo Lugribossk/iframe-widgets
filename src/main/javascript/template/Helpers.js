@@ -3,18 +3,6 @@ define(["Handlebars", "util/Logger"],
         "use strict";
         var log = new Logger("Handlebars");
 
-        // Override Handlebars' logger with our own.
-        Handlebars.logger.log = function (level, obj) {
-            if (level === Handlebars.logger.DEBUG ||
-                level === Handlebars.logger.INFO) {
-                log.info(obj);
-            } else if (level === Handlebars.logger.WARN) {
-                log.warn(obj);
-            } else if (level === Handlebars.logger.ERROR) {
-                log.error(obj);
-            }
-        };
-
         /**
          * Font Awesome icons.
          * See http://fortawesome.github.io/Font-Awesome/

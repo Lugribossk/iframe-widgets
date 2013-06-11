@@ -1,27 +1,40 @@
 <fieldset>
-    <legend>Sharing</legend>
+    <legend>Sharing <a href="http://www.addthis.com" target="_blank">{{icon "info-sign"}}</a></legend>
 
     <label>URL to share</label>
-    <input type="url" data-parameter="src" data-required autofocus>
+    <input type="url" data-parameter="src" autofocus placeholder="http://viewer.zmags.com/publication/...">
 
     <label>Title to share</label>
     <input type="text" data-parameter="title" placeholder="Optional">
 
     <label>Networks</label>
     <label class="checkbox">
-        <input type="checkbox" value="facebook" data-parameter="networks">
-        Facebook
+        <input type="checkbox" value="facebook" data-parameter="services">
+        <img src="http://cache.addthiscdn.com/icons/v1/thumbs/facebook.gif"/> Facebook
     </label>
     <label class="checkbox">
-        <input type="checkbox" value="twitter" data-parameter="networks">
-        Twitter
+        <input type="checkbox" value="twitter" data-parameter="services">
+        <img src="http://cache.addthiscdn.com/icons/v1/thumbs/twitter.gif"/> Twitter
+    </label>
+    <label class="checkbox">
+        <input type="checkbox" value="pinterest" data-parameter="services">
+        <img src="http://cache.addthiscdn.com/icons/v1/thumbs/pinterest.gif"/> Pinterest
+    </label>
+    <label class="checkbox">
+        <input type="checkbox" value="google_plusone_share" data-parameter="services">
+        <img src="http://cache.addthiscdn.com/icons/v1/thumbs/google_plusone_share.gif"/> Google+
+    </label>
+    <label class="checkbox">
+        <input type="checkbox" value="linkedin" data-parameter="services">
+        <img src="http://cache.addthiscdn.com/icons/v1/thumbs/linkedin.gif"/> LinkedIn
+    </label>
+    <label class="checkbox">
+        <input type="checkbox" value="email" data-parameter="services">
+        <img src="http://cache.addthiscdn.com/icons/v1/thumbs/email.gif"/> Email
     </label>
 
-    <label>Icon size</label>
-    <select data-parameter="size">
-        <option value="32x32" selected>Large</option>
-        <option value="16x16">Small</option>
-    </select>
+    <label>Disable page deeplinking</label>
+    <input type="checkbox" data-parameter="noDeeplink" value="true">
 
     <input type="hidden" data-parameter="type" value="share">
 </fieldset>

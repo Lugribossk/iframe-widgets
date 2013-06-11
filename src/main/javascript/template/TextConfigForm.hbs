@@ -5,13 +5,15 @@
     <input type="text" data-parameter="text" data-required autofocus>
 
     <label>Font</label>
-    <input type="text" data-parameter="font-family">
+    <input type="text" data-parameter="font-family" spellcheck="false">
 
-    <label>Enable Google Fonts <a href="https://www.google.com/fonts/" target="_blank">{{icon "info-sign"}}</a></label>
-    <input type="checkbox" data-parameter="googleFont" value="true">
+    <label class="checkbox">
+        <input type="checkbox" data-parameter="googleFont" value="true">
+        Enable Google Fonts <a href="https://www.google.com/fonts/" target="_blank">{{icon "info-sign"}}</a>
+    </label>
 
     <label>Color</label>
-    <input type="text" class="colorpicker" data-parameter="color" placeholder="Black">
+    <input type="text" class="colorpicker" data-parameter="color" placeholder="Black" spellcheck="false">
 
     <input type="hidden" data-parameter="type" value="text">
 </fieldset>

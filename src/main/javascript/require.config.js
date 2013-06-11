@@ -1,18 +1,19 @@
 require.config({
     paths: {
         // Libraries
-        jquery: "lib/jquery",
-        underscore: "lib/underscore",
-        Handlebars: "lib/handlebars",
+        requirejs: "../../../components/requirejs/require",
+        jquery: "../../../components/jquery/jquery",
+        underscore: "../../../components/underscore/underscore",
+        Handlebars: "../../../components/handlebars/handlebars",
 
-        backbone: "lib/backbone/backbone",
-        "backbone.wreqr": "lib/backbone/backbone.wreqr",
-        "backbone.babysitter": "lib/backbone/backbone.babysitter",
-        "backbone.stickit": "lib/backbone/backbone.stickit",
-        marionette: "lib/backbone/backbone.marionette",
+        backbone: "../../../components/backbone/backbone",
+        "backbone.stickit": "../../../components/backbone.stickit/backbone.stickit",
+        marionette: "../../../components/backbone.marionette/lib/backbone.marionette",
 
-        bootstrap: "lib/bootstrap/bootstrap",
-        "bootstrap-colorpicker": "lib/bootstrap/bootstrap-colorpicker",
+        bootstrap: "../../../components/bootstrap/docs/assets/js/bootstrap",
+        "bootstrap-colorpicker": "../../../components/bootstrap-colorpicker/js/bootstrap-colorpicker",
+
+        "jquery.animate-enhanced": "../../../components/jquery.animate-enhanced/scripts/src/jquery.animate-enhanced",
 
         // External APIs
         webfont: "//ajax.googleapis.com/ajax/libs/webfont/1/webfont",
@@ -20,8 +21,11 @@ require.config({
         addthis: "//s7.addthis.com/js/300/addthis_widget",
 
         // RequireJS plugins
-        text: "lib/plugins/text",
-        hbars: "lib/plugins/hbars"
+        text: "../../../components/requirejs-text/text",
+        hbars: "../../../components/requirejs-handlebars/hbars",
+        css: "../../../components/require-css/css",
+        "normalize": "../../../components/require-css/normalize",
+        "css-builder": "../../../components/require-css/css-builder"
     },
     shim: {
         webfont: {
@@ -31,10 +35,13 @@ require.config({
             exports: "addthis"
         },
         bootstrap: {
-            deps: ["jquery", "css!styling/lib/bootstrap", "css!styling/lib/font-awesome"]
+            deps: ["jquery",
+                   "css!../../../components/bootstrap/docs/assets/css/bootstrap",
+                   "css!../../../components/font-awesome/build/assets/font-awesome/css/font-awesome"]
         },
         "bootstrap-colorpicker": {
-            deps: ["bootstrap", "css!styling/lib/bootstrap-colorpicker"]
+            deps: ["bootstrap",
+                   "css!../../../components/bootstrap-colorpicker/css/bootstrap-colorpicker"]
         },
         underscore: {
             exports: "_"
@@ -46,16 +53,15 @@ require.config({
             deps: ["jquery", "underscore"],
             exports: "Backbone"
         },
-        "lib/jquery.animate-enhanced": {
+        marionette: {
+            deps: ["backbone"],
+            exports: "Marionette"
+        },
+        "jquery.animate-enhanced": {
             deps: ["jquery"]
         },
         "backbone.stickit": {
             deps: ["backbone"]
-        }
-    },
-    map: {
-        "*": {
-            "css": "lib/plugins/require-css/css"
         }
     },
     hbars: {

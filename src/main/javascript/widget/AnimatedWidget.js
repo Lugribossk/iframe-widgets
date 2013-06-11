@@ -1,5 +1,5 @@
 /*global window */
-define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
+define(["jquery", "widget/BaseWidget", "jquery.animate-enhanced"],
     function ($, BaseWidget) {
         "use strict";
 

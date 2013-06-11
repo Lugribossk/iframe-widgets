@@ -29,7 +29,7 @@ module.exports = function (grunt) {
                 options: {
                     name: "widget",
                     out: "target/widget/widget.js",
-                    deps: ["lib/require",
+                    deps: ["requirejs",
                            "require.config.js",
                            "widget/TextWidget",
                            "widget/ImageWidget",
@@ -40,7 +40,7 @@ module.exports = function (grunt) {
                 options: {
                     name: "configure",
                     out: "target/configure/configure.js",
-                    deps: ["lib/require",
+                    deps: ["requirejs",
                            "require.config.js"]
                 }
             }
@@ -54,10 +54,10 @@ module.exports = function (grunt) {
         "string-replace": {
             options: {
                 replacements: [{
-                    pattern: /\s*<script src="lib\/require\.js"><\/script>/,
+                    pattern: "<script src=\"../../../components/requirejs/require.js\"><\/script>",
                     replacement: ""
                 }, {
-                    pattern: /\s*<script src="require\.config\.js"><\/script>/,
+                    pattern: "<script src=\"require.config.js\"><\/script>",
                     replacement: ""
                 }, {
                     pattern: "${build}",
@@ -81,8 +81,13 @@ module.exports = function (grunt) {
             configure: {
                 files: [{
                     expand: true,
-                    cwd: "src/main/javascript/styling",
-                    src: ["img/**", "font/**"],
+                    cwd: "components/font-awesome/build/assets/font-awesome/",
+                    src: ["font/**"],
+                    dest: "target/configure/styling"
+                }, {
+                    expand: true,
+                    cwd: "components/bootstrap-colorpicker",
+                    src: ["img/**"],
                     dest: "target/configure/styling"
                 }]
             }

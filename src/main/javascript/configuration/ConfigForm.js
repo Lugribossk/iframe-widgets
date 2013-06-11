@@ -69,6 +69,29 @@ define(["jquery",
                 this.ui.colorpickers.colorpicker("destroy");
             },
 
+            templateHelpers: function () {
+                return {
+                    services: [{
+                        code: "facebook"
+                    }, {
+                        code: "twitter"
+                    }, {
+                        code: "pinterest"
+                    }, {
+                        code: "google_plusone_share",
+                        name: "Google+"
+                    }, {
+                        code: "linkedin",
+                        name: "LinkedIn"
+                    }, {
+                        code: "email"
+                    }],
+                    serviceName: function () {
+                        return this.name || (this.code.charAt(0).toUpperCase() + this.code.slice(1));
+                    }
+                };
+            },
+
             /**
              * Update the model to reflect the current state of the form.
              */

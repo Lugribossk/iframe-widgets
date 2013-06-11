@@ -46,7 +46,11 @@ body {
 .ShareWidget,
 .ShareWidget a,
 .ShareWidget img {
-    width: auto;
     height: 100%;
     max-height: 32px;
+}
+
+.ShareWidget a,
+.ShareWidget img {
+    max-width: 32px;
 }

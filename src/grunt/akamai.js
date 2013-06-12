@@ -2,6 +2,8 @@
 module.exports = function (grunt) {
     "use strict";
 
+    var separator = ",";
+    
     /**
      * Task for purging URLs on Akamai.
      *
@@ -38,13 +40,13 @@ module.exports = function (grunt) {
             grunt.fail.warn("--remoteBase must be specified");
         }
 
-        localBases.split(";").forEach(function (localbase) {
+        localBases.split(separator).forEach(function (localbase) {
             localFiles = localFiles.concat(grunt.file.expand({
                 cwd: localbase
             }, "**/*"));
         });
 
-        rawRemoteBases.split(";").forEach(function (rawRemoteBase) {
+        rawRemoteBases.split(separator).forEach(function (rawRemoteBase) {
             if (rawRemoteBase.indexOf("//") === 0) {
                 remoteBases.push("http:" + rawRemoteBase);
                 remoteBases.push("https:" + rawRemoteBase);
@@ -88,7 +90,7 @@ module.exports = function (grunt) {
                 purge: {
                     user: user,
                     password: password,
-                    notify: notify.split(","),
+                    notify: notify.split(separator),
                     urls: getAkamaiUrls()
                 }
             }

@@ -19,7 +19,7 @@ module.exports = function (grunt) {
      * E.g. localBase resolves to ["test.js", "css/test.css"] and remoteBase is "http://www.example.com/".
      * This then purges "http://www.example.com/test.js" and "http://www.example.com/css/test.css".
      *
-     * Separate list items with semicolons.
+     * Separate list items with commas.
      *
      * @author Bo Gotthardt
      */
@@ -88,7 +88,7 @@ module.exports = function (grunt) {
                 purge: {
                     user: user,
                     password: password,
-                    notify: notify.split(";"),
+                    notify: notify.split(","),
                     urls: getAkamaiUrls()
                 }
             }

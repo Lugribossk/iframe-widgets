@@ -83,12 +83,12 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: "components/font-awesome/build/assets/font-awesome/",
                     src: ["font/**"],
-                    dest: "target/configure/styling"
+                    dest: "target/configure"
                 }, {
                     expand: true,
                     cwd: "components/bootstrap-colorpicker",
                     src: ["img/**"],
-                    dest: "target/configure/styling"
+                    dest: "target/configure"
                 }]
             }
         },

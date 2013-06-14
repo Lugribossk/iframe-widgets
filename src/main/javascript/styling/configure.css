@@ -18,3 +18,12 @@
     width: 95%;
     cursor: auto;
 }
+
+.shareIcon {
+    float: left;
+}
+
+.shareIconText {
+    float: left;
+    margin-left: 5px;
+}

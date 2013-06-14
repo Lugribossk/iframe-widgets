@@ -1,6 +1,6 @@
 /*global window*/
-define(["backbone", "util/UrlParameters"],
-    function (Backbone, UrlParameters) {
+define(["backbone", "util/UrlParameters", "configuration/ShareServicesModel"],
+    function (Backbone, UrlParameters, ShareServicesModel) {
         "use strict";
 
         /**
@@ -13,7 +13,9 @@ define(["backbone", "util/UrlParameters"],
                 url: "",
                 activateUrl: "",
                 parameters: {},
-                baseUrl: "//" + window.location.host + window.location.pathname.replace(/\/configure/, "/widget")
+                baseUrl: "//" + window.location.host + window.location.pathname.replace(/\/configure/, "/widget"),
+
+                shareServices: new ShareServicesModel()
             },
 
             initialize: function () {

@@ -7,8 +7,9 @@ define(["jquery",
         "hbars!template/ShareConfigForm",
         "hbars!template/AnimationConfigForm",
         "util/Logger",
+        "configuration/ShareServices",
         "bootstrap-colorpicker"],
-    function ($, _, Marionette, TextConfigForm, ImageConfigForm, ShareConfigForm, AnimationConfigForm, Logger) {
+    function ($, _, Marionette, TextConfigForm, ImageConfigForm, ShareConfigForm, AnimationConfigForm, Logger, ShareServices) {
         "use strict";
         var log = new Logger("ConfigForm");
 
@@ -40,10 +41,11 @@ define(["jquery",
                 colorpickers: "input.colorpicker"
             },
             regions: {
-                animation: "#animation"
+                animation: "#animation",
+                shareServices: "#shareServices"
             },
             events: {
-                "change input[type='checkbox'], select": "updateModel",
+                "change input[type='checkbox'], input[type='hidden'], select": "updateModel",
                 "changeColor .colorpicker": "updateModel",
                 "keyup input, textarea": "delayedUpdateModel",
                 "keyup input[data-validate-https]": function (e) {
@@ -57,6 +59,10 @@ define(["jquery",
                     template: AnimationConfigForm
                 }));
 
+                this.shareServices.show(new ShareServices({
+                    model: this.model.get("shareServices")
+                }));
+
                 // Re-bind so this.ui also includes elements from the animation form.
                 this.bindUIElements();
 
@@ -67,29 +73,6 @@ define(["jquery",
             close: function () {
                 // The colorpicker must be explicitly removed.
                 this.ui.colorpickers.colorpicker("destroy");
-            },
-
-            templateHelpers: function () {
-                return {
-                    services: [{
-                        code: "facebook"
-                    }, {
-                        code: "twitter"
-                    }, {
-                        code: "pinterest"
-                    }, {
-                        code: "google_plusone_share",
-                        name: "Google+"
-                    }, {
-                        code: "linkedin",
-                        name: "LinkedIn"
-                    }, {
-                        code: "email"
-                    }],
-                    serviceName: function () {
-                        return this.name || (this.code.charAt(0).toUpperCase() + this.code.slice(1));
-                    }
-                };
             },
 
             /**

@@ -12,13 +12,8 @@
     <label>Title to share</label>
     <input type="text" data-parameter="title" placeholder="Optional">
 
-    <label>Networks</label>
-    {{#each services}}
-        <label class="checkbox">
-            <input type="checkbox" value="{{code}}" data-parameter="services">
-            <img src="http://cache.addthiscdn.com/icons/v1/thumbs/{{code}}.gif"/> {{../serviceName}}
-        </label>
-    {{/each}}
+    <label>Sharing services</label>
+    <div id="shareServices"></div>
 
     <input type="hidden" data-parameter="type" value="share">
 </fieldset>

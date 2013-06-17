@@ -23,7 +23,7 @@ define(["marionette",
             var configModel = new ConfigModel();
 
             app.navbar.show(new NavBar({
-                brand: "Widget Configurator",
+                brand: "Widgetizer",
                 items: [{
                     title: "Text",
                     link: "#text",

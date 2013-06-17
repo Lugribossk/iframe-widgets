@@ -41,6 +41,10 @@ define(["jquery", "marionette", "hbars!template/ShareServices", "lib/select2", "
                         }
                     });
                 });
+            },
+
+            clear: function () {
+                this.ui.shareServices.select2("val", "");
             }
         });
     });

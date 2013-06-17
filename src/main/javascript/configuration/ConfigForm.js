@@ -38,7 +38,10 @@ define(["jquery",
             },
             ui: {
                 formInputs: "input, select, textarea",
-                colorpickers: "input.colorpicker"
+                colorpickers: "input.colorpicker",
+
+                noValOnClear: "input[type='text'], input[type='number'], input[type='url'], select",
+                uncheckOnClear: "input[type='checkbox']"
             },
             regions: {
                 animation: "#animation",
@@ -47,10 +50,17 @@ define(["jquery",
             events: {
                 "change input[type='checkbox'], input[type='hidden'], select": "updateModel",
                 "changeColor .colorpicker": "updateModel",
-                "keyup input, textarea": "delayedUpdateModel",
+                "keyup input, textarea": _.debounce(function () {
+                    this.updateModel();
+                }, TYPING_DELAY_MS),
                 "keyup input[data-validate-https]": function (e) {
                     var target = $(e.currentTarget);
                     $(target.data("validate-https")).toggle(target.val().indexOf("http://") === 0);
+                },
+                "click #clear": function () {
+                    this.ui.noValOnClear.val("");
+                    this.ui.uncheckOnClear.removeAttr("checked");
+                    this.shareServices.currentView.clear();
                 }
             },
 
@@ -120,10 +130,6 @@ define(["jquery",
                 if (!requiredMissing) {
                     this.model.set("parameters", parameters);
                 }
-            },
-
-            delayedUpdateModel: _.debounce(function () {
-                this.updateModel();
-            }, TYPING_DELAY_MS)
+            }
         });
     });

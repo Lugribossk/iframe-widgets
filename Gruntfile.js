@@ -82,7 +82,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: "src/main/javascript/styling",
-                    src: ["img/**", "font/**"],
+                    src: ["img/**", "font/**", "lib/*.png", "lib/*.gif"],
                     dest: "target/configure/styling"
                 }]
             }

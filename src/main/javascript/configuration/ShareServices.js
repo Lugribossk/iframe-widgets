@@ -1,6 +1,7 @@
-define(["jquery", "marionette", "hbars!template/ShareServices", "lib/select2", "css!styling/lib/select2", "lib/jquery-ui-1.10.3.custom", "css!http://cache.addthiscdn.com/icons/v1/sprites/services"],
+define(["jquery", "marionette", "hbars!template/ShareServices", "lib/select2", "css!styling/lib/select2", "lib/jquery-ui-1.10.3.custom"],
     function ($, Marionette, ShareServices) {
         "use strict";
+        // Should depend on http://cache.addthiscdn.com/icons/v1/sprites/services.css, but the CSS plugin build doesn't work with external URLs.
 
         return Marionette.ItemView.extend({
             template: ShareServices,

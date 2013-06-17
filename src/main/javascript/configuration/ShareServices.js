@@ -6,7 +6,13 @@ define(["jquery", "marionette", "hbars!template/ShareServices", "lib/select2", "
         return Marionette.ItemView.extend({
             template: ShareServices,
             ui: {
-                shareServices: "#shareServices"
+                shareServices: "#shareServices",
+                dragHelp: "#reorder-help"
+            },
+            events: {
+                "change #shareServices": function () {
+                    this.ui.dragHelp.toggle(this.ui.shareServices.val() !== "");
+                }
             },
 
             onRender: function () {

@@ -29,19 +29,5 @@ define(["Handlebars", "util/Logger"],
             debugger;
         });
 
-        /**
-         * Use the value of a resolved or rejected Promise.
-         */
-        Handlebars.registerHelper("promise", function (resolvedPromise) {
-            log.assert(resolvedPromise.state() !== "pending", "Input promise is still pending.");
-
-            var value = "";
-            resolvedPromise.always(function (v) {
-                value = v;
-            });
-
-            return new Handlebars.SafeString(value);
-        });
-
         return Handlebars;
     });

@@ -7,7 +7,7 @@ define(["jquery", "marionette", "hbars!template/ShareServices", "lib/select2", "
             template: ShareServices,
             ui: {
                 shareServices: "#shareServices",
-                dragHelp: "#reorder-help"
+                dragHelp: "#reorderHelp"
             },
             events: {
                 "change #shareServices": function () {

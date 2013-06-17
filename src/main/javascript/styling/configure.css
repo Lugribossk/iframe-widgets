@@ -27,3 +27,11 @@
     float: left;
     margin-left: 5px;
 }
+
+.select2-choices {
+    border-radius: 4px;
+}
+
+#shareServices {
+    width: 255px;
+}

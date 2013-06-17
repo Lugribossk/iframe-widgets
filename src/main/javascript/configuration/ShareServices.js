@@ -5,14 +5,14 @@ define(["jquery", "marionette", "hbars!template/ShareServices", "lib/select2", "
         return Marionette.ItemView.extend({
             template: ShareServices,
             ui: {
-                select2: "#select2"
+                shareServices: "#shareServices"
             },
 
             onRender: function () {
                 var scope = this;
 
                 this.model.get("loaded").done(function () {
-                    scope.ui.select2.select2({
+                    scope.ui.shareServices.select2({
                         // Set tags to force it into that mode
                         tags: [],
                         formatSelection: function (obj, container) {
@@ -31,10 +31,14 @@ define(["jquery", "marionette", "hbars!template/ShareServices", "lib/select2", "
                     });
 
                     // Enable drag-and-drop.
-                    scope.ui.select2.select2("container").find("ul.select2-choices").sortable({
+                    scope.ui.shareServices.select2("container").find("ul.select2-choices").sortable({
                         containment: "parent",
-                        start: function () { scope.ui.select2.select2("onSortStart"); },
-                        update: function () { scope.ui.select2.select2("onSortEnd"); }
+                        start: function () {
+                            scope.ui.shareServices.select2("onSortStart");
+                        },
+                        update: function () {
+                            scope.ui.shareServices.select2("onSortEnd");
+                        }
                     });
                 });
             }

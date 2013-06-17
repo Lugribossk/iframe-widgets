@@ -23,16 +23,6 @@ define(["jquery", "marionette", "hbars!template/NavBar", "bootstrap"],
 
                 return regions;
             },
-            events: {
-                "click ul.nav a": function (e) {
-                    var target = $(e.currentTarget);
-
-                    if (!target.hasClass("active")) {
-                        this.ui.navItems.removeClass("active");
-                        target.parent().addClass("active");
-                    }
-                }
-            },
             serializeData: function () {
                 return this.options;
             },
@@ -42,6 +32,10 @@ define(["jquery", "marionette", "hbars!template/NavBar", "bootstrap"],
                         this[item.region].show(item.view);
                     }
                 }, this);
+            },
+            activeLink: function (link) {
+                this.ui.navItems.removeClass("active");
+                this.ui.navItems.find("a[href='#" + link + "']").parent().addClass("active");
             }
         });
     });

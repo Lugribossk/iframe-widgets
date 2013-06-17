@@ -33,7 +33,7 @@ define(["jquery",
                     return ShareConfigForm;
                 default:
                     log.error("Unknown config type: ", this.options.type);
-                    return null;
+                    return TextConfigForm;
                 }
             },
             ui: {

@@ -1,4 +1,3 @@
-/*global window*/
 define(["jquery",
         "underscore",
         "marionette",

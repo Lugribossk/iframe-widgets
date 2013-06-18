@@ -46,6 +46,7 @@ define(["marionette",
                             model: configModel
                         }));
                         app.navbar.currentView.activeLink(type);
+                        configModel.set("parameters", {});
                     },
                     "": function () {
                         window.location.hash = "#text";

@@ -61,6 +61,7 @@ define(["jquery",
                     this.ui.noValOnClear.val("");
                     this.ui.uncheckOnClear.removeAttr("checked");
                     this.shareServices.currentView.clear();
+                    this.model.set("parameters", {});
                 }
             },
 

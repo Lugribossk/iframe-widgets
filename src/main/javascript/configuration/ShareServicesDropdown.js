@@ -1,10 +1,15 @@
-define(["jquery", "marionette", "hbars!template/ShareServices", "lib/select2", "css!styling/lib/select2", "lib/jquery-ui-1.10.3.custom"],
-    function ($, Marionette, ShareServices) {
+define(["marionette", "hbars!template/ShareServicesDropdown", "lib/select2", "css!styling/lib/select2", "lib/jquery-ui-1.10.3.custom"],
+    function (Marionette, ShareServicesDropdown) {
         "use strict";
         // Should depend on http://cache.addthiscdn.com/icons/v1/sprites/services.css, but the CSS plugin build doesn't work with external URLs.
 
+        /**
+         * A dropdown-like UI control for selecting AddThis sharing services.
+         *
+         * @author Bo Gotthardt
+         */
         return Marionette.ItemView.extend({
-            template: ShareServices,
+            template: ShareServicesDropdown,
             ui: {
                 shareServices: "#shareServices",
                 dragHelp: "#reorderHelp"
@@ -18,7 +23,7 @@ define(["jquery", "marionette", "hbars!template/ShareServices", "lib/select2", "
             onRender: function () {
                 var scope = this;
 
-                this.model.get("loaded").done(function () {
+                this.model.get("formattedServices").done(function (services) {
                     scope.ui.shareServices.select2({
                         // Set tags to force it into that mode
                         tags: [],
@@ -33,7 +38,7 @@ define(["jquery", "marionette", "hbars!template/ShareServices", "lib/select2", "
                             }
                         },
                         data: {
-                            results: scope.model.get("results")
+                            results: services
                         }
                     });
 

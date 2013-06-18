@@ -1,5 +1,5 @@
-define(["jquery", "marionette", "hbars!template/NavBar", "bootstrap"],
-    function ($, Marionette, NavBar) {
+define(["marionette", "hbars!template/NavBar", "bootstrap"],
+    function (Marionette, NavBar) {
         "use strict";
 
         /**

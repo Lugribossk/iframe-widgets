@@ -13,7 +13,7 @@ define(["backbone", "util/UrlParameters", "configuration/ShareServicesModel"],
                 url: "",
                 activateUrl: "",
                 parameters: {},
-                baseUrl: "//" + window.location.host + window.location.pathname.replace(/\/configure/, "/widget"),
+                baseUrl: "//" + window.location.host + window.location.pathname.replace(/\/configure/g, "/widget"),
 
                 shareServices: new ShareServicesModel()
             },

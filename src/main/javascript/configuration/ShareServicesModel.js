@@ -3,10 +3,15 @@ define(["jquery", "backbone"],
     function ($, Backbone) {
         "use strict";
 
+        /**
+         * A list of sharing services retrieved from the AddThis API.
+         *
+         * @author Bo Gotthardt
+         */
         return Backbone.Model.extend({
             defaults: {
-                results: [],
-                loaded: new $.Deferred()
+                services: [],
+                formattedServices: new $.Deferred()
             },
 
             initialize: function () {
@@ -23,7 +28,7 @@ define(["jquery", "backbone"],
                         };
                     });
 
-                    scope.set("results", [{
+                    var formatted = [{
                         text: "Popular",
                         children: [{
                             id: "facebook",
@@ -35,9 +40,10 @@ define(["jquery", "backbone"],
                     }, {
                         text: "All",
                         children: results
-                    }]);
+                    }];
 
-                    scope.get("loaded").resolve();
+                    scope.set("services", response.data);
+                    scope.get("formattedServices").resolve(formatted);
                 };
 
                 // The AddThis API code has a bug where it doesn't match the first parameter in the hash fragment, so put the parameter we need as number two.

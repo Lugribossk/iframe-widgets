@@ -11,6 +11,11 @@ define(["marionette",
     function (Marionette, Backbone, helpers, bootstrap, css, NavBar, ConfigForm, WidgetPreview, ConfigModel) {
         "use strict";
 
+        /**
+         * "Widgetizer" application for configuring HTML5 iframe widgets, so that they are easy to plug into Enriched.
+         *
+         * @author Bo Gotthardt
+         */
         var app = new Marionette.Application();
 
         app.addRegions({

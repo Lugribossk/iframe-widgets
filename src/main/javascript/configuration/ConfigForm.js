@@ -7,9 +7,9 @@ define(["jquery",
         "hbars!template/ShareConfigForm",
         "hbars!template/AnimationConfigForm",
         "util/Logger",
-        "configuration/ShareServices",
+        "configuration/ShareServicesDropdown",
         "bootstrap-colorpicker"],
-    function ($, _, Marionette, TextConfigForm, ImageConfigForm, ShareConfigForm, AnimationConfigForm, Logger, ShareServices) {
+    function ($, _, Marionette, TextConfigForm, ImageConfigForm, ShareConfigForm, AnimationConfigForm, Logger, ShareServicesDropdown) {
         "use strict";
         var log = new Logger("ConfigForm");
 
@@ -70,7 +70,7 @@ define(["jquery",
                     template: AnimationConfigForm
                 }));
 
-                this.shareServices.show(new ShareServices({
+                this.shareServices.show(new ShareServicesDropdown({
                     model: this.model.get("shareServices")
                 }));
 

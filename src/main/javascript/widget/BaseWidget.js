@@ -56,12 +56,8 @@ define(["jquery", "lib/lucid", "iframeapi", "css!styling/widget"],
             });
 
             $window.on("resize", function () {
-                // Hide the widget element so it doesn't influence the size of the iframe, set the html size to match
-                // the new iframe size, and show the element again.
-                scope.element.hide();
+                // TODO this event will never be triggered on iOS 6, presumably because the iframe has been forced to a fixed size.
                 fixIframeSize();
-                scope.element.show();
-
                 scope.trigger("resize");
             });
 

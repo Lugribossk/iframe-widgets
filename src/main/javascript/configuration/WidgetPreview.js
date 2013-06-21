@@ -1,4 +1,3 @@
-/*global window*/
 define(["jquery", "marionette", "hbars!template/WidgetPreview", "backbone.stickit"],
     function ($, Marionette, WidgetPreview) {
         "use strict";

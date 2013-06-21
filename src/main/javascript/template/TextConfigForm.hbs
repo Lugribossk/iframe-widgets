@@ -1,21 +1,23 @@
 <fieldset>
     <legend>Text</legend>
 
-    <label>Text</label>
-    <input type="text" data-parameter="text" data-required autofocus>
+    <label for="input-text">Text</label>
+    <input id="input-text" type="text" data-parameter="text" data-required autofocus>
 
-    <label>Font</label>
-    <input type="text" data-parameter="font-family" spellcheck="false">
+    <label for="input-font">Font</label>
+    <input id="input-font" type="text" data-parameter="font-family" spellcheck="false">
 
-    <label class="checkbox">
-        <input type="checkbox" data-parameter="googleFont" value="true">
+    <label class="checkbox" for="input-google">
+        <input id="input-google" type="checkbox" data-parameter="googleFont" value="true">
         Enable Google Fonts <a href="https://www.google.com/fonts/" target="_blank">{{icon "info-sign"}}</a>
     </label>
 
-    <label>Color</label>
-    <input type="text" class="colorpicker" data-parameter="color" placeholder="Black" spellcheck="false">
+    <label for="input-color">Color</label>
+    <input id="input-color" type="text" class="colorpicker" data-parameter="color" placeholder="Black" spellcheck="false">
 
     <input type="hidden" data-parameter="type" value="text">
 </fieldset>
 
 <div id="animation"></div>
+
+<button class="btn" id="clear">{{icon "eraser"}}Clear</button>

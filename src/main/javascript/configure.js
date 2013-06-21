@@ -1,6 +1,6 @@
-require(["configuration/WidgetConfiguratorApp"],
-    function (WidgetConfigurator) {
+require(["configuration/WidgetizerApp"],
+    function (WidgetizerApp) {
         "use strict";
 
-        WidgetConfigurator.start();
+        WidgetizerApp.start();
     });

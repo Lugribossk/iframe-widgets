@@ -1,4 +1,3 @@
-/*global window*/
 define(["jquery",
         "underscore",
         "marionette",
@@ -7,8 +6,9 @@ define(["jquery",
         "hbars!template/ShareConfigForm",
         "hbars!template/AnimationConfigForm",
         "util/Logger",
+        "configuration/ShareServicesDropdown",
         "bootstrap-colorpicker"],
-    function ($, _, Marionette, TextConfigForm, ImageConfigForm, ShareConfigForm, AnimationConfigForm, Logger) {
+    function ($, _, Marionette, TextConfigForm, ImageConfigForm, ShareConfigForm, AnimationConfigForm, Logger, ShareServicesDropdown) {
         "use strict";
         var log = new Logger("ConfigForm");
 
@@ -32,29 +32,45 @@ define(["jquery",
                     return ShareConfigForm;
                 default:
                     log.error("Unknown config type: ", this.options.type);
-                    return null;
+                    return TextConfigForm;
                 }
             },
             ui: {
                 formInputs: "input, select, textarea",
-                colorpickers: "input.colorpicker"
+                colorpickers: "input.colorpicker",
+
+                noValOnClear: "input[type='text'], input[type='number'], input[type='url'], select",
+                uncheckOnClear: "input[type='checkbox']"
             },
             regions: {
-                animation: "#animation"
+                animation: "#animation",
+                shareServices: "#shareServices"
             },
             events: {
-                "change input[type='checkbox'], select": "updateModel",
+                "change input[type='checkbox'], input[type='hidden'], select": "updateModel",
                 "changeColor .colorpicker": "updateModel",
-                "keyup input, textarea": "delayedUpdateModel",
+                "keyup input, textarea": _.debounce(function () {
+                    this.updateModel();
+                }, TYPING_DELAY_MS),
                 "keyup input[data-validate-https]": function (e) {
                     var target = $(e.currentTarget);
                     $(target.data("validate-https")).toggle(target.val().indexOf("http://") === 0);
+                },
+                "click #clear": function () {
+                    this.ui.noValOnClear.val("");
+                    this.ui.uncheckOnClear.removeAttr("checked");
+                    this.shareServices.currentView.clear();
+                    this.model.set("parameters", {});
                 }
             },
 
             onRender: function () {
                 this.animation.show(new Marionette.ItemView({
                     template: AnimationConfigForm
+                }));
+
+                this.shareServices.show(new ShareServicesDropdown({
+                    model: this.model.get("shareServices")
                 }));
 
                 // Re-bind so this.ui also includes elements from the animation form.
@@ -67,29 +83,6 @@ define(["jquery",
             close: function () {
                 // The colorpicker must be explicitly removed.
                 this.ui.colorpickers.colorpicker("destroy");
-            },
-
-            templateHelpers: function () {
-                return {
-                    services: [{
-                        code: "facebook"
-                    }, {
-                        code: "twitter"
-                    }, {
-                        code: "pinterest"
-                    }, {
-                        code: "google_plusone_share",
-                        name: "Google+"
-                    }, {
-                        code: "linkedin",
-                        name: "LinkedIn"
-                    }, {
-                        code: "email"
-                    }],
-                    serviceName: function () {
-                        return this.name || (this.code.charAt(0).toUpperCase() + this.code.slice(1));
-                    }
-                };
             },
 
             /**
@@ -137,10 +130,6 @@ define(["jquery",
                 if (!requiredMissing) {
                     this.model.set("parameters", parameters);
                 }
-            },
-
-            delayedUpdateModel: _.debounce(function () {
-                this.updateModel();
-            }, TYPING_DELAY_MS)
+            }
         });
     });

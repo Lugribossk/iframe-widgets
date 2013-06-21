@@ -3,6 +3,15 @@ define(["jquery", "lib/lucid", "iframeapi", "css!styling/widget"],
     function ($, LucidJS, Iframe) {
         "use strict";
 
+        var $window = $(window);
+
+        function fixIframeSize() {
+            // Force the html element to keep its initial size, regardless of what content we insert later on.
+            // This fixes an iOS 6 issue where the iframe will grow to adjust to its content.
+            $("html").height($window.height())
+                     .width($window.width());
+        }
+
         /**
          * Generic base functionality for widgets.
          *
@@ -17,14 +26,10 @@ define(["jquery", "lib/lucid", "iframeapi", "css!styling/widget"],
          * @param {Object} options
          */
         function BaseWidget(options) {
-            var scope = this,
-                $window = $(window);
+            var scope = this;
             this.options = options;
 
-            // Force the html element to keep its initial size, regardless of what content we insert later on.
-            // This fixes an iOS 6 issue where the iframe will grow to adjust to its content.
-            $("html").height($window.height())
-                     .width($window.width());
+            fixIframeSize();
 
             this.element = $("<div class='BaseWidget'></div>")
                 .appendTo("body");
@@ -51,6 +56,8 @@ define(["jquery", "lib/lucid", "iframeapi", "css!styling/widget"],
             });
 
             $window.on("resize", function () {
+                // TODO this event will never be triggered on iOS 6, presumably because the iframe has been forced to a fixed size.
+                fixIframeSize();
                 scope.trigger("resize");
             });
 

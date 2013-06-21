@@ -1,26 +1,22 @@
 <fieldset>
     <legend>Sharing <a href="http://www.addthis.com" target="_blank">{{icon "info-sign"}}</a></legend>
 
-    <label>URL to share</label>
-    <input type="url" data-parameter="url" autofocus placeholder="http://viewer.zmags.com/publication/...">
+    <label for="input-src">URL to share</label>
+    <input id="input-src" type="url" data-parameter="src" autofocus placeholder="http://viewer.zmags.com/publication/...">
 
-    <label class="checkbox">
-        <input type="checkbox" data-parameter="noDeeplink" value="true">
+    <label class="checkbox" for="input-deeplink">
+        <input id="input-deeplink" type="checkbox" data-parameter="noDeeplink" value="true">
         Disable page deeplinking
     </label>
 
-    <label>Title to share</label>
-    <input type="text" data-parameter="title" placeholder="Optional">
+    <label for="input-title">Title to share</label>
+    <input id="input-title" type="text" data-parameter="title" placeholder="Optional">
 
-    <label>Networks</label>
-    {{#each services}}
-        <label class="checkbox">
-            <input type="checkbox" value="{{code}}" data-parameter="services">
-            <img src="http://cache.addthiscdn.com/icons/v1/thumbs/{{code}}.gif"/> {{../serviceName}}
-        </label>
-    {{/each}}
+    <div id="shareServices"></div>
 
     <input type="hidden" data-parameter="type" value="share">
 </fieldset>
 
 <div id="animation"></div>
+
+<button class="btn" id="clear">{{icon "eraser"}}Clear</button>

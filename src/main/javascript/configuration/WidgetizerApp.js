@@ -45,12 +45,15 @@ define(["marionette",
 
             var router = new Backbone.Router({
                 routes: {
-                    ":type": function (type) {
+                    "widgetlist": function () {
+                        app.config.show(new WidgetList());
+                    },
+                    ":configType": function (configType) {
                         app.config.show(new ConfigForm({
-                            type: type,
+                            type: configType,
                             model: configModel
                         }));
-                        app.navbar.currentView.activeLink(type);
+                        app.navbar.currentView.activeLink(configType);
                         configModel.set("parameters", {});
                     },
                     "": function () {

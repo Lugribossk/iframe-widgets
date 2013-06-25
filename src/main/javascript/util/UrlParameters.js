@@ -28,7 +28,7 @@ define([],
             var scope = this;
 
             if (parameterString !== "") {
-                var parameters = parameterString.substr(1).split("&");
+                var parameters = parameterString.split("&");
                 parameters.forEach(function (parameter) {
                     var keyValue = parameter.split("=");
                     if (keyValue.length === 2) {
@@ -48,7 +48,8 @@ define([],
          */
         UrlParameters.fromQuery = function (frame) {
             frame = frame || window;
-            return new UrlParameters(frame.location.search);
+            var parameters = frame.location.search;
+            return new UrlParameters(parameters.length > 0 ? parameters.substr(1) : "");
         };
 
         /**
@@ -59,7 +60,8 @@ define([],
          */
         UrlParameters.fromHash = function (frame) {
             frame = frame || window;
-            return new UrlParameters(frame.location.hash);
+            // We can't use window.location.hash as a Firefox bug from 2002 (!!!) automatically unescapes it when accessed.
+            return new UrlParameters(frame.location.href.split("#")[1] || "");
         };
 
         /**

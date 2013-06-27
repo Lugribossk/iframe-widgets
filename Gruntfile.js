@@ -117,14 +117,7 @@ module.exports = function (grunt) {
     });
 
     grunt.loadTasks("src/grunt");
-
-    grunt.loadNpmTasks("grunt-contrib-jshint");
-    grunt.loadNpmTasks("grunt-requirejs");
-    grunt.loadNpmTasks("grunt-contrib-cssmin");
-    grunt.loadNpmTasks("grunt-contrib-copy");
-    grunt.loadNpmTasks("grunt-contrib-clean");
-    grunt.loadNpmTasks("grunt-string-replace");
-    grunt.loadNpmTasks("grunt-git-describe");
+    require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 
     grunt.registerTask("default", ["widget"]);
 

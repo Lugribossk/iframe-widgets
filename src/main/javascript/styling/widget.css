@@ -1,11 +1,12 @@
 html {
+    height: 100%;
+    width: 100%;
     overflow: hidden;
 }
 
 body {
     margin: 0;
     height: 100%;
-    /* Force iOS 6 to use the size of the html element as the size of the iframe. */
     overflow: hidden;
 }
 

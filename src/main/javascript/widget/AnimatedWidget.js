@@ -44,7 +44,9 @@ define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
                 this.on("resize", function () {
                     if (scope.active) {
                         // Reset the animation target position.
-                        scope._animateIn(0, "ease", 0);
+                        window.setTimeout(function () {
+                            scope._animateIn(0, "ease", 0);
+                        }, 0);
                     }
                 });
             }

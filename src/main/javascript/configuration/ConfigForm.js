@@ -80,7 +80,7 @@ define(["jquery",
                 this.ui.colorpickers.colorpicker();
             },
 
-            close: function () {
+            onClose: function () {
                 // The colorpicker must be explicitly removed.
                 this.ui.colorpickers.colorpicker("destroy");
             },
@@ -89,6 +89,8 @@ define(["jquery",
              * Update the model to reflect the current state of the form.
              */
             updateModel: function () {
+                // TODO It would be nice to use Stickit for this, but that will probably be a bit hard to combine
+                // with the current model-less data-parameter approach.
                 var parameters = {},
                     requiredMissing = false;
 

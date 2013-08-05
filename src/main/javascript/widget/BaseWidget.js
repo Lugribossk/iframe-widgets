@@ -1,7 +1,9 @@
 /*global window*/
-define(["jquery", "util/QueryParameters", "lib/lucid", "iframeapi"],
-    function ($, QueryParameters, LucidJS, Iframe) {
+define(["jquery", "lib/lucid", "iframeapi", "css!styling/widget"],
+    function ($, LucidJS, Iframe) {
         "use strict";
+
+        var $window = $(window);
 
         /**
          * Generic base functionality for widgets.
@@ -37,18 +39,18 @@ define(["jquery", "util/QueryParameters", "lib/lucid", "iframeapi"],
             this.initialized = new $.Deferred();
 
             Iframe.addEventListener(Iframe.IFRAME_WIDGET_ACTIVATE, function (event) {
-                scope.activate(event);
+                scope.activate(event.publicationID, event.currentPages, event.widgetPages);
             });
 
             Iframe.addEventListener(Iframe.IFRAME_WIDGET_DEACTIVATE, function (event) {
-                scope.deactivate(event);
+                scope.deactivate(event.publicationID, event.currentPages, event.widgetPages);
             });
 
-            $(window).on("resize", function () {
+            $window.on("resize", function () {
                 scope.trigger("resize");
             });
 
-            $(window).on("beforeunload", function () {
+            $window.on("beforeunload", function () {
                 scope.trigger("unload");
             });
         }
@@ -58,20 +60,18 @@ define(["jquery", "util/QueryParameters", "lib/lucid", "iframeapi"],
 
         /**
          * Activate the widget. Is called automatically by the Iframe API.
-         * @param event
          */
-        BaseWidget.prototype.activate = function (event) {
+        BaseWidget.prototype.activate = function (publicationID, currentPages, widgetPages) {
             this.active = true;
-            this.trigger("activate", event);
+            this.trigger("activate", publicationID, currentPages, widgetPages);
         };
 
         /**
          * Deactivate the widget. Is called automatically by the Iframe API.
-         * @param event
          */
-        BaseWidget.prototype.deactivate = function (event) {
+        BaseWidget.prototype.deactivate = function (publicationID, currentPages, widgetPages) {
             this.active = false;
-            this.trigger("deactivate", event);
+            this.trigger("deactivate", publicationID, currentPages, widgetPages);
         };
 
         /**

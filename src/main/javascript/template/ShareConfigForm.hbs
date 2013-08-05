@@ -1,0 +1,22 @@
+<fieldset>
+    <legend>Sharing <a href="http://www.addthis.com" target="_blank">{{icon "info-sign"}}</a></legend>
+
+    <label for="input-src">URL to share</label>
+    <input id="input-src" type="url" data-parameter="url" autofocus placeholder="http://viewer.zmags.com/publication/...">
+
+    <label class="checkbox" for="input-deeplink">
+        <input id="input-deeplink" type="checkbox" data-parameter="noDeeplink" value="true">
+        Disable page deeplinking
+    </label>
+
+    <label for="input-title">Title to share</label>
+    <input id="input-title" type="text" data-parameter="title" placeholder="Optional">
+
+    <div id="shareServices"></div>
+
+    <input type="hidden" data-parameter="type" value="share">
+</fieldset>
+
+<div id="animation"></div>
+
+<button class="btn" id="clear">{{icon "eraser"}}Clear</button>

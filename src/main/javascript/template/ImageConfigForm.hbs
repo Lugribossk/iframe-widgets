@@ -1,0 +1,17 @@
+<fieldset>
+    <legend>Image/SVG</legend>
+
+    <label for="input-src">Source URL</label>
+    <input id="input-src" type="text" data-parameter="src" data-required data-validate-https="#warning-https" autofocus>
+
+    <div class="alert" id="warning-https" style="display: none;">
+        {{icon "warning-sign"}} For the image to show when on a HTTPS connection (e.g. Facebook),
+        the source URL must start with <code>https://</code> or <code>//</code>.
+    </div>
+
+    <input type="hidden" data-parameter="type" value="image">
+</fieldset>
+
+<div id="animation"></div>
+
+<button class="btn" id="clear">{{icon "eraser"}}Clear</button>

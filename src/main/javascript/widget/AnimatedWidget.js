@@ -1,6 +1,6 @@
-/*global setTimeout, window */
-define(["jquery", "widget/BaseWidget", "util/Browser"],
-    function ($, BaseWidget, Browser) {
+/*global window */
+define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
+    function ($, BaseWidget) {
         "use strict";
 
         /**
@@ -17,20 +17,23 @@ define(["jquery", "widget/BaseWidget", "util/Browser"],
             BaseWidget.call(this, options);
 
             this.element.addClass("AnimatedWidget");
+            this._delayedAnimation = null;
 
-            var from = this.options.from;
-            if (from) {
+            if (this.options.from || this.options.fadeIn) {
                 this.hide();
 
                 var scope = this;
 
                 this.on("activate", function () {
                     scope.initialized.done(function () {
-                        scope._positionOutsideFrame();
+                        scope._setupStartPosition();
                         scope.show();
-                        scope._animateToOppositeEdge(scope.options.duration,
-                                                     scope.options.timingFunction,
-                                                     scope.options.delay);
+
+                        var duration = (scope.options.duration !== undefined ? parseInt(scope.options.duration, 10) : 1000),
+                            delay = (scope.options.delay !== undefined ? parseInt(scope.options.delay, 10) : 500),
+                            timingFunction = scope.options.timingFunction || "ease";
+
+                        scope._animateIn(duration, timingFunction, delay);
                     });
                 });
 
@@ -41,7 +44,9 @@ define(["jquery", "widget/BaseWidget", "util/Browser"],
                 this.on("resize", function () {
                     if (scope.active) {
                         // Reset the animation target position.
-                        scope._animateToOppositeEdge("0", "ease", "0");
+                        window.setTimeout(function () {
+                            scope._animateIn(0, "ease", 0);
+                        }, 0);
                     }
                 });
             }
@@ -49,11 +54,11 @@ define(["jquery", "widget/BaseWidget", "util/Browser"],
         AnimatedWidget.prototype = Object.create(BaseWidget.prototype);
 
         /**
-         * Position the widget just offscreen so it is ready to slide in.
+         * Set up the widget so it is ready for the animation to start.
          * 
          * @private
          */
-        AnimatedWidget.prototype._positionOutsideFrame = function () {
+        AnimatedWidget.prototype._setupStartPosition = function () {
             var x = 0,
                 y = 0;
 
@@ -69,30 +74,37 @@ define(["jquery", "widget/BaseWidget", "util/Browser"],
                 break;
             case "right":
                 x = $(window).width();
+                // On iOS 6, if the element is even partially outside the right edge of the window, it's shifted upwards
+                // a little while animating in. Setting y to even -1 make it a lot less apparent.
+                y = -1;
                 break;
             }
 
-            this.element.css({
-                transition: "none",
-                transform: "translate3d(" + x + "px, " + y + "px, 0)"
-            });
+            var startPosition = {
+                top: y,
+                left: x
+            };
+
+            if (this.options.fadeIn) {
+                startPosition.opacity = 0;
+            }
+
+            this.element.css(startPosition);
         };
 
         /**
-         * Animate the widget moving to the opposite edge of the window.
+         * Do the widget activation animation.
          *
-         * @param {String} [duration=1s] The animation duration as a CSS string, e.g. "1s".
-         * @param {String} [timingFunction=ease] The animation timing function as a CSS string, e.g. "ease".
-         * @param {String} [delay=0] The animation start delay as a CSS string, e.g. "1s".
+         * @param {Number} duration The animation duration, in milliseconds.
+         * @param {String} timingFunction The animation timing function as a CSS string, e.g. "ease".
+         * @param {Number} delay The animation start delay, in milliseconds.
          * @private
          */
-        AnimatedWidget.prototype._animateToOppositeEdge = function (duration, timingFunction, delay) {
-            duration = duration || "1s";
-            timingFunction = timingFunction || "ease";
-            delay = delay || "500ms";
-
-            var x = 0,
-                y = 0;
+        AnimatedWidget.prototype._animateIn = function (duration, timingFunction, delay) {
+            // On iOS 6 animating to 0 makes the animation immediately jump to the end position, then start from there.
+            // But animating it to "=0" works...
+            var x = "=0",
+                y = "=0";
 
             switch (this.options.from) {
             case "top":
@@ -105,12 +117,19 @@ define(["jquery", "widget/BaseWidget", "util/Browser"],
             }
 
             var scope = this;
-            setTimeout(function () {
-                scope.element.css({
-                    transition: Browser.getCSSPrefix() + "transform " + duration + " " + timingFunction + " " + delay,
-                    transform: "translate3d(" + x + "px, " + y + "px, 0)"
-                });
-            }, 0);
+            window.clearTimeout(this._delayedAnimation);
+            this._delayedAnimation = window.setTimeout(function () {
+                var animation = {
+                    top: y,
+                    left: x
+                };
+
+                if (scope.options.fadeIn) {
+                    animation.opacity = 1;
+                }
+
+                scope.element.animate(animation, duration, timingFunction);
+            }, delay);
         };
 
         return AnimatedWidget;

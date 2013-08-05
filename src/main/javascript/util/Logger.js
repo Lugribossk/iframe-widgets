@@ -103,7 +103,7 @@ define(["util/Promise"],
             if (!condition) {
                 this.error.apply(this, Array.prototype.slice.call(arguments, 1));
                 // This debugger statement is allowed to stay in as it's part of the assert functionality.
-                /*jslint debug:true*/
+                /*jshint debug:true*/
                 debugger;
             }
         };

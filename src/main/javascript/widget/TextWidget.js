@@ -24,7 +24,7 @@ define(["jquery", "widget/AnimatedWidget", "util/WebFontLoader", "util/Logger", 
                 }
             });
 
-            var text = this.options.text.replace("\n", "<br/>");
+            var text = this.options.text.replace(/\\n/g, "<br/>");
             this.element.html(text)
                 .addClass("TextWidget");
 
@@ -83,11 +83,11 @@ define(["jquery", "widget/AnimatedWidget", "util/WebFontLoader", "util/Logger", 
             // There's no way to scale some text to fit in a box with CSS.
             // But we can keep increasing the font size until the element is larger than the window.
             var size = 6;
-            while (this.element.width() < win.width() &&
-                    this.element.height() < win.height() &&
-                    size < 10000) {
+            do {
                 this.setFontSize(++size);
-            }
+            } while (this.element.width() < win.width() &&
+                    this.element.height() < win.height() &&
+                    size < 10000);
             this.setFontSize(size - 1);
         };
 

@@ -1,5 +1,5 @@
 /*global window*/
-define(["jquery", "util/QueryParameters", "util/Logger", "util/Promise"],
+define(["jquery", "util/UrlParameters", "util/Logger", "util/Promise"],
     function ($, QueryParameters, Logger, Promise) {
         "use strict";
         var log = new Logger("WidgetBuilder");
@@ -14,12 +14,9 @@ define(["jquery", "util/QueryParameters", "util/Logger", "util/Promise"],
             case "image":
                 widgetClass = "widget/ImageWidget";
                 break;
-//            case "debug":
-//                widgetClass = "widget/DebugWidget";
-//                break;
-//            case "cardflip":
-//                widgetClass = "widget/CardFlipWidget";
-//                break;
+            case "share":
+                widgetClass = "widget/ShareWidget";
+                break;
             // If adding a new class here, also add it to the Gruntfile under requirejs.compile.options.deps .
             default:
                 log.error("Unknown widget type:", type);
@@ -51,12 +48,12 @@ define(["jquery", "util/QueryParameters", "util/Logger", "util/Promise"],
         }
 
         /**
-         * Create a widget based on the options in the page's query parameters.
+         * Create a widget based on the specified parameters.
          *
+         * @param {Object} parameters The widget parameters
          * @returns {Promise} A promise for the widget
          */
-        WidgetBuilder.prototype.fromQueryParameters = function () {
-            var parameters = new QueryParameters();
+        WidgetBuilder.prototype.build = function (parameters) {
             var options = {};
 
             if (parameters.preset) {
@@ -78,7 +75,6 @@ define(["jquery", "util/QueryParameters", "util/Logger", "util/Promise"],
                     // If the page has been opened directly we will never get the activate event, so trigger it manually.
                     if (window === window.top || parameters.activate) {
                         widget.initialized.done(function () {
-                            log.info("Widget loaded directly, activating immediately.");
                             widget.activate();
                         });
                     }

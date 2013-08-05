@@ -1,0 +1,32 @@
+<fieldset>
+    <legend>Animation</legend>
+
+    <label for="input-slide">Slide in from</label>
+    <select id="input-slide" data-parameter="from">
+        <option value="" selected>Disabled</option>
+        <option value="top">Top</option>
+        <option value="bottom">Bottom</option>
+        <option value="left">Left</option>
+        <option value="right">Right</option>
+    </select>
+
+    <label class="checkbox" for="input-fade">
+        <input id="input-fade" type="checkbox" data-parameter="fadeIn" value="true">
+        Fade in
+    </label>
+
+    <label for="input-duration">Duration</label>
+    <div class="input-append">
+        <input id="input-duration" type="number" placeholder="1000" min="0" data-parameter="duration">
+        <span class="add-on">ms</span>
+    </div>
+
+    <label for="input-delay">Delay</label>
+    <div class="input-append">
+        <input id="input-delay" type="number" placeholder="500" min="0" data-parameter="delay">
+        <span class="add-on">ms</span>
+    </div>
+
+    <label for="input-easing">Easing <a href="http://matthewlein.com/ceaser/" target="_blank">{{icon "info-sign"}}</a></label>
+    <input id="input-easing" type="text" data-parameter="timingFunction" placeholder="ease" spellcheck="false">
+</fieldset>

@@ -1,0 +1,57 @@
+html {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+.BaseWidget {
+    visibility: visible;
+}
+
+.BaseWidget.hidden {
+    /* Use visibility rather than display so that the widget retains its size while hidden. */
+    visibility: hidden;
+}
+
+
+.AnimatedWidget {
+    position: absolute;
+}
+
+
+.TextWidget {
+    display: inline;
+    white-space: nowrap;
+}
+
+
+.ImageWidget,
+.ImageWidget img {
+    width: 100%;
+}
+
+.ImageWidget.windowIsWider,
+.ImageWidget.windowIsWider img {
+    width: auto;
+    height: 100%;
+}
+
+
+.ShareWidget,
+.ShareWidget a,
+.ShareWidget img {
+    height: 100%;
+    max-height: 32px;
+}
+
+.ShareWidget a,
+.ShareWidget img {
+    max-width: 32px;
+}

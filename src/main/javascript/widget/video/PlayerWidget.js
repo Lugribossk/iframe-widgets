@@ -1,4 +1,4 @@
-define(["widget/BaseWidget", "util/QueryParameters"],
+define(["widget/BaseWidget", "util/UrlParameters"],
     function (BaseWidget) {
         "use strict";
 

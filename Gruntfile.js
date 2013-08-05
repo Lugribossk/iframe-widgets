@@ -2,11 +2,24 @@
 module.exports = function (grunt) {
     "use strict";
 
+    var buildHtml = {
+        replacements: [{
+            pattern: /\s*<script src="lib\/require\.js"><\/script>/,
+            replacement: ""
+        }, {
+            pattern: /\s*<script src="require\.config\.js"><\/script>/,
+            replacement: ""
+        }, {
+            pattern: "${build}",
+            replacement: "<%= revision %> <%= grunt.template.today('UTC:yyyy/mm/dd HH:MM:ss Z') %>"
+        }]
+    };
+
     grunt.initConfig({
         jshint: {
             options: {
                 jshintrc: ".jshintrc",
-                ignores: ["src/main/javascript/lib/*.js",
+                ignores: ["src/main/javascript/lib/**/*.js",
                           "src/main/javascript/full-page-video/**/*.js"]
             },
             all: {
@@ -25,58 +38,99 @@ module.exports = function (grunt) {
                 preserveLicenseComments: false,
                 generateSourceMaps: true
             },
-            dist: {
+            widget: {
                 options: {
-                    name: "main",
-                    out: "target/widget.min.js",
+                    name: "widget",
+                    out: "target/widget/widget.js",
                     deps: ["lib/require",
                            "require.config.js",
                            "widget/TextWidget",
-                           "widget/ImageWidget"/*,
-                           "widget/DebugWidget"*/]
+                           "widget/ImageWidget",
+                           "widget/ShareWidget"]
+                }
+            },
+            configure: {
+                options: {
+                    name: "configure",
+                    out: "target/configure/configure.js",
+                    deps: ["lib/require",
+                           "require.config.js"]
                 }
             }
         },
-        cssmin: {
+        "git-describe": {
             options: {
-                report: "min"
+                prop: "revision"
             },
-            dist: {
-                files: {
-                    "target/widget.min.css": ["src/main/css/**/*.css"]
-                }
-            }
+            describe: {}
         },
         "string-replace": {
-            dist: {
+            widget: {
+                options: buildHtml,
+                files: [{
+                    src: "src/main/javascript/widget.html",
+                    dest: "target/widget/widget.html"
+                }]
+            },
+            configure: {
+                options: buildHtml,
+                files: [{
+                    src: "src/main/javascript/configure.html",
+                    dest: "target/configure/configure.html"
+                }]
+            },
+            analytics: {
                 options: {
                     replacements: [{
-                        pattern: "../css/styling.css",
-                        replacement: "widget.min.css"
-                    }, {
-                        pattern: /\s*<script src="lib\/require\.js"><\/script>\r\n/,
-                        replacement: ""
-                    }, {
-                        pattern: /\s*<script src="require\.config\.js"><\/script>/,
-                        replacement: ""
-                    }, {
-                        pattern: "src=\"main.js\"",
-                        replacement: "src=\"widget.min.js\""
+                        pattern: "</body>",
+                        replacement: "<script>" +
+                        "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){" +
+                            "(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o)," +
+                            "m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)" +
+                        "})(window,document,'script','//www.google-analytics.com/analytics.js','ga');" +
+                        "ga('create', '" + grunt.option("id") + "', '" + grunt.option("domain") + "');" +
+                        "ga('send', 'pageview');" +
+                        "</script></body>"
                     }]
                 },
                 files: [{
-                    src: "src/main/javascript/dev.html",
-                    dest: "target/widget.html"
+                    src: grunt.option("file"),
+                    dest: grunt.option("file")
                 }]
             }
+        },
+        copy: {
+            configure: {
+                files: [{
+                    expand: true,
+                    cwd: "src/main/javascript/styling",
+                    src: ["img/**", "font/**", "lib/*.png", "lib/*.gif"],
+                    dest: "target/configure/styling"
+                }]
+            }
+        },
+        clean: {
+            // Trying to delete the target folder itself makes the requirejs task randomly fail.
+            widget: ["target/widget/**/*"],
+            configure: ["target/configure/**/*"]
         }
     });
 
-    grunt.loadNpmTasks("grunt-contrib-jshint");
-    grunt.loadNpmTasks("grunt-requirejs");
-    grunt.loadNpmTasks("grunt-contrib-cssmin");
-    grunt.loadNpmTasks("grunt-contrib-copy");
-    grunt.loadNpmTasks("grunt-string-replace");
+    grunt.loadTasks("src/grunt");
+    require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 
-    grunt.registerTask("default", ["jshint", "requirejs:dist", "cssmin:dist", "string-replace:dist"]);
+    grunt.registerTask("default", ["widget"]);
+
+    grunt.registerTask("widget",    ["jshint:all",
+                                     "clean:widget",
+                                     "requirejs:widget",
+                                     "git-describe",
+                                     "string-replace:widget"]);
+
+    grunt.registerTask("configure", ["jshint:all",
+                                     "clean:configure",
+                                     "requirejs:configure",
+                                     "git-describe",
+                                     "string-replace:configure",
+                                     "copy:configure"]);
 };

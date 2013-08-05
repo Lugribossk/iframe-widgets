@@ -1,1 +1,0 @@
-body{margin:0;overflow:hidden}html,body{height:100%}.BaseWidget{visibility:visible}.BaseWidget.hidden{visibility:hidden}.AnimatedWidget{position:absolute}.TextWidget{display:inline;white-space:nowrap}.ImageWidget{width:100%;height:100%}.ImageWidget img{width:100%}.ImageWidget.windowIsWider img{width:auto;height:100%}

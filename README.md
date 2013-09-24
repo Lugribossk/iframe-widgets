@@ -4,7 +4,7 @@ Reusable Zmags Iframe widgets with various configuration options.
 
 ## Usage
 
-1. Open the widget configuration tool. There's a demo version hosted [here](http://lugribossk.github.io/iframe-widgets/target/configure/configure.html).
+1. Open the widget configuration tool (configure.html).
 2. Configure the widget with the options you want.
 3. Use the Widget URL to view or use the widget standalone.
 
@@ -18,6 +18,3 @@ Should hopefully work in all modern (IE 9+) browsers.
 ## Building
 
 Build with Grunt using 'grunt widget configure', then upload the files in `target` to your own server.
-
-
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/ee572733c662aee473ea4e83442d5ed1 "githalytics.com")](http://githalytics.com/Lugribossk/iframe-widgets)

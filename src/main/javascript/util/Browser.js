@@ -4,26 +4,13 @@ define(["jquery", "util/Logger"],
         "use strict";
         var log = new Logger("Browser");
 
-        function findCSSPrefix() {
-            var style = window.getComputedStyle($("body")[0], null);
-
-            if (style.WebkitTransition !== undefined) {
-                return "-webkit-";
-            }
-            if (style.MozTransition !== undefined) {
-                return "-moz-";
-            }
-            if (style.msTransition !== undefined) {
-                return "-ms-";
-            }
-            if (style.OTransition !== undefined) {
-                return "-o-";
-            }
-            log.error("Unable to determine browser CSS prefix.");
-            return "";
+        function isTransitionsSupported() {
+            var thisBody = window.document.body || window.document.documentElement,
+                thisStyle = thisBody.style;
+            return thisStyle.WebkitTransition !== undefined || thisStyle.MozTransition !== undefined || thisStyle.OTransition !== undefined || thisStyle.transition !== undefined;
         }
 
-        var prefix = findCSSPrefix();
+        var transitionsSupported = isTransitionsSupported();
 
         /**
          * Utility class for getting the window object.
@@ -56,15 +43,8 @@ define(["jquery", "util/Logger"],
             return window.location.protocol === "https:";
         };
 
-        /**
-         * Get the CSS vendor prefix used by this browser.
-         *
-         * @static
-         *
-         * @return {String}
-         */
-        Browser.getCSSPrefix = function () {
-            return prefix;
+        Browser.isTransitionsSupported = function () {
+            return transitionsSupported;
         };
 
         return Browser;

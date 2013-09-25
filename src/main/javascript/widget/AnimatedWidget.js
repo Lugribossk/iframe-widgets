@@ -1,7 +1,16 @@
 /*global window */
-define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
-    function ($, BaseWidget) {
+define(["jquery", "widget/BaseWidget", "util/Browser", "lib/jquery.animate-enhanced"],
+    function ($, BaseWidget, Browser) {
         "use strict";
+
+        function getEasing(timing) {
+            // IE 9 hack to fall back to a Javascript easing type that is implemented in jQuery.
+            if (Browser.isTransitionsSupported()) {
+                return timing;
+            } else {
+                return "swing";
+            }
+        }
 
         /**
          * Widget that slides in from offscreen, ending next to the opposite edge.
@@ -128,7 +137,7 @@ define(["jquery", "widget/BaseWidget", "lib/jquery.animate-enhanced"],
                     animation.opacity = 1;
                 }
 
-                scope.element.animate(animation, duration, timingFunction);
+                scope.element.animate(animation, duration, getEasing(timingFunction));
             }, delay);
         };
 
